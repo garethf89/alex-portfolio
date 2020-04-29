@@ -9,6 +9,7 @@
     "@emotion/styled": "^10.0.27",
     "chalk": "^4.0.0",
     "contentful-import": "^7.7.12",
+    "emotion-theming": "^10.0.27",
     "eslint-plugin-prefer-arrow": "^1.2.0",
     "fs": "^0.0.1-security",
     "gatsby": "^2.21.0",
@@ -31,9 +32,16 @@
     "theme-ui": "^0.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react": "^5.3.18",
+    "babel-loader": "^8.1.0",
     "eslint": "^6.8.0",
     "eslint-config-gatsby-standard": "^2.2.0",
     "prettier": "^2.0.5",
+    "storybook-addon-theme-ui": "^0.1.5",
     "stylelint": "^13.0.0",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
@@ -55,7 +63,9 @@
     "lint:js": "eslint 'src/**/*.js'",
     "lint:css": "stylelint 'src/**/*.js'",
     "check-pretty": "prettier --list-different {,src/**/}*.{js,jsx,json,css,scss}",
-    "format": "prettier --write \"src/**/*.js\""
+    "format": "prettier --write \"src/**/*.js\"",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
