@@ -10,6 +10,9 @@ export default {
     fonts: {
         body: "Muli, Roboto, Helvetica, Arial, sans-serif",
     },
+    sizes: {
+        maxWidth: "1200px",
+    },
     responsive: {
         small: "35em",
         medium: "50em",

@@ -1,3 +1,21 @@
+let contentfulConfig
+try {
+    contentfulConfig = require("./.contentful")
+} catch (e) {
+    contentfulConfig = {
+        production: {
+            spaceId: process.env.SPACE_ID,
+            accessToken: process.env.ACCESS_TOKEN,
+        },
+    }
+} finally {
+    const { spaceId, accessToken } = contentfulConfig.production
+    if (!spaceId || !accessToken) {
+        throw new Error(
+            "Contentful space ID and access token need to be provided."
+        )
+    }
+}
 module.exports = {
     siteMetadata: {
         title: "Alex",
@@ -56,8 +74,15 @@ module.exports = {
             resolve: `gatsby-plugin-schema-snapshot`,
             options: {
                 path: `./src/gatsby/schema/schema.gql`,
-                update: true,
+                update: false,
             },
+        },
+        {
+            resolve: "gatsby-source-contentful",
+            options:
+                process.env.NODE_ENV === "development"
+                    ? contentfulConfig.development
+                    : contentfulConfig.production,
         },
         // this (optional) plugin enables Progressive Web App + Offline functionality
         // To learn more, visit: https://gatsby.dev/offline

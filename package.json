@@ -20,6 +20,7 @@
     "gatsby-plugin-schema-snapshot": "^1.0.0",
     "gatsby-plugin-sharp": "^2.6.0",
     "gatsby-plugin-theme-ui": "^0.3.0",
+    "gatsby-source-contentful": "^2.3.1",
     "gatsby-source-filesystem": "^2.3.0",
     "gatsby-transformer-sharp": "^2.5.0",
     "inquirer": "^7.1.0",

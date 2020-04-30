@@ -1,4 +1,4 @@
-### Type definitions saved at 2020-04-28T15:53:11.185Z ###
+### Type definitions saved at 2020-04-30T10:58:42.576Z ###
 
 type File implements Node @dontInfer {
   sourceInstanceName: String!
