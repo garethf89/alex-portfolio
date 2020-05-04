@@ -30,6 +30,11 @@ export const query = graphql`
                     content
                 }
             }
+            headline {
+                internal {
+                    content
+                }
+            }
             title
             coverImage {
                 file {

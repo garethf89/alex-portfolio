@@ -8,8 +8,6 @@ import globalStyles from "../src/styles/globals"
 import styled from "@emotion/styled"
 import theme from "../src/gatsby-plugin-theme-ui/index"
 
-console.log(theme)
-
 const req = require.context("../stories", true, /\.stories\.js$/)
 function loadStories() {
     req.keys().forEach(filename => req(filename))

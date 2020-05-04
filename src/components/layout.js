@@ -7,6 +7,7 @@
 
 import { graphql, useStaticQuery } from "gatsby"
 
+import Footer from "./footer"
 import { Global } from "@emotion/core"
 import Header from "./header"
 import PropTypes from "prop-types"
@@ -16,8 +17,17 @@ import styled from "@emotion/styled"
 
 const Root = styled.div`
     font-family: ${props => props.theme.fonts.body};
+    p {
+        font-size: 1.13rem;
+        line-height: 1.6;
+        font-weight: 200;
+    }
+    h1,
+    h2 {
+        font-weight: 200;
+    }
 `
-const Layout = ({ children }) => {
+const Layout = ({ logoColor, children }) => {
     const data = useStaticQuery(graphql`
         query SiteTitleQuery {
             site {
@@ -30,14 +40,15 @@ const Layout = ({ children }) => {
 
     return (
         <Root>
-            <Header siteTitle={data.site.siteMetadata.title} />
+            <Header
+                logoColor={logoColor}
+                siteTitle={data.site.siteMetadata.title}
+            />
             <div>
                 <main>{children}</main>
-                <footer>
-                    © {new Date().getFullYear()}, Built with
-                    {` `}
-                    <a href="https://www.gatsbyjs.org">Gatsby</a>
-                </footer>
+                {!data.site.siteMetadata.title === "Home" && (
+                    <Footer isHome={false} />
+                )}
             </div>
             <Global styles={globalStyles} />
         </Root>

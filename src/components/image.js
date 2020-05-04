@@ -22,7 +22,7 @@ const Image = () => {
                 sourceInstanceName: { eq: "images" }
             ) {
                 childImageSharp {
-                    fixed(width: 300) {
+                    fixed(width: 60) {
                         ...GatsbyImageSharpFixed
                     }
                 }
