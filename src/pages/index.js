@@ -6,9 +6,7 @@ import { graphql, useStaticQuery } from "gatsby"
 import Container from "../components/container"
 import Footer from "../components/footer"
 import FullPage from "../components/fullpage"
-import Header from "../components/header"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 import styled from "@emotion/styled"
 
 const Panel = styled.div`
@@ -131,8 +129,11 @@ const IndexPage = () => {
 
     let [logoColor, setLogo] = useState("light")
 
+    let [currentSlide, setCurrentSlide] = useState(0)
+
     const onSlideLeave = (origin, destination, direction) => {
         const target = destination.index
+        setCurrentSlide(target)
 
         // set logo colors
         const panel = panelColorIndex.filter(el => {
@@ -170,12 +171,7 @@ const IndexPage = () => {
         }
     }
     return (
-        <Layout>
-            <SEO title="Home" />
-            <Header
-                logoColor={logoColor}
-                siteTitle={data.site.siteMetadata.title}
-            />
+        <Layout title="Home" logoColor={logoColor}>
             <FullPage panels={allPanels} onSlideLeave={onSlideLeave} />
         </Layout>
     )

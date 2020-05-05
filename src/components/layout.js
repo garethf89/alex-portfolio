@@ -12,12 +12,14 @@ import { Global } from "@emotion/core"
 import Header from "./header"
 import PropTypes from "prop-types"
 import React from "react"
+import SEO from "./seo"
 import globalStyles from "../styles/globals"
 import styled from "@emotion/styled"
 
 const Root = styled.div`
     font-family: ${props => props.theme.fonts.body};
-    p {
+    p,
+    li {
         font-size: 1.13rem;
         line-height: 1.6;
         font-weight: 200;
@@ -27,7 +29,7 @@ const Root = styled.div`
         font-weight: 200;
     }
 `
-const Layout = ({ logoColor, children }) => {
+const Layout = ({ logoColor, children, title, image, description }) => {
     const data = useStaticQuery(graphql`
         query SiteTitleQuery {
             site {
@@ -37,9 +39,10 @@ const Layout = ({ logoColor, children }) => {
             }
         }
     `)
-
     return (
         <Root>
+            <SEO title={title} description={description} image={image} />
+
             <Header
                 logoColor={logoColor}
                 siteTitle={data.site.siteMetadata.title}

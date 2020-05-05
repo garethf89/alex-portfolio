@@ -1,31 +1,31 @@
 import { Link } from "gatsby"
+import Navigation from "./Navigation/nav"
 import PropTypes from "prop-types"
 import React from "react"
 import SvgLogo from "../svgs/logo"
 import styled from "@emotion/styled"
-import { useSiteMetadata } from "../hooks/use-site-metadata"
 
 const HeaderStyles = styled.header`
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     background: transparent;
-    z-index: 99;
     padding: 3.75rem;
 `
-
-const Nav = styled.nav`
-    display: none;
+const HeaderLink = styled(props => <Link {...props} />)`
+    z-index: 3;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    text-indent: -99rem;
+    font-size: 0;
 `
-
-const activeLinkStyle = {
-    color: "white",
-}
 
 const HeaderLogo = styled(SvgLogo)`
     height: 3.75rem;
     width: 3.75rem;
+    display: block;
     g {
         transition: all 1s;
     }
@@ -42,26 +42,16 @@ const HeaderLogo = styled(SvgLogo)`
 `
 
 const Header = ({ logoColor, siteTitle }) => {
-    const { menuLinks } = useSiteMetadata()
-
     const svgClass =
         logoColor === "light" ? "svgHeaderLogo" : "svgHeaderLogo--dark"
 
     return (
         <HeaderStyles>
-            <HeaderLogo className={svgClass} />
-            <Nav>
-                <ul>
-                    <Link to="/">{siteTitle}</Link>
-                    {menuLinks.map(link => (
-                        <li key={link.name}>
-                            <Link to={link.slug} activeStyle={activeLinkStyle}>
-                                {link.name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </Nav>
+            <HeaderLink to="/">
+                <HeaderLogo className={svgClass} />
+                Home
+            </HeaderLink>
+            <Navigation logoColor={logoColor} siteTitle={siteTitle} />
         </HeaderStyles>
     )
 }

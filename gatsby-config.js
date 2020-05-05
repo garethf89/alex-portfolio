@@ -29,12 +29,12 @@ module.exports = {
                 slug: "/",
             },
             {
-                name: "About",
-                slug: "/about/",
+                name: "Work",
+                slug: "/work/",
             },
             {
-                name: "Contact",
-                slug: "/contact/",
+                name: "About",
+                slug: "/about/",
             },
         ],
         basePath: "/",

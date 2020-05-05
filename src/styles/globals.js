@@ -13,6 +13,7 @@ export const globalStyles = css`
         bottom: 1rem;
         left: 50%;
         transform: translateX(-50%);
+        z-index: 4;
         ul {
             display: flex;
             flex-direction: row;
