@@ -15,6 +15,7 @@ import React from "react"
 import SEO from "./seo"
 import globalStyles from "../styles/globals"
 import styled from "@emotion/styled"
+import { supportsWebP } from "../helpers/webp"
 
 const Root = styled.div`
     font-family: ${props => props.theme.fonts.body};
@@ -39,6 +40,11 @@ const Layout = ({ logoColor, children, title, image, description }) => {
             }
         }
     `)
+    supportsWebP(res => {
+        if (!res) {
+            document.addClass("nowebp")
+        }
+    })
     return (
         <Root>
             <SEO title={title} description={description} image={image} />
@@ -47,12 +53,10 @@ const Layout = ({ logoColor, children, title, image, description }) => {
                 logoColor={logoColor}
                 siteTitle={data.site.siteMetadata.title}
             />
-            <div>
-                <main>{children}</main>
-                {!data.site.siteMetadata.title === "Home" && (
-                    <Footer isHome={false} />
-                )}
-            </div>
+            <main>{children}</main>
+            {!data.site.siteMetadata.title === "Home" && (
+                <Footer isHome={false} />
+            )}
             <Global styles={globalStyles} />
         </Root>
     )

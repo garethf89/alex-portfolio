@@ -8,9 +8,16 @@ export const globalStyles = css`
     * {
         box-sizing: border-box;
     }
+    html,
+    body {
+        &.noscroll {
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+    }
     #fp-nav {
         top: auto;
-        bottom: 1rem;
+        bottom: 3.75rem;
         left: 50%;
         transform: translateX(-50%);
         z-index: 4;

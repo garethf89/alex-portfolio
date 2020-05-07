@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { disableScroll, enableScroll } from "../../helpers/scroll"
 
 import { Link } from "gatsby"
 import NavigationButton from "./navbutton"
@@ -26,8 +27,10 @@ const NavigationStyles = styled.nav`
     top: 0;
     left: 0;
     height: 100vh;
+    max-height: ${props => (props.active ? "100vh" : "10vh")};
     width: 100vw;
-    transition: z-index 0s 0.5s;
+    transition: z-index 0s 0.5s
+        ${props => (!props.active ? ",  max-height 0s 1s" : "")};
     z-index: ${props => (props.active ? "99" : "3")};
 `
 
@@ -71,12 +74,17 @@ const Navigation = ({ logoColor }) => {
         color: theme.colors.color,
     }
 
+    const nav = active => {
+        setNav(active)
+        active ? disableScroll() : enableScroll()
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <NavigationStyles active={navActive}>
                 <NavigationButton
                     theme={logoColor}
-                    buttonClick={() => setNav(navActive ? false : "active")}
+                    buttonClick={() => nav(navActive ? false : "active")}
                 />
                 <NavInner active={navActive}>
                     <NavList>

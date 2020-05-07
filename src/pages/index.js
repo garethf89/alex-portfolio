@@ -1,40 +1,11 @@
-import * as bg from "../../static/images/AlexLogo.png"
-
 import React, { useMemo, useState } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
-import Container from "../components/container"
 import Footer from "../components/footer"
 import FullPage from "../components/fullpage"
 import Layout from "../components/layout"
-import styled from "@emotion/styled"
-
-const Panel = styled.div`
-    position: relative;
-    .fp-tableCell {
-        vertical-align: bottom;
-    }
-`
-
-const MainPanel = styled(Panel)`
-    background-image: url(${bg});
-    background-color: #000;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #fff;
-`
-
-const PanelText = styled(Container)``
-
-const PanelHeading = styled.h2`
-    font-size: 3em;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-`
-
-const PanelSubText = styled.p`
-    margin-bottom: 2.06rem;
-`
+import Panel from "../components/Home/panel"
+import VideoBackground from "../components/Media/video"
 
 const IndexPage = () => {
     const data = useStaticQuery(graphql`
@@ -47,6 +18,13 @@ const IndexPage = () => {
             contentfulHomePage {
                 headline
                 title
+                image {
+                    file {
+                        contentType
+                        url
+                    }
+                }
+
                 projects {
                     title
                     headline {
@@ -61,6 +39,9 @@ const IndexPage = () => {
                             contentType
                         }
                         title
+                        resolutions(width: 2400) {
+                            srcWebp
+                        }
                     }
                     darkBackground
                 }
@@ -94,46 +75,68 @@ const IndexPage = () => {
     const panels = useMemo(
         () =>
             projects.map((value, index) => {
+                const video = value.coverImage.file.contentType.includes(
+                    "video"
+                )
+
                 const isDarkBackground = value.darkBackground
-                const ChildPanel = styled(Panel)`
-                    background: url(${value.coverImage.file.url});
-                    background-position: center;
-                    background-size: cover;
-                    color: ${isDarkBackground ? "#fff" : "inherit"};
-                `
+                const theme = isDarkBackground ? "light" : "dark"
 
                 return (
-                    <ChildPanel key={index} className="section">
-                        <PanelText>
-                            <PanelHeading>{value.title}</PanelHeading>
-                            <PanelSubText>
-                                {value.headline.internal.content}
-                            </PanelSubText>
-                        </PanelText>
-                    </ChildPanel>
+                    <Panel
+                        key={index}
+                        theme={theme}
+                        image={video ? "" : value.coverImage}
+                        text={value.title}
+                        subText={value.headline.internal.content}
+                    >
+                        {video && (
+                            <VideoBackground
+                                src={value.coverImage.file.url}
+                                type={value.coverImage.file.contentType}
+                                poster=""
+                                autoPlay={false}
+                            />
+                        )}
+                    </Panel>
                 )
             }),
         [projects]
     )
+    const homePanel = useMemo(() => {
+        const image = data.contentfulHomePage.image
+        const video = image.file.contentType.includes("video")
 
-    const allPanels = [
-        <MainPanel key="home" className="section">
-            <PanelText>
-                <PanelHeading>{data.contentfulHomePage.title}</PanelHeading>
-                <PanelSubText>{data.contentfulHomePage.headline}</PanelSubText>
-            </PanelText>
-        </MainPanel>,
+        return (
+            <Panel
+                key="home"
+                theme="light"
+                backgroundColor="#000"
+                text={data.contentfulHomePage.title}
+                subText={data.contentfulHomePage.headline}
+            >
+                {video && (
+                    <VideoBackground
+                        src={image.file.url}
+                        type={image.file.contentType}
+                        poster=""
+                        autoPlay
+                    />
+                )}
+            </Panel>
+        )
+    }, [])
+
+    const allPanels = useMemo(() => [
+        homePanel,
         panels,
         <Footer key="footer" isHome />,
-    ]
+    ])
 
     let [logoColor, setLogo] = useState("light")
 
-    let [currentSlide, setCurrentSlide] = useState(0)
-
     const onSlideLeave = (origin, destination, direction) => {
         const target = destination.index
-        setCurrentSlide(target)
 
         // set logo colors
         const panel = panelColorIndex.filter(el => {
@@ -170,6 +173,7 @@ const IndexPage = () => {
             }, 0)
         }
     }
+
     return (
         <Layout title="Home" logoColor={logoColor}>
             <FullPage panels={allPanels} onSlideLeave={onSlideLeave} />

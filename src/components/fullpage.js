@@ -1,7 +1,7 @@
 import React from "react"
 import ReactFullpage from "@fullpage/react-fullpage"
 
-const FullPage = ({ onSlideLeave, panels }) => {
+const FullPage = ({ onSlideLeave, panels, test }) => {
     return (
         <ReactFullpage
             licenseKey={"YOUR_KEY_HERE"}
@@ -11,6 +11,8 @@ const FullPage = ({ onSlideLeave, panels }) => {
             onLeave={onSlideLeave}
             navigation
             navigationPosition="bottom"
+            // autoScrolling={false}
+            // fitToSectionDelay={500}
             render={({ state, fullpageApi }) => {
                 return <ReactFullpage.Wrapper>{panels}</ReactFullpage.Wrapper>
             }}
