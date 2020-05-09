@@ -7,13 +7,15 @@ export const supportsWebP = cb => {
         animation:
             "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA",
     }
-    const img = new Image()
-    img.onload = () => {
-        const result = img.width > 0 && img.height > 0
-        return cb(result)
+    if (typeof window !== `undefined`) {
+        const img = new window.Image()
+        img.onload = () => {
+            const result = img.width > 0 && img.height > 0
+            return cb(result)
+        }
+        img.onerror = () => {
+            return cb()
+        }
+        img.src = "data:image/webp;base64," + kTestImages.lossy
     }
-    img.onerror = () => {
-        return cb()
-    }
-    img.src = "data:image/webp;base64," + kTestImages.lossy
 }

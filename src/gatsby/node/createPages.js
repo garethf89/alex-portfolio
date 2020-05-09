@@ -29,8 +29,10 @@ module.exports = async ({ graphql, actions }) => {
     const pagesQuery = await graphql(query.data.projects)
     const pages = pagesQuery.data.allContentfulProject.edges
     pages.forEach((page, i) => {
+        const title = page.node.title.replace(" ", "")
+        const slug = `/${title}/`.toLowerCase()
         createPage({
-            path: `/${page.node.title}/`.toLowerCase(),
+            path: slug,
             component: projectTemplate,
             context: {
                 id: page.node.id,

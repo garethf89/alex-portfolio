@@ -4,7 +4,10 @@ import { graphql, useStaticQuery } from "gatsby"
 import FullPage from "../components/fullpage"
 import Layout from "../components/layout"
 import Panel from "../components/Home/panel"
+import PanelImage from "../components/Media/panelimage"
 import VideoBackground from "../components/Media/video"
+import { gatsbyWindow } from "../helpers/gatsbyWindow"
+import theme from "../gatsby-plugin-theme-ui/index"
 import throttle from "lodash.throttle"
 
 const IndexPage = () => {
@@ -30,6 +33,13 @@ const IndexPage = () => {
                     headline {
                         internal {
                             content
+                        }
+                    }
+                    coverVideo {
+                        file {
+                            url
+                            fileName
+                            contentType
                         }
                     }
                     coverImage {
@@ -72,10 +82,14 @@ const IndexPage = () => {
 
     const panelColorIndex = panelColorIndexHome.concat(panelColorIndexChildren)
 
+    const isMobile = window.matchMedia(
+        `(max-width: ${theme.responsive.medium} )`
+    ).matches
+
     const panels = useMemo(
         () =>
             projects.map((value, index) => {
-                const video = value.coverImage.file.contentType.includes(
+                const video = value.coverVideo.file.contentType.includes(
                     "video"
                 )
 
@@ -90,14 +104,20 @@ const IndexPage = () => {
                         text={value.title}
                         subText={value.headline.internal.content}
                     >
-                        {video && (
+                        {video && !isMobile && (
                             <VideoBackground
-                                src={value.coverImage.file.url}
-                                type={value.coverImage.file.contentType}
+                                src={value.coverVideo.file.url}
+                                type={value.coverVideo.file.contentType}
                                 poster=""
                                 autoPlay={false}
                             />
                         )}
+                        {!video ||
+                            (isMobile && (
+                                <PanelImage
+                                    source={value.coverImage.file.url}
+                                />
+                            ))}
                     </Panel>
                 )
             }),
@@ -167,6 +187,10 @@ const IndexPage = () => {
         if (!fpRef.current) {
             return
         }
+        if (!gatsbyWindow()) {
+            return
+        }
+
         const offset = 0
         const slidesAmount = projects.length + 1
         const heightOfFullpage = fpRef.current.offsetHeight
@@ -178,14 +202,16 @@ const IndexPage = () => {
             window.fullpage_api.setFitToSection(true)
         }
     }
+    if (gatsbyWindow()) {
+        useEffect(() => {
+            window.addEventListener("scroll", throttle(checkScroll, 500))
 
-    useEffect(() => {
-        window.addEventListener("scroll", throttle(checkScroll, 500))
+            return function cleanup() {
+                window.removeEventListener("scroll", throttle(checkScroll, 500))
+            }
+        }, [])
+    }
 
-        return function cleanup() {
-            window.removeEventListener("scroll", throttle(checkScroll, 500))
-        }
-    }, [])
     return (
         <Layout title="Home" logoColor={logoColor}>
             <div ref={fpRef}>

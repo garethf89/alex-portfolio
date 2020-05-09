@@ -1,6 +1,7 @@
 import React, { useRef } from "react"
 
 import debounce from "../../helpers/debounce"
+import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import isElementVisible from "../../helpers/isElementVisible"
 import styled from "@emotion/styled"
 
@@ -49,13 +50,14 @@ const VideoBackground = ({ src, poster, autoPlay, type = "video/mp4" }) => {
         }
     }
 
-    window.addEventListener(
-        "scroll",
-        debounce(e => {
-            visibilityChange()
-        }, 100)
-    )
-
+    if (gatsbyWindow()) {
+        window.addEventListener(
+            "scroll",
+            debounce(e => {
+                visibilityChange()
+            }, 100)
+        )
+    }
     return (
         <VideoBackgroundContainer>
             <video

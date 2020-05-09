@@ -1,5 +1,6 @@
 import Container from "../container"
 import React from "react"
+import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import styled from "@emotion/styled"
 
 const PanelContainer = styled.div`
@@ -32,7 +33,7 @@ const PanelSubText = styled.p`
 
 const Panel = ({ children, theme, image, text, subText, backgroundColor }) => {
     let displayImage
-    if (image) {
+    if (image && gatsbyWindow) {
         displayImage = !document.body.classList.contains("nowebp")
             ? image.resolutions.srcWebp
             : image.file.url
