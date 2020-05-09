@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
-import Footer from "../components/footer"
 import FullPage from "../components/fullpage"
 import Layout from "../components/layout"
 import Panel from "../components/Home/panel"
 import VideoBackground from "../components/Media/video"
+import throttle from "lodash.throttle"
 
 const IndexPage = () => {
     const data = useStaticQuery(graphql`
@@ -127,15 +127,16 @@ const IndexPage = () => {
         )
     }, [])
 
-    const allPanels = useMemo(() => [
-        homePanel,
-        panels,
-        <Footer key="footer" isHome />,
-    ])
+    const allPanels = useMemo(() => [homePanel, panels])
+
+    const fpRef = useRef(null)
 
     let [logoColor, setLogo] = useState("light")
 
     const onSlideLeave = (origin, destination, direction) => {
+        if (document.body.classList.contains("navopen")) {
+            return
+        }
         const target = destination.index
 
         // set logo colors
@@ -160,23 +161,36 @@ const IndexPage = () => {
                 })
             }
         }
+    }
 
-        // no nav on footer
-        if (target === panelColorIndex.length) {
-            const items = document
-                .getElementById("fp-nav")
-                .querySelectorAll("li")
-            setTimeout(() => {
-                items[items.length - 2]
-                    .querySelector("a")
-                    .classList.add("active")
-            }, 0)
+    const checkScroll = () => {
+        if (!fpRef.current) {
+            return
+        }
+        const offset = 0
+        const slidesAmount = projects.length + 1
+        const heightOfFullpage = fpRef.current.offsetHeight
+        const heightofPanel = heightOfFullpage / slidesAmount - offset
+        const outOfBounds = window.scrollY > heightOfFullpage - heightofPanel
+        if (outOfBounds) {
+            window.fullpage_api.setFitToSection(false)
+        } else {
+            window.fullpage_api.setFitToSection(true)
         }
     }
 
+    useEffect(() => {
+        window.addEventListener("scroll", throttle(checkScroll, 500))
+
+        return function cleanup() {
+            window.removeEventListener("scroll", throttle(checkScroll, 500))
+        }
+    }, [])
     return (
         <Layout title="Home" logoColor={logoColor}>
-            <FullPage panels={allPanels} onSlideLeave={onSlideLeave} />
+            <div ref={fpRef}>
+                <FullPage panels={allPanels} onSlideLeave={onSlideLeave} />
+            </div>
         </Layout>
     )
 }

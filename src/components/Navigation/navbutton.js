@@ -9,8 +9,8 @@ import styled from "@emotion/styled"
 const NavButton = styled.button`
     display: block;
     position: absolute;
-    right: 3.75rem;
-    top: 3.8rem;
+    right: 1.5rem;
+    top: 1.5rem;
     width: 3.75rem;
     height: 3.75rem;
     cursor: pointer;
@@ -21,6 +21,11 @@ const NavButton = styled.button`
     z-index: 999;
     transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1),
         background 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        right: 3.75rem;
+        top: 3.8rem;
+    }
 `
 
 const ButtonTarget = styled.span`

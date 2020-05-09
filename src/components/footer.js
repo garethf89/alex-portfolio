@@ -6,18 +6,17 @@ const FooterStyles = styled.p`
     margin: 0;
 `
 
-const FooterOuter = styled.div`
+const FooterOuter = styled.footer`
     section {
         padding-top: 3.44rem;
         padding-bottom: 3.44rem;
     }
 `
 
-const Footer = ({ isHome }) => {
+const Footer = () => {
     const year = new Date().getFullYear()
-    const conditionalClass = !isHome ? "" : "section fp-auto-height"
     return (
-        <FooterOuter className={conditionalClass}>
+        <FooterOuter>
             <Container>
                 <FooterStyles>Alex Ioanna Graphic Design {year}</FooterStyles>
             </Container>

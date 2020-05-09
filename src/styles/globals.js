@@ -8,13 +8,6 @@ export const globalStyles = css`
     * {
         box-sizing: border-box;
     }
-    html,
-    body {
-        &.noscroll {
-            height: 100% !important;
-            overflow: hidden !important;
-        }
-    }
     #fp-nav {
         top: auto;
         bottom: 3.75rem;
@@ -24,9 +17,6 @@ export const globalStyles = css`
         ul {
             display: flex;
             flex-direction: row;
-            li:last-of-type {
-                display: none;
-            }
             li:hover,
             li {
                 a {

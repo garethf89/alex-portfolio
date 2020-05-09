@@ -3,11 +3,10 @@ import { disableScroll, enableScroll } from "../../helpers/scroll"
 
 import { Link } from "gatsby"
 import NavigationButton from "./navbutton"
-import { ThemeProvider } from "emotion-theming"
 import styled from "@emotion/styled"
 import { useSiteMetadata } from "../../hooks/use-site-metadata"
 
-const Themes = {
+const NavThemes = {
     dark: {
         colors: {
             primary: "#fff",
@@ -34,16 +33,24 @@ const NavigationStyles = styled.nav`
     z-index: ${props => (props.active ? "99" : "3")};
 `
 
-const NavInner = styled.div(props => ({
-    background: props.theme.colors.primary,
-    height: "100%",
-    width: "100%",
-    willChange: "clip-path",
-    transition: "clip-path 1s ease-in-out",
-    clipPath: !props.active
-        ? "circle(1.65rem at calc(100% - 5.65rem) 5.65rem)"
-        : "circle(100rem at calc(100% - 5.65rem) 5.65rem)",
-}))
+const NavInner = styled.div`
+    background: ${props =>
+        props.navTheme.colors.primary ? props.navTheme.colors.primary : ""};
+    height: 100%;
+    width: 100%;
+    will-change: clip-path;
+    transition: clip-path 1s ease-in-out;
+    clip-path: ${props =>
+        !props.active
+            ? "circle(1.65rem at calc(100% - 3.5rem) 3.5rem)"
+            : "circle(100rem at calc(100% - 3.5rem)3.5rem)"};
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        clip-path: ${props =>
+            !props.active
+                ? "circle(1.65rem at calc(100% - 5.65rem) 5.65rem)"
+                : "circle(100rem at calc(100% - 5.65rem) 5.65rem)"};
+    }
+`
 
 const NavList = styled.ul`
     padding: 3.75rem;
@@ -57,9 +64,12 @@ const NavList = styled.ul`
 `
 
 const StyledLink = styled(props => <Link {...props} />)`
-    font-size: 96px;
+    font-size: 48px;
     text-decoration: none;
     line-height: 1.7;
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        font-size: 96px;
+    }
 `
 
 const Navigation = ({ logoColor }) => {
@@ -67,8 +77,8 @@ const Navigation = ({ logoColor }) => {
 
     const [navActive, setNav] = useState(false)
 
-    let theme = Themes.light
-    if (logoColor) theme = Themes[logoColor]
+    let theme = NavThemes.light
+    if (logoColor) theme = NavThemes[logoColor]
 
     const linkStyles = {
         color: theme.colors.color,
@@ -77,28 +87,27 @@ const Navigation = ({ logoColor }) => {
     const nav = active => {
         setNav(active)
         active ? disableScroll() : enableScroll()
+        document.body.classList.toggle("navopen")
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <NavigationStyles active={navActive}>
-                <NavigationButton
-                    theme={logoColor}
-                    buttonClick={() => nav(navActive ? false : "active")}
-                />
-                <NavInner active={navActive}>
-                    <NavList>
-                        {menuLinks.map(link => (
-                            <li key={link.name}>
-                                <StyledLink style={linkStyles} to={link.slug}>
-                                    {link.name}
-                                </StyledLink>
-                            </li>
-                        ))}
-                    </NavList>
-                </NavInner>
-            </NavigationStyles>
-        </ThemeProvider>
+        <NavigationStyles active={navActive}>
+            <NavigationButton
+                theme={logoColor}
+                buttonClick={() => nav(navActive ? false : "active")}
+            />
+            <NavInner navTheme={theme} active={navActive}>
+                <NavList>
+                    {menuLinks.map(link => (
+                        <li key={link.name}>
+                            <StyledLink style={linkStyles} to={link.slug}>
+                                {link.name}
+                            </StyledLink>
+                        </li>
+                    ))}
+                </NavList>
+            </NavInner>
+        </NavigationStyles>
     )
 }
 

@@ -6,12 +6,16 @@ import SvgLogo from "../svgs/logo"
 import styled from "@emotion/styled"
 
 const HeaderStyles = styled.header`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 99;
     background: transparent;
-    padding: 3.75rem;
+    padding: 1.5rem;
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        padding: 3.75rem;
+    }
 `
 const HeaderLink = styled(props => <Link {...props} />)`
     z-index: 3;

@@ -1,5 +1,7 @@
-import React from "react"
-import VizSensor from "react-visibility-sensor"
+import React, { useRef } from "react"
+
+import debounce from "../../helpers/debounce"
+import isElementVisible from "../../helpers/isElementVisible"
 import styled from "@emotion/styled"
 
 const VideoBackgroundContainer = styled.div`
@@ -33,36 +35,39 @@ const VideoBackgroundContainer = styled.div`
 `
 
 const VideoBackground = ({ src, poster, autoPlay, type = "video/mp4" }) => {
-    const refVideo = React.createRef()
+    const refVideo = useRef(null)
 
-    const visibilityChange = isVisible => {
-        if (isVisible) {
+    const visibilityChange = () => {
+        if (!refVideo.current) {
+            return
+        }
+        const isVisible = isElementVisible(refVideo.current)
+        if (isVisible && refVideo.current.paused) {
             refVideo.current.play()
-        } else {
+        } else if (!isVisible) {
             refVideo.current.pause()
         }
     }
 
+    window.addEventListener(
+        "scroll",
+        debounce(e => {
+            visibilityChange()
+        }, 100)
+    )
+
     return (
-        <VizSensor
-            scrollDelay={100}
-            onChange={isVisible => {
-                visibilityChange(isVisible)
-            }}
-            delayedCall
-        >
-            <VideoBackgroundContainer>
-                <video
-                    ref={refVideo}
-                    poster={poster}
-                    autoPlay={autoPlay}
-                    muted
-                    loop
-                >
-                    <source src={src} type={type} />
-                </video>
-            </VideoBackgroundContainer>
-        </VizSensor>
+        <VideoBackgroundContainer>
+            <video
+                ref={refVideo}
+                poster={poster}
+                autoPlay={autoPlay}
+                muted
+                loop
+            >
+                <source src={src} type={type} />
+            </video>
+        </VideoBackgroundContainer>
     )
 }
 

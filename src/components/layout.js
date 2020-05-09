@@ -15,7 +15,7 @@ import React from "react"
 import SEO from "./seo"
 import globalStyles from "../styles/globals"
 import styled from "@emotion/styled"
-import { supportsWebP } from "../helpers/webp"
+import { supportsWebP } from "../helpers/support/webp"
 
 const Root = styled.div`
     font-family: ${props => props.theme.fonts.body};
@@ -54,9 +54,7 @@ const Layout = ({ logoColor, children, title, image, description }) => {
                 siteTitle={data.site.siteMetadata.title}
             />
             <main>{children}</main>
-            {!data.site.siteMetadata.title === "Home" && (
-                <Footer isHome={false} />
-            )}
+            <Footer />
             <Global styles={globalStyles} />
         </Root>
     )
