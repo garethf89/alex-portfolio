@@ -52,7 +52,12 @@ const IndexPage = () => {
                         resolutions(width: 2400) {
                             srcWebp
                         }
+                        fixed(width: 1400) {
+                            src
+                            srcWebp
+                        }
                     }
+
                     darkBackground
                 }
             }
@@ -115,7 +120,8 @@ const IndexPage = () => {
                         {!video ||
                             (isMobile && (
                                 <PanelImage
-                                    source={value.coverImage.file.url}
+                                    source={value.coverImage.fixed.src}
+                                    sourceWeb={value.coverImage.fixed.srcWebp}
                                 />
                             ))}
                     </Panel>
