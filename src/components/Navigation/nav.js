@@ -43,12 +43,12 @@ const NavInner = styled.div`
     clip-path: ${props =>
         !props.active
             ? "circle(1.65rem at calc(100% - 3.5rem) 3.5rem)"
-            : "circle(100rem at calc(100% - 3.5rem)3.5rem)"};
+            : "circle(150rem at calc(100% - 3.5rem)3.5rem)"};
     @media (min-width: ${props => props.theme.responsive.medium}) {
         clip-path: ${props =>
             !props.active
                 ? "circle(1.65rem at calc(100% - 5.65rem) 5.65rem)"
-                : "circle(100rem at calc(100% - 5.65rem) 5.65rem)"};
+                : "circle(150rem at calc(100% - 5.65rem) 5.65rem)"};
     }
 `
 
