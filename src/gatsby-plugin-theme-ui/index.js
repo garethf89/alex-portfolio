@@ -11,7 +11,8 @@ export default {
         body: "Muli, Roboto, Helvetica, Arial, sans-serif",
     },
     sizes: {
-        maxWidth: "1200px",
+        maxWidth: "1248px",
+        widerMaxWidth: "1368px",
     },
     responsive: {
         small: "35em",
