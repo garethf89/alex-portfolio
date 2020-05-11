@@ -27,7 +27,7 @@ const Content = styled.div`
 `
 
 const WorkPanel = ({ size, title, image, color }) => {
-    const [imageSrc, setSrc] = useState(image.file.url)
+    const [imageSrc, setSrc] = useState(image ? image.file.url : null)
 
     supportsWebP(res => {
         if (res) {

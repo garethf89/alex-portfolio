@@ -3,12 +3,8 @@ import { graphql, useStaticQuery } from "gatsby"
 
 import FullPage from "../components/fullpage"
 import Layout from "../components/layout"
-import Panel from "../components/Home/panel"
-import PanelImage from "../components/Media/panelimage"
 import SeeMore from "../components/Work/seemore"
-import VideoBackground from "../components/Media/video"
 import { gatsbyWindow } from "../helpers/gatsbyWindow"
-import theme from "../gatsby-plugin-theme-ui/index"
 import throttle from "lodash.throttle"
 
 const IndexPage = () => {
@@ -88,74 +84,6 @@ const IndexPage = () => {
 
     const panelColorIndex = panelColorIndexHome.concat(panelColorIndexChildren)
 
-    const isMobile = window.matchMedia(
-        `(max-width: ${theme.responsive.medium} )`
-    ).matches
-
-    const panels = useMemo(
-        () =>
-            projects.map((value, index) => {
-                const video = value.coverVideo.file.contentType.includes(
-                    "video"
-                )
-
-                const isDarkBackground = value.darkBackground
-                const theme = isDarkBackground ? "light" : "dark"
-
-                return (
-                    <Panel
-                        key={index}
-                        theme={theme}
-                        image={video ? "" : value.coverImage}
-                        text={value.title}
-                        subText={value.headline.internal.content}
-                    >
-                        {video && !isMobile && (
-                            <VideoBackground
-                                src={value.coverVideo.file.url}
-                                type={value.coverVideo.file.contentType}
-                                poster=""
-                                autoPlay={false}
-                            />
-                        )}
-                        {!video ||
-                            (isMobile && (
-                                <PanelImage
-                                    source={value.coverImage.fixed.src}
-                                    sourceWeb={value.coverImage.fixed.srcWebp}
-                                />
-                            ))}
-                    </Panel>
-                )
-            }),
-        [projects]
-    )
-    const homePanel = useMemo(() => {
-        const image = data.contentfulHomePage.image
-        const video = image.file.contentType.includes("video")
-
-        return (
-            <Panel
-                key="home"
-                theme="light"
-                backgroundColor="#000"
-                text={data.contentfulHomePage.title}
-                subText={data.contentfulHomePage.headline}
-            >
-                {video && (
-                    <VideoBackground
-                        src={image.file.url}
-                        type={image.file.contentType}
-                        poster=""
-                        autoPlay
-                    />
-                )}
-            </Panel>
-        )
-    }, [])
-
-    const allPanels = useMemo(() => [homePanel, panels])
-
     const fpRef = useRef(null)
 
     let [logoColor, setLogo] = useState("light")
@@ -170,23 +98,12 @@ const IndexPage = () => {
         const panel = panelColorIndex.filter(el => {
             return el.index === target
         })
-
-        const itemsNav = document.getElementById("fp-nav").querySelectorAll("a")
-        itemsNav.forEach(e => {
-            e.classList.remove("dark")
-        })
-
         if (!panel[0]) {
             return
         }
 
         if (panel[0]) {
             setLogo(panel[0].color)
-            if (panel[0].color === "dark") {
-                itemsNav.forEach(e => {
-                    e.classList.add("dark")
-                })
-            }
         }
     }
 
@@ -222,7 +139,11 @@ const IndexPage = () => {
     return (
         <Layout title="Home" logoColor={logoColor}>
             <div ref={fpRef}>
-                <FullPage panels={allPanels} onSlideLeave={onSlideLeave} />
+                <FullPage
+                    data={data}
+                    projects={projects}
+                    onSlideLeave={onSlideLeave}
+                />
             </div>
             <SeeMore />
         </Layout>
