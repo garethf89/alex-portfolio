@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "@emotion/styled"
-
 const Wrapper = styled.section`
     margin: 0 auto auto;
     width: 100%;
@@ -9,7 +8,7 @@ const Wrapper = styled.section`
         props.wide
             ? props.theme.sizes.widerMaxWidth
             : props.theme.sizes.maxWidth};
-    padding: 4.38em 1.5em 2em;
+    padding: ${props => (props.wide ? "0 1.5em" : "0 3.5rem")};
     flex-grow: 1;
 `
 

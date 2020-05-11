@@ -5,6 +5,7 @@ import FullPage from "../components/fullpage"
 import Layout from "../components/layout"
 import Panel from "../components/Home/panel"
 import PanelImage from "../components/Media/panelimage"
+import SeeMore from "../components/Work/seemore"
 import VideoBackground from "../components/Media/video"
 import { gatsbyWindow } from "../helpers/gatsbyWindow"
 import theme from "../gatsby-plugin-theme-ui/index"
@@ -223,6 +224,7 @@ const IndexPage = () => {
             <div ref={fpRef}>
                 <FullPage panels={allPanels} onSlideLeave={onSlideLeave} />
             </div>
+            <SeeMore />
         </Layout>
     )
 }

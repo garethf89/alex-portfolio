@@ -4,12 +4,13 @@ import Container from "../components/container"
 import Heading from "../components/Typography/heading"
 import Layout from "../components/layout"
 import React from "react"
+import Social from "../components/social"
 import WorkPanel from "../components/Work/panels"
 import styled from "@emotion/styled"
 
 const ContainerWork = styled(Container)`
-    margin-top: 10rem;
     padding-bottom: 0;
+    margin: 14.13rem 0 7.13rem;
 `
 
 const WorkFlex = styled.div`
@@ -80,6 +81,7 @@ const WorkPage = () => {
             <Container wide>
                 <WorkFlex>{panels}</WorkFlex>
             </Container>
+            <Social />
         </Layout>
     )
 }

@@ -6,7 +6,7 @@ import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
 
 const WorkPanelStyled = styled(Link)`
-    padding-top: 40%;
+    padding-top: 55%;
     width: 100%;
     color: ${props => (props.color === "dark" ? "#000" : "#fff")};
     overflow: hidden;
@@ -17,7 +17,7 @@ const WorkPanelStyled = styled(Link)`
     background-size: cover;
     text-decoration: none;
     @media (min-width: ${props => props.theme.responsive.medium}) {
-        padding-top: ${props => (props.size === "large" ? "40%" : "20%")};
+        padding-top: ${props => (props.size === "large" ? "55%" : "22%")};
         width: ${props => (props.size === "large" ? "100%" : "47%")};
     }
 `

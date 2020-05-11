@@ -1,3 +1,4 @@
+import Theme from "../gatsby-plugin-theme-ui/index"
 import { css } from "@emotion/core"
 import normalize from "normalize.css"
 
@@ -10,7 +11,7 @@ export const globalStyles = css`
     }
     #fp-nav {
         top: auto;
-        bottom: 3.75rem;
+        bottom: 1.75rem;
         left: 50%;
         transform: translateX(-50%);
         z-index: 4;
@@ -41,6 +42,9 @@ export const globalStyles = css`
                     }
                 }
             }
+        }
+        @media (min-width: ${Theme.responsive.medium}) {
+            bottom: 3.75rem;
         }
     }
 `

@@ -26,7 +26,9 @@ const Root = styled.div`
         font-weight: 200;
     }
     h1,
-    h2 {
+    h2,
+    h3,
+    h4 {
         font-weight: 200;
     }
 `

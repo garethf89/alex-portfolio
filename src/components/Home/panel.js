@@ -18,6 +18,7 @@ const PanelContainer = styled.div`
 
 const PanelText = styled(Container)`
     position: relative;
+    padding-bottom: 2rem;
     z-index: 2;
 `
 
