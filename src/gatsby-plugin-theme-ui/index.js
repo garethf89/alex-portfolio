@@ -13,6 +13,7 @@ export default {
     sizes: {
         maxWidth: "1248px",
         widerMaxWidth: "1368px",
+        contentMaxWidth: "657px",
     },
     responsive: {
         small: "35em",

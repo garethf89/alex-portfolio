@@ -25,12 +25,6 @@ const Root = styled.div`
         line-height: 1.6;
         font-weight: 200;
     }
-    h1,
-    h2,
-    h3,
-    h4 {
-        font-weight: 200;
-    }
 `
 const Layout = ({ logoColor, children, title, image, description }) => {
     const data = useStaticQuery(graphql`

@@ -1,11 +1,12 @@
 import { Email, Facebook, Instagram, Linkedin } from "../svgs/Index"
 
+import Heading from "../components/Typography/heading"
 import Highlight from "../components/highlight"
 import Mixins from "../styles/mixins"
 import React from "react"
 import styled from "@emotion/styled"
 
-const SocialStyles = styled.h3`
+const SocialStyles = styled(Heading)`
     font-size: 36px;
     line-height: 1.2;
     margin: 0;
@@ -57,7 +58,7 @@ const SocialList = styled.ul`
 const Social = () => {
     return (
         <Highlight>
-            <SocialStyles>Let's Chat</SocialStyles>
+            <SocialStyles level="h3" text="Let's Chat" />
             <SocialList>
                 <li>
                     <a href="mailto:">

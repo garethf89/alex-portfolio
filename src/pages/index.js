@@ -27,11 +27,7 @@ const IndexPage = () => {
 
                 projects {
                     title
-                    headline {
-                        internal {
-                            content
-                        }
-                    }
+                    headline
                     coverVideo {
                         file {
                             url

@@ -4,7 +4,7 @@ module.exports.data = {
       edges {
         node {
           id
-          title
+          slug
         }
       }
     }
