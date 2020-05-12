@@ -1,5 +1,6 @@
 import Container from "../container"
 import Heading from "../Typography/heading"
+import { Link } from "gatsby"
 import React from "react"
 import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import styled from "@emotion/styled"
@@ -33,6 +34,10 @@ const PanelHeading = styled(Heading)`
 
 const PanelSubText = styled.p`
     margin-bottom: 4.5rem;
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 `
 
 const Panel = ({
@@ -43,6 +48,7 @@ const Panel = ({
     subText,
     backgroundColor,
     contentPage,
+    slug,
 }) => {
     let displayImage
     if (image && gatsbyWindow) {
@@ -50,7 +56,6 @@ const Panel = ({
             ? image.resolutions.srcWebp
             : image.file.url
     }
-
     return (
         <PanelContainer
             className="section"
@@ -63,9 +68,17 @@ const Panel = ({
             {text && (
                 <PanelText>
                     {text && (
-                        <PanelHeading level="h2" text={text}></PanelHeading>
+                        <PanelHeading level="h2">
+                            {slug && <Link to={`/${slug}`}>{text}</Link>}
+                            {!slug && text}
+                        </PanelHeading>
                     )}
-                    {subText && <PanelSubText>{subText}</PanelSubText>}
+                    {subText && (
+                        <PanelSubText>
+                            {slug && <Link to={`/${slug}`}>{subText}</Link>}
+                            {!slug && subText}
+                        </PanelSubText>
+                    )}
                 </PanelText>
             )}
         </PanelContainer>

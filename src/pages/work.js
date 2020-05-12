@@ -26,6 +26,7 @@ const WorkPage = () => {
                 projects {
                     id
                     title
+                    slug
                     darkBackground
                     coverVideo {
                         file {
@@ -69,6 +70,7 @@ const WorkPage = () => {
                 title={value.title}
                 image={value.coverImage}
                 size={size}
+                slug={value.slug}
             />
         )
     })

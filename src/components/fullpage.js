@@ -63,6 +63,7 @@ const FullPage = ({ data, projects, onSlideLeave, panels }) => {
                                     text={value.title}
                                     subText={value.headline}
                                     dataAnchor={`slide-anchor-${index}`}
+                                    slug={value.slug}
                                 >
                                     {video && !isMobile && (
                                         <VideoBackground

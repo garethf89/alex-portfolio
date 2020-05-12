@@ -28,6 +28,7 @@ const IndexPage = () => {
                 projects {
                     title
                     headline
+                    slug
                     coverVideo {
                         file {
                             url
@@ -128,6 +129,7 @@ const IndexPage = () => {
 
             return function cleanup() {
                 window.removeEventListener("scroll", throttle(checkScroll, 500))
+                window.fullpage_api.destroy("all")
             }
         }, [])
     }

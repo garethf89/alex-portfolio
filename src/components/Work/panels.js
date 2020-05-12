@@ -26,7 +26,7 @@ const Content = styled.div`
     margin: 1.88rem 3.75rem;
 `
 
-const WorkPanel = ({ size, title, image, color }) => {
+const WorkPanel = ({ size, title, image, color, slug }) => {
     const [imageSrc, setSrc] = useState(image ? image.file.url : null)
 
     supportsWebP(res => {
@@ -36,7 +36,12 @@ const WorkPanel = ({ size, title, image, color }) => {
     })
 
     return (
-        <WorkPanelStyled size={size} image={imageSrc} color={color}>
+        <WorkPanelStyled
+            to={`/${slug}`}
+            size={size}
+            image={imageSrc}
+            color={color}
+        >
             <Content>
                 <Heading level="h2" text={title} />
             </Content>

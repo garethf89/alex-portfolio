@@ -40,8 +40,27 @@ const options = {
 
 const BodyText = ({ text }) => documentToReactComponents(text, options)
 
-const Body = ({ text, className }) => {
-    return <BodyText className={className} text={text} />
+const Body = ({ text, className, heading }) => {
+    const textObject = { ...text }
+    const textToUse = useHeading => {
+        if (useHeading) {
+            textObject.content = Object.values(textObject.content).filter(
+                (obj, i) => {
+                    return i === 0 ? obj : false
+                }
+            )
+        } else {
+            textObject.content = Object.values(textObject.content).filter(
+                (obj, i) => {
+                    console.log(i !== 0)
+                    return i !== 0 ? obj : false
+                }
+            )
+        }
+        return textObject
+    }
+    const outputText = textToUse(heading)
+    return <BodyText className={className} text={outputText} />
 }
 
 export default Body

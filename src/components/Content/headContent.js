@@ -13,6 +13,9 @@ const HeadAreaStyled = styled.div`
 const HeadAreaContainer = styled.div`
     display: flex;
     flex-direction: column;
+    p {
+        margin-top: 0;
+    }
     @media (min-width: ${props => props.theme.responsive.medium}) {
         flex-direction: row;
         justify-content: space-between;
@@ -28,7 +31,7 @@ const HeadContent = ({ body, agency }) => {
         <HeadAreaStyled>
             <HeadAreaContainer>
                 <BodyWidth>
-                    <Body text={body} />
+                    <Body heading text={body} />
                 </BodyWidth>
                 {agency && <Agency content={agency} />}
             </HeadAreaContainer>
