@@ -40,26 +40,29 @@ const options = {
 
 const BodyText = ({ text }) => documentToReactComponents(text, options)
 
-const Body = ({ text, className, heading }) => {
+const Body = ({ text, className, include, exclude }) => {
     const textObject = { ...text }
-    const textToUse = useHeading => {
-        if (useHeading) {
+
+    const textToUse = (includes, excludes) => {
+        //One paragraph for heading only
+        if (includes || includes === 0) {
             textObject.content = Object.values(textObject.content).filter(
                 (obj, i) => {
-                    return i === 0 ? obj : false
+                    return i === includes ? obj : false
                 }
             )
-        } else {
+        } else if (excludes || excludes === 0) {
+            // All other objects
             textObject.content = Object.values(textObject.content).filter(
                 (obj, i) => {
-                    console.log(i !== 0)
-                    return i !== 0 ? obj : false
+                    return i !== exclude ? obj : false
                 }
             )
         }
         return textObject
     }
-    const outputText = textToUse(heading)
+
+    const outputText = textToUse(include, exclude)
     return <BodyText className={className} text={outputText} />
 }
 

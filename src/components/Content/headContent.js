@@ -31,7 +31,7 @@ const HeadContent = ({ body, agency }) => {
         <HeadAreaStyled>
             <HeadAreaContainer>
                 <BodyWidth>
-                    <Body heading text={body} />
+                    <Body include={0} text={body} />
                 </BodyWidth>
                 {agency && <Agency content={agency} />}
             </HeadAreaContainer>

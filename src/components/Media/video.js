@@ -30,7 +30,7 @@ const VideoBackgroundContainer = styled.div`
     @media (max-aspect-ratio: 16/9) {
         video {
             width: auto;
-            height: 100%;
+            min-height: 100%;
         }
     }
 `
