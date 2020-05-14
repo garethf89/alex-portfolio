@@ -38,7 +38,7 @@ const ButtonTarget = styled.span`
     transition: all 1s;
     opacity: ${props => (props.active ? "1" : "0")};
 `
-const NavigationButton = ({ buttonClick, theme }) => {
+const NavigationButton = ({ theme, buttonClick }) => {
     let [menuIconDark, updateMenuDark] = useState(null)
     let [menuIconLight, updateMenuLight] = useState(null)
 
@@ -46,7 +46,7 @@ const NavigationButton = ({ buttonClick, theme }) => {
 
     useEffect(() => {
         setTimeout(() => {
-            if (menuIconLight) lottie.destroy()
+            if (menuIconLight || menuIconDark) lottie.destroy()
 
             updateMenuDark(
                 lottie.loadAnimation({
@@ -75,11 +75,10 @@ const NavigationButton = ({ buttonClick, theme }) => {
                 })
             )
         })
-
         return () => {
-            if (menuIconLight) lottie.destroy()
+            lottie.destroy()
         }
-    }, [theme])
+    }, [])
 
     const onClick = () => {
         buttonClick()

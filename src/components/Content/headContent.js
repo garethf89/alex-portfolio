@@ -27,7 +27,8 @@ const BodyWidth = styled.div`
 `
 
 const HeadContent = ({ body, agency }) => {
-    const isImageFirstChild = body.content[1].nodeType !== "paragraph"
+    const isImageFirstChild =
+        body.content.length > 1 && body.content[1].nodeType !== "paragraph"
     return (
         <HeadAreaStyled isImageFirstChild={isImageFirstChild}>
             <HeadAreaContainer>

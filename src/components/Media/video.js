@@ -1,8 +1,8 @@
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 
 import debounce from "../../helpers/debounce"
 import { gatsbyWindow } from "../../helpers/gatsbyWindow"
-import isElementVisible from "../../helpers/isElementVisible"
+import isElementVisibleFullpage from "../../helpers/isElementVisibleFullpage"
 import styled from "@emotion/styled"
 
 const VideoBackgroundContainer = styled.div`
@@ -14,7 +14,7 @@ const VideoBackgroundContainer = styled.div`
     z-index: 1;
     overflow: hidden;
     video {
-        width: 100%;
+        min-width: 100%;
         height: auto;
         position: absolute;
         top: 50%;
@@ -29,7 +29,6 @@ const VideoBackgroundContainer = styled.div`
     }
     @media (max-aspect-ratio: 16/9) {
         video {
-            width: auto;
             min-height: 100%;
         }
     }
@@ -42,7 +41,7 @@ const VideoBackground = ({ src, poster, autoPlay, type = "video/mp4" }) => {
         if (!refVideo.current) {
             return
         }
-        const isVisible = isElementVisible(refVideo.current)
+        const isVisible = isElementVisibleFullpage(refVideo.current)
         if (isVisible && refVideo.current.paused) {
             refVideo.current.play()
         } else if (!isVisible) {
@@ -51,12 +50,23 @@ const VideoBackground = ({ src, poster, autoPlay, type = "video/mp4" }) => {
     }
 
     if (gatsbyWindow()) {
-        window.addEventListener(
-            "scroll",
-            debounce(e => {
-                visibilityChange()
-            }, 100)
-        )
+        useEffect(() => {
+            window.addEventListener(
+                "scroll",
+                debounce(e => {
+                    visibilityChange()
+                }, 100)
+            )
+
+            return function cleanup() {
+                window.removeEventListener(
+                    "scroll",
+                    debounce(e => {
+                        visibilityChange()
+                    }, 100)
+                )
+            }
+        }, [])
     }
     return (
         <VideoBackgroundContainer>

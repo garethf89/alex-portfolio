@@ -4,6 +4,7 @@ import HeadContent from "../components/Content/headContent"
 import HeadHeading from "../components/Content/headHeading"
 import Layout from "../components/layout"
 import Panel from "../components/Home/panel"
+import PanelContainer from "../components/panelContainer"
 import React from "react"
 import Social from "../components/social"
 import VideoBackground from "../components/Media/video"
@@ -13,6 +14,7 @@ const ProjectTemplate = ({ data }) => {
     const {
         title,
         coverImage,
+        darkBackground,
         coverVideo,
         headline,
         body,
@@ -23,15 +25,21 @@ const ProjectTemplate = ({ data }) => {
     const hasVideo = coverVideo.file.contentType.includes("video")
 
     return (
-        <Layout logoColor="light" title="About me">
-            <Panel contentPage theme="light" backgroundColor="#000">
-                <VideoBackground
-                    src={coverVideo.file.url}
-                    type={coverVideo.file.contentType}
-                    poster=""
-                    autoPlay
-                />
-            </Panel>
+        <Layout title="About me">
+            <PanelContainer
+                contentPage
+                backgroundColor="#000"
+                darkBackground={darkBackground}
+            >
+                <Panel>
+                    <VideoBackground
+                        src={coverVideo.file.url}
+                        type={coverVideo.file.contentType}
+                        poster=""
+                        autoPlay
+                    />
+                </Panel>
+            </PanelContainer>
             <Container>
                 <HeadHeading subtext={title} headline={headline} />
                 <HeadContent body={bodyjson} agency={agency} />
@@ -54,6 +62,7 @@ export const query = graphql`
             }
             headline
             title
+            darkBackground
             body {
                 json
             }

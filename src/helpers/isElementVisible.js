@@ -2,21 +2,13 @@ export default el => {
     if (!el) {
         return
     }
-    const windowHeight = window.innerHeight
-    if (el.getBoundingClientRect().y === 0) {
-        return true
+
+    const elHeight = el.getBoundingClientRect().height
+    const elY = el.getBoundingClientRect().y
+
+    if (elHeight + elY < 0) {
+        return false
     }
-    if (
-        el.getBoundingClientRect().y > 0 &&
-        el.getBoundingClientRect().y < windowHeight
-    ) {
-        return true
-    }
-    if (
-        el.getBoundingClientRect().y < 0 &&
-        el.getBoundingClientRect().y > -windowHeight
-    ) {
-        return true
-    }
-    return false
+
+    return true
 }

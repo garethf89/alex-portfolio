@@ -5,6 +5,7 @@ import HeadContent from "../components/Content/headContent"
 import HeadHeading from "../components/Content/headHeading"
 import Layout from "../components/layout"
 import Panel from "../components/Home/panel"
+import PanelContainer from "../components/panelContainer"
 import React from "react"
 import Social from "../components/social"
 import VideoBackground from "../components/Media/video"
@@ -34,15 +35,17 @@ const AboutPage = () => {
     `)
     const AboutData = data.contentfulAboutPage
     return (
-        <Layout logoColor="light" title="About me">
-            <Panel contentPage key="home" theme="light" backgroundColor="#000">
-                <VideoBackground
-                    src={AboutData.coverImage.file.url}
-                    type={AboutData.coverImage.file.contentType}
-                    poster=""
-                    autoPlay
-                />
-            </Panel>
+        <Layout title="About me">
+            <PanelContainer contentPage backgroundColor="#000">
+                <Panel>
+                    <VideoBackground
+                        src={AboutData.coverImage.file.url}
+                        type={AboutData.coverImage.file.contentType}
+                        poster=""
+                        autoPlay
+                    />
+                </Panel>
+            </PanelContainer>
             <Container>
                 <HeadHeading
                     subtext={data.contentfulAboutPage.title}

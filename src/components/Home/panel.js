@@ -5,31 +5,23 @@ import React from "react"
 import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import styled from "@emotion/styled"
 
-const PanelContainer = styled.div`
-    transition: height 0.5s ease-out;
-    height: ${props => (props.contentPage ? "73vh" : "100vh")};
-    position: relative;
-    .fp-tableCell {
-        vertical-align: bottom;
-    }
-
-    background-color: ${props => props.backgroundColor};
-    background-image: url(${props => props.image});
-    background-position: center;
-    background-size: cover;
-    color: ${props => (props.theme === "light" ? "#fff" : "inherit")};
-`
-
 const PanelText = styled(Container)`
     position: relative;
     padding-bottom: 2rem;
     z-index: 2;
 `
 
+const PanelTopHeading = styled(Heading)`
+    font-size: 1.13rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+`
+
 const PanelHeading = styled(Heading)`
     font-size: 3em;
     line-height: 1.1;
-    margin-bottom: 1rem;
+    max-width: 750px;
+    margin-bottom: ${props => (props.lower ? "4.5rem" : "1rem")};
 `
 
 const PanelSubText = styled.p`
@@ -42,12 +34,12 @@ const PanelSubText = styled.p`
 
 const Panel = ({
     children,
-    theme,
     image,
     text,
     subText,
     backgroundColor,
     contentPage,
+    topText,
     slug,
 }) => {
     let displayImage
@@ -57,18 +49,18 @@ const Panel = ({
             : image.file.url
     }
     return (
-        <PanelContainer
-            className="section"
-            backgroundColor={backgroundColor}
-            image={displayImage}
-            theme={theme}
-            contentPage={contentPage}
-        >
+        <>
             {children}
             {text && (
                 <PanelText>
+                    {topText && (
+                        <PanelTopHeading level="h1">
+                            {slug && <Link to={`/${slug}`}>{topText}</Link>}
+                            {!slug && topText}
+                        </PanelTopHeading>
+                    )}
                     {text && (
-                        <PanelHeading level="h2">
+                        <PanelHeading level="h2" lower={topText}>
                             {slug && <Link to={`/${slug}`}>{text}</Link>}
                             {!slug && text}
                         </PanelHeading>
@@ -81,7 +73,7 @@ const Panel = ({
                     )}
                 </PanelText>
             )}
-        </PanelContainer>
+        </>
     )
 }
 

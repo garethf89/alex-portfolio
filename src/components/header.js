@@ -1,8 +1,10 @@
+import React, { useContext } from "react"
+
 import { Link } from "gatsby"
 import Navigation from "./Navigation/nav"
 import PropTypes from "prop-types"
-import React from "react"
 import SvgLogo from "../svgs/logo"
+import ThemeContext from "../state/theme"
 import styled from "@emotion/styled"
 
 const HeaderStyles = styled.header`
@@ -45,7 +47,8 @@ const HeaderLogo = styled(SvgLogo)`
     }
 `
 
-const Header = ({ logoColor, siteTitle }) => {
+const Header = ({ siteTitle }) => {
+    const logoColor = useContext(ThemeContext)[0]
     const svgClass =
         logoColor === "light" ? "svgHeaderLogo" : "svgHeaderLogo--dark"
 
@@ -55,7 +58,7 @@ const Header = ({ logoColor, siteTitle }) => {
                 <HeaderLogo className={svgClass} />
                 Home
             </HeaderLink>
-            <Navigation logoColor={logoColor} siteTitle={siteTitle} />
+            <Navigation siteTitle={siteTitle} />
         </HeaderStyles>
     )
 }

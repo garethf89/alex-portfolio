@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { disableScroll, enableScroll } from "../../helpers/scroll"
 
 import { Link } from "gatsby"
 import NavigationButton from "./navbutton"
+import ThemeContext from "../../state/theme"
 import styled from "@emotion/styled"
 import { useSiteMetadata } from "../../hooks/use-site-metadata"
 
@@ -72,9 +73,9 @@ const StyledLink = styled(props => <Link {...props} />)`
     }
 `
 
-const Navigation = ({ logoColor }) => {
+const Navigation = () => {
     const { menuLinks } = useSiteMetadata()
-
+    const logoColor = useContext(ThemeContext)[0]
     const [navActive, setNav] = useState(false)
 
     let theme = NavThemes.light

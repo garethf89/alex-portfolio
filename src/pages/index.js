@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
 import FullPage from "../components/fullpage"
@@ -58,51 +58,9 @@ const IndexPage = () => {
         }
     `)
 
-    const panelColorIndexHome = [
-        {
-            index: 0,
-            color: "light",
-        },
-    ]
-
     const projects = data.contentfulHomePage.projects
 
-    const panelColorIndexChildren = useMemo(
-        () =>
-            projects.map((value, index) => {
-                const isDarkBackground = value.darkBackground
-                return {
-                    index: index + 1,
-                    color: isDarkBackground ? "light" : "dark",
-                }
-            }),
-        [projects]
-    )
-
-    const panelColorIndex = panelColorIndexHome.concat(panelColorIndexChildren)
-
     const fpRef = useRef(null)
-
-    let [logoColor, setLogo] = useState("light")
-
-    const onSlideLeave = (origin, destination, direction) => {
-        if (document.body.classList.contains("navopen")) {
-            return
-        }
-        const target = destination.index
-
-        // set logo colors
-        const panel = panelColorIndex.filter(el => {
-            return el.index === target
-        })
-        if (!panel[0]) {
-            return
-        }
-
-        if (panel[0]) {
-            setLogo(panel[0].color)
-        }
-    }
 
     const checkScroll = () => {
         if (!fpRef.current) {
@@ -135,13 +93,9 @@ const IndexPage = () => {
     }
 
     return (
-        <Layout title="Home" logoColor={logoColor}>
+        <Layout title="Home">
             <div ref={fpRef}>
-                <FullPage
-                    data={data}
-                    projects={projects}
-                    onSlideLeave={onSlideLeave}
-                />
+                <FullPage data={data} projects={projects} />
             </div>
             <SeeMore />
         </Layout>
