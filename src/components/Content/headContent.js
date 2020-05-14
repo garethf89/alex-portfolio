@@ -7,7 +7,7 @@ const HeadAreaStyled = styled.div`
     font-size: 1.13rem;
     line-height: 1.6;
     font-weight: 200;
-    margin-bottom: 5.4rem;
+    margin-bottom: ${props => (props.isImageFirstChild ? "5.4rem" : "0")};
 `
 
 const HeadAreaContainer = styled.div`
@@ -27,8 +27,9 @@ const BodyWidth = styled.div`
 `
 
 const HeadContent = ({ body, agency }) => {
+    const isImageFirstChild = body.content[1].nodeType !== "paragraph"
     return (
-        <HeadAreaStyled>
+        <HeadAreaStyled isImageFirstChild={isImageFirstChild}>
             <HeadAreaContainer>
                 <BodyWidth>
                     <Body include={0} text={body} />

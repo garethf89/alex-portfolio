@@ -1,3 +1,4 @@
+import BodyContent from "../components/Content/bodyContent"
 import Container from "../components/container"
 import HeadContent from "../components/Content/headContent"
 import HeadHeading from "../components/Content/headHeading"
@@ -34,6 +35,7 @@ const ProjectTemplate = ({ data }) => {
             <Container>
                 <HeadHeading subtext={title} headline={headline} />
                 <HeadContent body={bodyjson} agency={agency} />
+                <BodyContent body={bodyjson} />
             </Container>
             <Social />
         </Layout>
