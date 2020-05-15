@@ -5,15 +5,15 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useState } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
 import Footer from "./footer"
 import { Global } from "@emotion/core"
 import Header from "./header"
 import PropTypes from "prop-types"
+import React from "react"
 import SEO from "./seo"
-import ThemeContext from "../state/theme"
+import { StateProvider } from "../state/state"
 import globalStyles from "../styles/globals"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../helpers/support/webp"
@@ -42,19 +42,23 @@ const Layout = ({ children, title, image, description }) => {
             document.addClass("nowebp")
         }
     })
-
-    const themeMode = useState("light")
-
     return (
-        <ThemeContext.Provider value={themeMode}>
-            <Root>
+        <Root>
+            <StateProvider
+                value={[
+                    {},
+                    () => {
+                        console.log("ere")
+                    },
+                ]}
+            >
                 <SEO title={title} description={description} image={image} />
                 <Header siteTitle={data.site.siteMetadata.title} />
                 <main>{children}</main>
                 <Footer />
                 <Global styles={globalStyles} />
-            </Root>
-        </ThemeContext.Provider>
+            </StateProvider>
+        </Root>
     )
 }
 

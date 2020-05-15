@@ -4,14 +4,15 @@ import Panel from "../components/Home/panel"
 import PanelContainer from "../components/panelContainer"
 import PanelImage from "../components/Media/panelimage"
 import ReactFullpage from "@fullpage/react-fullpage"
-import ThemeContext from "../state/theme"
 import VideoBackground from "../components/Media/video"
 import classNames from "classnames"
 import { gatsbyWindow } from "../helpers/gatsbyWindow"
+import { store } from "../state/state"
 import theme from "../gatsby-plugin-theme-ui/index"
 
 const FullPage = ({ data, projects }) => {
-    const [themeMode, setThemeMode] = useContext(ThemeContext)
+    const { state, dispatch } = useContext(store)
+    const themeMode = state.theme
 
     const panelColorIndexHome = [
         {
@@ -50,7 +51,7 @@ const FullPage = ({ data, projects }) => {
         }
 
         if (panel[0]) {
-            setThemeMode(panel[0].color)
+            dispatch({ type: "THEME", theme: panel[0].color })
         }
     }
 

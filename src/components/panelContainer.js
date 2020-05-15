@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef } from "react"
 
-import ThemeContext from "../state/theme"
 import { gatsbyWindow } from "../helpers/gatsbyWindow"
 import isElementVisible from "../helpers/isElementVisible"
+import { store } from "../state/state"
 import styled from "@emotion/styled"
 import throttle from "lodash.throttle"
 
@@ -28,10 +28,9 @@ const PanelContainer = ({
     displayImage,
     children,
 }) => {
-    const [themeMode, setThemeMode] = useContext(ThemeContext)
-
-    const ref = useRef(null)
     const theme = darkBackground ? "light" : "dark"
+    const ref = useRef(null)
+    const { state, dispatch } = useContext(store)
 
     const visibilityChange = () => {
         if (!ref.current) {
@@ -40,32 +39,26 @@ const PanelContainer = ({
         const isVisible = isElementVisible(ref.current)
 
         if (isVisible) {
-            setThemeMode(theme)
+            dispatch({ type: "THEME", theme: theme })
         } else {
-            setThemeMode("dark")
+            dispatch({ type: "THEME", theme: "dark" })
         }
     }
 
+    const throttled = throttle(visibilityChange, 100)
+
     if (gatsbyWindow() && contentPage) {
         useEffect(() => {
-            window.addEventListener(
-                "scroll",
-                throttle(e => {
-                    visibilityChange()
-                }, 100)
-            )
-            setThemeMode(theme)
+            window.removeEventListener("scroll", throttled)
+
+            window.addEventListener("scroll", throttled)
 
             return function cleanup() {
-                window.removeEventListener(
-                    "scroll",
-                    throttle(e => {
-                        visibilityChange()
-                    }, 100)
-                )
+                window.removeEventListener("scroll", throttled)
             }
         }, [])
     }
+
     return (
         <PanelContainerStyled
             className="section"

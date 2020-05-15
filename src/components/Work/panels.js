@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import Heading from "../Typography/heading"
 import { Link } from "gatsby"
+import { store } from "../../state/state"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
 
@@ -28,6 +29,11 @@ const Content = styled.div`
 
 const WorkPanel = ({ size, title, image, color, slug }) => {
     const [imageSrc, setSrc] = useState(image ? image.file.url : null)
+    const { state, dispatch } = useContext(store)
+
+    useEffect(() => {
+        dispatch({ type: "THEME", theme: "dark" })
+    }, [])
 
     supportsWebP(res => {
         if (res) {

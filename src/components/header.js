@@ -4,7 +4,7 @@ import { Link } from "gatsby"
 import Navigation from "./Navigation/nav"
 import PropTypes from "prop-types"
 import SvgLogo from "../svgs/logo"
-import ThemeContext from "../state/theme"
+import { store } from "../state/state"
 import styled from "@emotion/styled"
 
 const HeaderStyles = styled.header`
@@ -48,7 +48,8 @@ const HeaderLogo = styled(SvgLogo)`
 `
 
 const Header = ({ siteTitle }) => {
-    const logoColor = useContext(ThemeContext)[0]
+    const { state, dispatch } = useContext(store)
+    const logoColor = state.theme
     const svgClass =
         logoColor === "light" ? "svgHeaderLogo" : "svgHeaderLogo--dark"
 
