@@ -36,6 +36,7 @@ const WorkPage = () => {
                 image={value.coverImage}
                 size={size}
                 slug={value.slug}
+                locked={value.locked}
             />
         )
     })

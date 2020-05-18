@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 
 import Heading from "../Typography/heading"
 import { Link } from "gatsby"
+import { Locked } from "../../svgs/Index"
 import { store } from "../../state/state"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
@@ -27,7 +28,26 @@ const Content = styled.div`
     margin: 1.88rem 3.75rem;
 `
 
-const WorkPanel = ({ size, title, image, color, slug }) => {
+const LockContainer = styled.div`
+    color: ${props => (props.color === "dark" ? "#000" : "#fff")};
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+    svg,
+    span {
+        vertical-align: middle;
+        display: inline-block;
+    }
+    svg {
+        width: 1.25rem;
+        height: 1.5rem;
+        margin-right: 0.25rem;
+        g {
+            fill: ${props => (props.color === "dark" ? "#000" : "#fff")};
+        }
+    }
+`
+
+const WorkPanel = ({ size, title, image, color, slug, locked }) => {
     const [imageSrc, setSrc] = useState(image ? image.file.url : null)
     const { state, dispatch } = useContext(store)
 
@@ -49,7 +69,13 @@ const WorkPanel = ({ size, title, image, color, slug }) => {
             color={color}
         >
             <Content>
-                <Heading level="h2" text={title} />
+                {locked && (
+                    <LockContainer color={color}>
+                        <Locked />
+                        <span>Locked</span>
+                    </LockContainer>
+                )}
+                <Heading level="h2">{title}</Heading>
             </Content>
         </WorkPanelStyled>
     )

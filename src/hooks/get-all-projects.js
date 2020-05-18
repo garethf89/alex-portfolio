@@ -11,6 +11,7 @@ export const getAllProjects = () => {
                         slug
                         darkBackground
                         headline
+                        locked
                         coverVideo {
                             file {
                                 url
