@@ -3,6 +3,7 @@ import Container from "../components/container"
 import HeadContent from "../components/Content/headContent"
 import HeadHeading from "../components/Content/headHeading"
 import Layout from "../components/layout"
+import LinkedProjects from "../components/Shared/linkedProjects"
 import Panel from "../components/Home/panel"
 import PanelContainer from "../components/panelContainer"
 import React from "react"
@@ -12,6 +13,7 @@ import { graphql } from "gatsby"
 
 const ProjectTemplate = ({ data }) => {
     const {
+        id,
         title,
         coverImage,
         darkBackground,
@@ -23,7 +25,6 @@ const ProjectTemplate = ({ data }) => {
     const bodyjson = body.json
 
     const hasVideo = coverVideo.file.contentType.includes("video")
-
     return (
         <Layout title="About me">
             <PanelContainer
@@ -45,6 +46,7 @@ const ProjectTemplate = ({ data }) => {
                 <HeadContent body={bodyjson} agency={agency} />
                 <BodyContent body={bodyjson} />
             </Container>
+            <LinkedProjects exclude={id} />
             <Social />
         </Layout>
     )

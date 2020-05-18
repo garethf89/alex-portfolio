@@ -21,6 +21,11 @@ const PanelContainerStyled = styled.div`
     color: ${props => (props.color === "light" ? "#fff" : "inherit")};
 `
 
+const getCurrentState = () => {
+    const { state } = useContext(store)
+    return state
+}
+
 const PanelContainer = ({
     contentPage,
     backgroundColor,
@@ -30,23 +35,21 @@ const PanelContainer = ({
 }) => {
     const theme = darkBackground ? "light" : "dark"
     const ref = useRef(null)
-    const { state, dispatch } = useContext(store)
+    const { dispatch } = useContext(store)
 
+    const state = getCurrentState()
     const visibilityChange = () => {
         if (!ref.current) {
             return
         }
         const isVisible = isElementVisible(ref.current)
-
-        if (isVisible) {
+        if (isVisible && state.theme !== theme) {
             dispatch({ type: "THEME", theme: theme })
-        } else {
+        } else if (!isVisible && state.theme !== "dark") {
             dispatch({ type: "THEME", theme: "dark" })
         }
     }
-
-    const throttled = throttle(visibilityChange, 100)
-
+    const throttled = throttle(visibilityChange, 200)
     if (gatsbyWindow() && contentPage) {
         useEffect(() => {
             window.removeEventListener("scroll", throttled)
@@ -56,7 +59,7 @@ const PanelContainer = ({
             return function cleanup() {
                 window.removeEventListener("scroll", throttled)
             }
-        }, [])
+        }, [state])
     }
 
     return (

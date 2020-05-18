@@ -4,6 +4,7 @@ import Container from "../components/container"
 import HeadContent from "../components/Content/headContent"
 import HeadHeading from "../components/Content/headHeading"
 import Layout from "../components/layout"
+import LinkedProjects from "../components/Shared/linkedProjects"
 import Panel from "../components/Home/panel"
 import PanelContainer from "../components/panelContainer"
 import React from "react"
@@ -53,6 +54,8 @@ const AboutPage = () => {
                 />
                 <HeadContent body={data.contentfulAboutPage.body.json} />
             </Container>
+            <LinkedProjects />
+
             <Social />
         </Layout>
     )

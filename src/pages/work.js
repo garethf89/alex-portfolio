@@ -1,11 +1,10 @@
-import { graphql, useStaticQuery } from "gatsby"
-
 import Container from "../components/container"
 import Heading from "../components/Typography/heading"
 import Layout from "../components/layout"
 import React from "react"
 import Social from "../components/social"
 import WorkPanel from "../components/Work/panels"
+import { getAllProjects } from "../hooks/get-all-projects"
 import styled from "@emotion/styled"
 
 const ContainerWork = styled(Container)`
@@ -20,41 +19,7 @@ const WorkFlex = styled.div`
 `
 
 const WorkPage = () => {
-    const data = useStaticQuery(graphql`
-        query WorkProjects {
-            contentfulWork {
-                projects {
-                    id
-                    title
-                    slug
-                    darkBackground
-                    coverVideo {
-                        file {
-                            url
-                            fileName
-                            contentType
-                        }
-                    }
-                    coverImage {
-                        file {
-                            url
-                            fileName
-                            contentType
-                        }
-                        title
-                        resolutions(quality: 100, width: 2400) {
-                            srcWebp
-                        }
-                        fixed(width: 1200) {
-                            src
-                            srcWebp
-                        }
-                    }
-                }
-            }
-        }
-    `)
-
+    const data = getAllProjects()
     const panels = data.contentfulWork.projects.map((value, index) => {
         const video = value.coverVideo.file.contentType.includes("video")
 
