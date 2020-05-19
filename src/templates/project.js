@@ -81,6 +81,7 @@ export const query = graphql`
             title
             darkBackground
             locked
+            slug
             body {
                 json
             }
