@@ -46,7 +46,7 @@ const LinkedProjects = ({ exclude }) => {
     const { state } = useContext(globals)
     const { webp } = state
     const data = getAllProjects()
-    console.log("render")
+
     useEffect(() => {
         const projects = [...data.contentfulWork.projects]
 

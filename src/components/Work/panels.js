@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react"
 
+import AuthModal from "../Auth/authModal"
 import Heading from "../Typography/heading"
 import { Link } from "gatsby"
 import { Locked } from "../../svgs/Index"
+import { isAuth } from "../../helpers/auth"
 import { store } from "../../state/state"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
@@ -18,6 +20,7 @@ const WorkPanelStyled = styled(Link)`
     background-position: center;
     background-size: cover;
     text-decoration: none;
+    pointer-events: ${props => (props.disabled ? "none" : "auto")};
     @media (min-width: ${props => props.theme.responsive.medium}) {
         padding-top: ${props => (props.size === "large" ? "55%" : "22%")};
         width: ${props => (props.size === "large" ? "100%" : "47%")};
@@ -49,7 +52,11 @@ const LockContainer = styled.div`
 
 const WorkPanel = ({ size, title, image, color, slug, locked }) => {
     const [imageSrc, setSrc] = useState(image ? image.file.url : null)
+    const [modalOpen, setModal] = useState(false)
     const { state, dispatch } = useContext(store)
+
+    const auth = isAuth()
+    const showLocked = !auth && locked
 
     useEffect(() => {
         dispatch({ type: "THEME", theme: "dark" })
@@ -61,19 +68,43 @@ const WorkPanel = ({ size, title, image, color, slug, locked }) => {
         }
     })
 
+    const clickLink = e => {
+        if (showLocked) {
+            e.preventDefault()
+            setModal(true)
+            return false
+        } else {
+            return true
+        }
+    }
+
+    const closeModal = e => {
+        e.stopPropagation()
+        setModal(false)
+    }
+
     return (
         <WorkPanelStyled
             to={`/${slug}`}
             size={size}
             image={imageSrc}
             color={color}
+            onClick={clickLink}
+            disabled={showLocked && modalOpen}
         >
             <Content>
-                {locked && (
-                    <LockContainer color={color}>
-                        <Locked />
-                        <span>Locked</span>
-                    </LockContainer>
+                {showLocked && (
+                    <>
+                        <LockContainer color={color}>
+                            <Locked />
+                            <span>Locked</span>
+                        </LockContainer>
+                        <AuthModal
+                            target={`/${slug}`}
+                            isOpen={modalOpen}
+                            onClose={closeModal}
+                        />
+                    </>
                 )}
                 <Heading level="h2">{title}</Heading>
             </Content>

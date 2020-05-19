@@ -21,4 +21,18 @@ export default {
         medium: "50em",
         large: "70em",
     },
+    button: {
+        light: {
+            border: "#000",
+            background: "#fff",
+            color: "#000",
+            before: "rgba(0, 0, 0, 0.4)",
+        },
+        dark: {
+            border: "#000",
+            background: "#000",
+            color: "#fff",
+            before: "rgba(255, 255, 255, 0.4)",
+        },
+    },
 }

@@ -4,6 +4,7 @@ import styled from "@emotion/styled"
 
 /* stylelint-disable */
 const common = props => css`
+    font-family: ${props.theme.fonts.body};
     a {
         text-decoration: none;
         color: inherit;

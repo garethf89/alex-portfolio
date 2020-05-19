@@ -1,3 +1,6 @@
+import { graphql, navigate } from "gatsby"
+
+import AuthModal from "../components/Auth/authModal"
 import BodyContent from "../components/Content/bodyContent"
 import Container from "../components/container"
 import HeadContent from "../components/Content/headContent"
@@ -9,7 +12,7 @@ import PanelContainer from "../components/panelContainer"
 import React from "react"
 import Social from "../components/social"
 import VideoBackground from "../components/Media/video"
-import { graphql } from "gatsby"
+import { isAuth } from "../helpers/auth"
 
 const ProjectTemplate = ({ data }) => {
     const {
@@ -21,12 +24,24 @@ const ProjectTemplate = ({ data }) => {
         headline,
         body,
         agency,
+        locked,
+        slug,
     } = data.contentfulProject
     const bodyjson = body.json
-
     const hasVideo = coverVideo.file.contentType.includes("video")
+
+    if (locked && !isAuth()) {
+        return (
+            <AuthModal
+                target={`/${slug}`}
+                isOpen
+                onClose={() => navigate("/work")}
+            />
+        )
+    }
+
     return (
-        <Layout title="About me">
+        <Layout title={title}>
             <PanelContainer
                 contentPage
                 backgroundColor="#000"
@@ -65,6 +80,7 @@ export const query = graphql`
             headline
             title
             darkBackground
+            locked
             body {
                 json
             }
