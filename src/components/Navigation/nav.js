@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { disableScroll, enableScroll } from "../../helpers/scroll"
 
 import { Link } from "gatsby"
@@ -92,6 +92,13 @@ const Navigation = () => {
         active ? disableScroll() : enableScroll()
         document.body.classList.toggle("navopen")
     }
+
+    useEffect(() => {
+        return function cleanup() {
+            document.body.classList.remove("navopen")
+            enableScroll()
+        }
+    }, [])
 
     return (
         <NavigationStyles active={navActive}>

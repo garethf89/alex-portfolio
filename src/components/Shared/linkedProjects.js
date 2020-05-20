@@ -5,6 +5,7 @@ import Heading from "../Typography/heading"
 import { Link } from "gatsby"
 import { getAllProjects } from "../../hooks/get-all-projects"
 import { globals } from "../../state/state"
+import { isAuth } from "../../helpers/auth"
 import { random } from "../../helpers/random"
 import styled from "@emotion/styled"
 
@@ -52,6 +53,9 @@ const LinkedProjects = ({ exclude }) => {
 
         const filteredProjects = projects.filter((p, i) => {
             if (exclude && p.id === exclude) {
+                return false
+            }
+            if (p.locked && !isAuth()) {
                 return false
             }
             return true
