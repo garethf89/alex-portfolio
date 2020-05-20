@@ -5,9 +5,9 @@ import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
 
 const ContentImageStyles = styled.img`
-    margin-bottom: 3.75rem;
-    width: ${props => (props.size === "large" ? "100%" : "auto")};
-
+    margin: 0 auto 3.75rem;
+    max-width: 100%;
+    width: auto;
     @media (min-width: ${props => props.theme.responsive.medium}) {
         ${props =>
             props.size === "small"

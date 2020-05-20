@@ -37,7 +37,7 @@ const AboutPage = () => {
     const AboutData = data.contentfulAboutPage
     return (
         <Layout title="About me">
-            <PanelContainer contentPage backgroundColor="#000">
+            <PanelContainer contentPage darkBackground backgroundColor="#000">
                 <Panel>
                     <VideoBackground
                         src={AboutData.coverImage.file.url}

@@ -2,10 +2,9 @@ import { BLOCKS, INLINES, MARKS } from "@contentful/rich-text-types"
 import React, { useEffect, useState } from "react"
 
 import ContentImage from "../Content/contentImage"
-import ContentImageGroup from "../Content/contentImageGroup"
 import Heading from "../Typography/heading"
+import Video from "./video"
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
-import { pairwise } from "../../helpers/pairwise"
 import styled from "@emotion/styled"
 
 const StyledParagraph = styled.p`
@@ -84,11 +83,14 @@ const options = {
             <Heading level="h5">{children}</Heading>
         ),
         [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
+            const file = node.data.target.fields.file["en-US"]
+            const video = file.contentType.includes("video")
+            if (video) {
+                return <Video src={file.url} contentType={file.contentType} />
+            }
             return <ContentImage node={node} size="large" />
         },
-        "embedded-asset-block-group": (node, children) => {
-            return <ContentImageGroup node={node} size="large" />
-        },
+
         [INLINES.ASSET_HYPERLINK]: (node, children) => {
             return <ContentImage node={node} size="small" />
         },
@@ -118,30 +120,36 @@ const Body = ({ text, className, include, exclude }) => {
     useEffect(() => {
         const textObject = { ...text }
 
-        // group together adjacent images
-        if (textObject.content.length) {
-            const grouped = []
-            pairwise(textObject.content, function (current, next) {
-                if (
-                    current.nodeType === BLOCKS.EMBEDDED_ASSET &&
-                    next.nodeType === BLOCKS.EMBEDDED_ASSET
-                ) {
-                    grouped.push({
-                        nodeType: "embedded-asset-block-group",
-                        content: [],
-                        data: [current, next],
-                    })
-                    next.remove = true
-                }
-            })
+        // group together adjacent images - DISABLED FOR NOW!
 
-            if (grouped.length) {
-                grouped.map((el, i) => {
-                    const t = { ...el }
-                    textObject.content = { ...textObject.content, t }
-                })
-            }
-        }
+        /* 
+                "embedded-asset-block-group": (node, children) => {
+            return <ContentImageGroup node={node} size="large" />
+        },
+        */
+        // if (textObject.content.length) {
+        //     const grouped = []
+        //     pairwise(textObject.content, function (current, next) {
+        //         if (
+        //             current.nodeType === BLOCKS.EMBEDDED_ASSET &&
+        //             next.nodeType === BLOCKS.EMBEDDED_ASSET
+        //         ) {
+        //             grouped.push({
+        //                 nodeType: "embedded-asset-block-group",
+        //                 content: [],
+        //                 data: [current, next],
+        //             })
+        //             next.remove = true
+        //         }
+        //     })
+
+        //     if (grouped.length) {
+        //         grouped.map((el, i) => {
+        //             const t = { ...el }
+        //             textObject.content = { ...textObject.content, t }
+        //         })
+        //     }
+        // }
 
         // remove empties
         textObject.content = Object.values(textObject.content).filter(
@@ -164,7 +172,7 @@ const Body = ({ text, className, include, exclude }) => {
         const outputText = textToUse(textObjectToUse, include, exclude)
         return <BodyText className={className} text={outputText} />
     }
-    return <h1>NO</h1>
+    return <h1></h1>
 }
 
 export default Body

@@ -14,6 +14,7 @@ const HeaderStyles = styled.header`
     width: 100%;
     z-index: 99;
     background: transparent;
+    pointer-events: none;
     padding: 1.5rem;
     @media (min-width: ${props => props.theme.responsive.medium}) {
         padding: 3.75rem;
@@ -21,6 +22,8 @@ const HeaderStyles = styled.header`
 `
 const HeaderLink = styled(props => <Link {...props} />)`
     z-index: 3;
+    pointer-events: auto;
+
     cursor: pointer;
     position: relative;
     display: inline-block;
