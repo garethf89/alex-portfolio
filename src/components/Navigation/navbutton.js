@@ -7,6 +7,7 @@ import lottie from "lottie-web"
 import styled from "@emotion/styled"
 
 const NavButton = styled.button`
+    pointer-events: ${props => (props.active ? "auto" : "none")};
     display: block;
     position: absolute;
     right: 1.5rem;
@@ -45,39 +46,35 @@ const NavigationButton = ({ theme, buttonClick }) => {
     let [status, updateStatus] = useState("closed")
 
     useEffect(() => {
-        setTimeout(() => {
-            if (menuIconLight || menuIconDark) lottie.destroy()
+        if (menuIconLight || menuIconDark) lottie.destroy()
 
-            updateMenuDark(
-                lottie.loadAnimation({
-                    container: document.getElementById("NavButtonDark"),
-                    renderer: "svg",
-                    loop: false,
-                    autoplay: false,
-                    animationData: animationDataInverted,
-                    rendererSettings: {
-                        clearCanvas: false,
-                        className: "RenderedSVGMenu",
-                    },
-                })
-            )
-            updateMenuLight(
-                lottie.loadAnimation({
-                    container: document.getElementById("NavButtonLight"),
-                    renderer: "svg",
-                    loop: false,
-                    autoplay: false,
-                    animationData: animationData,
-                    rendererSettings: {
-                        clearCanvas: false,
-                        className: "RenderedSVGMenu",
-                    },
-                })
-            )
-        })
-        return () => {
-            lottie.destroy()
-        }
+        updateMenuDark(
+            lottie.loadAnimation({
+                container: document.getElementById("NavButtonDark"),
+                renderer: "svg",
+                loop: false,
+                autoplay: false,
+                animationData: animationDataInverted,
+                rendererSettings: {
+                    clearCanvas: false,
+                    className: "RenderedSVGMenu",
+                },
+            })
+        )
+        updateMenuLight(
+            lottie.loadAnimation({
+                container: document.getElementById("NavButtonLight"),
+                renderer: "svg",
+                loop: false,
+                autoplay: false,
+                animationData: animationData,
+                rendererSettings: {
+                    clearCanvas: false,
+                    className: "RenderedSVGMenu",
+                },
+            })
+        )
+        return () => {}
     }, [])
 
     const onClick = () => {

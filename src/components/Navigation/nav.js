@@ -23,7 +23,7 @@ const NavThemes = {
 }
 
 const NavigationStyles = styled.nav`
-    pointer-events: auto;
+    pointer-events: ${props => (props.active ? "auto" : "none")};
     position: fixed;
     top: 0;
     left: 0;
