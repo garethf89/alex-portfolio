@@ -1,34 +1,9 @@
-import AniLink from "gatsby-plugin-transition-link/AniLink"
 import Container from "../container"
+import FadeLink from "../Home/animatedLink"
 import Heading from "../Typography/heading"
 import { Link } from "gatsby"
 import React from "react"
-import TransitionLink from "gatsby-plugin-transition-link"
-import { gatsbyWindow } from "../../helpers/gatsbyWindow"
-import gsap from "gsap"
 import styled from "@emotion/styled"
-export const fade = ({ exit: { length }, node, direction }) => {
-    const duration = direction === "out" ? length + length / 4 : length
-    const opacity = direction === "in" ? 1 : 0
-    const scrollTop =
-        (document.scrollingElement && document.scrollingElement.scrollTop) ||
-        document.body.scrollTop ||
-        window.pageYOffset
-    const holdPosition =
-        direction === "out"
-            ? {
-                  height: "100%",
-                  overflow: "scroll",
-                  position: "absolute",
-                  scrollTop: window.scrollY,
-              }
-            : {}
-
-    return gsap
-        .timeline()
-        .set(node, holdPosition)
-        .fromTo(node, { opacity: !opacity }, { opacity: opacity, duration })
-}
 
 const PanelText = styled(Container)`
     position: relative;
@@ -60,34 +35,7 @@ const PanelSubText = styled.p`
         color: inherit;
     }
 `
-
-export const FadeLink = ({ to, children }) => (
-    <TransitionLink
-        enter={{ delay: 0, length: 0 }}
-        exit={{ delay: 0.5, length: 0.5 }}
-        to={to}
-    >
-        {children}
-    </TransitionLink>
-)
-
-const Panel = ({
-    children,
-    image,
-    text,
-    subText,
-    backgroundColor,
-    contentPage,
-    topText,
-    slug,
-}) => {
-    let displayImage
-    if (image && gatsbyWindow) {
-        displayImage = !document.body.classList.contains("nowebp")
-            ? image.resolutions.srcWebp
-            : image.file.url
-    }
-
+const Panel = ({ children, text, subText, topText, slug }) => {
     return (
         <>
             {children}
@@ -96,9 +44,9 @@ const Panel = ({
                     {topText && (
                         <PanelTopHeading level="h1">
                             {slug && (
-                                <AniLink swipe to={`/${slug}`}>
+                                <FadeLink to={`/${slug}`} duration={1}>
                                     {topText}
-                                </AniLink>
+                                </FadeLink>
                             )}
                             {!slug && topText}
                         </PanelTopHeading>
@@ -106,37 +54,9 @@ const Panel = ({
                     {text && (
                         <PanelHeading level="h2" lower={topText}>
                             {slug && (
-                                <AniLink
-                                    trigger={async pages => {
-                                        const s = window.scrollY
-                                        window.scrollTo(0, 0)
-
-                                        const div = document.getElementById(
-                                            "home-container"
-                                        )
-                                        div.style.position = "relative"
-                                        div.style.top = `-${s}px`
-                                        pages.entry.state = { test: "sdf" }
-                                        const exit = await pages.exit
-                                        const entry = await pages.entry
-                                        entry.node.querySelector(
-                                            "video"
-                                        ).currentTime = exit.node.querySelector(
-                                            "video"
-                                        ).currentTime
-                                    }}
-                                    entry={{
-                                        state: {
-                                            transition:
-                                                "passed to the entering page",
-                                        },
-                                    }}
-                                    fade
-                                    to={`/${slug}`}
-                                    duration={1}
-                                >
+                                <FadeLink to={`/${slug}`} duration={1}>
                                     {text}
-                                </AniLink>
+                                </FadeLink>
                             )}
                             {!slug && text}
                         </PanelHeading>
