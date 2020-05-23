@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react"
 import { disableScroll, enableScroll } from "../../helpers/scroll"
+import { globals, store } from "../../state/state"
 
 import { Link } from "gatsby"
 import NavigationButton from "./navbutton"
-import { store } from "../../state/state"
 import styled from "@emotion/styled"
 import { useSiteMetadata } from "../../hooks/use-site-metadata"
 
@@ -21,6 +21,8 @@ const NavThemes = {
         },
     },
 }
+
+const NAV_ANIMATION_TIME = 750
 
 const NavigationStyles = styled.nav`
     pointer-events: ${props => (props.active ? "auto" : "none")};
@@ -41,7 +43,7 @@ const NavInner = styled.div`
     height: 100%;
     width: 100%;
     will-change: clip-path;
-    transition: clip-path 1s ease-in-out;
+    transition: clip-path ${NAV_ANIMATION_TIME}ms ease-in-out;
     clip-path: ${props =>
         !props.active
             ? "circle(1.65rem at calc(100% - 3.5rem) 3.5rem)"
@@ -76,42 +78,60 @@ const StyledLink = styled(props => <Link {...props} />)`
 
 const Navigation = () => {
     const { menuLinks } = useSiteMetadata()
-    const { state, dispatch } = useContext(store)
-    const logoColor = state.theme
 
-    const [navActive, setNav] = useState(false)
+    const { state } = useContext(store)
+    const globalState = useContext(globals)
 
-    let theme = NavThemes.light
-    if (logoColor) theme = NavThemes[logoColor]
+    const [navActive, setNav] = useState(state.nav)
+    const [theme, setTheme] = useState("light")
 
     const linkStyles = {
-        color: theme.colors.color,
+        color: NavThemes[theme].colors.color,
     }
 
-    const nav = active => {
-        setNav(active)
-        active ? disableScroll() : enableScroll()
-        document.body.classList.toggle("navopen")
+    navActive ? disableScroll() : enableScroll()
+
+    const toggleNav = isOpen => {
+        if (isOpen) {
+            setTimeout(() => {
+                setNav(!navActive)
+                globalState.dispatch({ type: "NAV", nav: !navActive })
+            }, 50)
+        } else {
+            setNav(!navActive)
+            globalState.dispatch({ type: "NAV", nav: !navActive })
+        }
     }
 
     useEffect(() => {
+        const timeout = navActive ? NAV_ANIMATION_TIME : 0
+        setTimeout(() => {
+            setTheme(state.theme)
+        }, timeout)
         return function cleanup() {
             document.body.classList.remove("navopen")
             enableScroll()
         }
-    }, [])
+    }, [state.theme])
+
+    const useTheme = NavThemes[theme]
 
     return (
         <NavigationStyles active={navActive}>
             <NavigationButton
-                theme={logoColor}
-                buttonClick={() => nav(navActive ? false : "active")}
+                theme={theme}
+                active={navActive}
+                buttonClick={() => toggleNav()}
             />
-            <NavInner navTheme={theme} active={navActive}>
+            <NavInner navTheme={useTheme} active={navActive}>
                 <NavList>
                     {menuLinks.map(link => (
                         <li key={link.name}>
-                            <StyledLink style={linkStyles} to={link.slug}>
+                            <StyledLink
+                                onClick={() => toggleNav(true)}
+                                style={linkStyles}
+                                to={link.slug}
+                            >
                                 {link.name}
                             </StyledLink>
                         </li>

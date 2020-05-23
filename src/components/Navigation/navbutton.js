@@ -7,7 +7,7 @@ import lottie from "lottie-web"
 import styled from "@emotion/styled"
 
 const NavButton = styled.button`
-    pointer-events: ${props => (props.active ? "auto" : "none")};
+    pointer-events: auto;
     display: block;
     position: absolute;
     right: 1.5rem;
@@ -17,7 +17,6 @@ const NavButton = styled.button`
     cursor: pointer;
     outline: 0;
     border: none;
-    pointer-events: auto;
     border-radius: 50%;
     z-index: 999;
     transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1),
@@ -39,12 +38,9 @@ const ButtonTarget = styled.span`
     transition: all 1s;
     opacity: ${props => (props.active ? "1" : "0")};
 `
-const NavigationButton = ({ theme, buttonClick }) => {
+const NavigationButton = ({ theme, buttonClick, active }) => {
     let [menuIconDark, updateMenuDark] = useState(null)
     let [menuIconLight, updateMenuLight] = useState(null)
-
-    let [status, updateStatus] = useState("closed")
-
     useEffect(() => {
         if (menuIconLight || menuIconDark) lottie.destroy()
 
@@ -77,14 +73,21 @@ const NavigationButton = ({ theme, buttonClick }) => {
         return () => {}
     }, [])
 
-    const onClick = () => {
-        buttonClick()
-        const direction = status === "closed" ? 1 : -1
+    const setupState = () => {
+        const direction = active ? 1 : -1
         theme === "light"
             ? menuIconLight.setDirection(direction)
             : menuIconDark.setDirection(direction)
-        updateStatus(status === "closed" ? "open" : "closed")
         theme === "light" ? menuIconLight.play() : menuIconDark.play()
+    }
+
+    if (menuIconLight || menuIconDark) {
+        setupState()
+    }
+
+    const onClick = () => {
+        buttonClick()
+        setupState()
     }
 
     return (

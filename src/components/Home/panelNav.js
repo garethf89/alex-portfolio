@@ -81,7 +81,7 @@ const PanelLink = styled.a`
         background: #333;
         left: 50%;
         top: 50%;
-        margin: -2px 0 0 -2px;
+        margin: -4px 0 0 -4px;
         transition: all 0.1s ease-in-out;
         height: 8px;
         width: 8px;
