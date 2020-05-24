@@ -1,83 +1,103 @@
-import React, { useContext, useMemo } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 import Panel from "../components/Home/panel"
 import PanelContainer from "../components/panelContainer"
 import PanelImage from "../components/Media/panelimage"
-import ReactFullpage from "@fullpage/react-fullpage"
+import PanelNav from "./Home/panelNav"
+import { TransitionState } from "gatsby-plugin-transition-link"
 import VideoBackground from "../components/Media/video"
-import classNames from "classnames"
-import { gatsbyWindow } from "../helpers/gatsbyWindow"
-import { store } from "../state/state"
-import theme from "../gatsby-plugin-theme-ui/index"
+import anime from "animejs"
+import debounce from "../helpers/debounce"
+import isVisible from "../helpers/isElementVisible"
+import styled from "@emotion/styled"
 
-const FullPage = ({ data, projects }) => {
-    const { state, dispatch } = useContext(store)
-    const themeMode = state.theme
+const FullPageContainer = styled.div``
 
-    const panelColorIndexHome = [
-        {
-            index: 0,
-            color: "light",
-        },
-    ]
+const FullPage = ({ data, projects, status }) => {
+    const [isSnapping, setSnap] = useState(false)
 
-    const panelColorIndexChildren = useMemo(
-        () =>
-            projects.map((value, index) => {
-                const isDarkBackground = value.darkBackground
-                return {
-                    index: index + 1,
-                    color: isDarkBackground ? "light" : "dark",
-                }
-            }),
-        [projects]
-    )
+    let scrollTO = useRef(false)
 
-    const panelColorIndex = panelColorIndexHome.concat(panelColorIndexChildren)
+    const throttled = debounce(e => {
+        scrollTO.current = setTimeout(snap, 200)
+    }, 200)
 
-    const onSlideLeave = (origin, destination, direction) => {
-        if (document.body.classList.contains("navopen")) {
-            return
-        }
+    const resetSnap = () => {
+        scrollTO.current = null
+        setSnap(false)
+        anime.remove(document.scrollingElement)
+    }
 
-        const target = destination.index
-
-        // set logo colors
-        const panel = panelColorIndex.filter(el => {
-            return el.index === target
+    const gotToSlide = (el, scrollDuration = 650) => {
+        anime({
+            targets: document.scrollingElement,
+            scrollTop: el.offsetTop,
+            duration: 650,
+            easing: "easeInOutCirc",
+            complete: () => {
+                resetSnap()
+            },
         })
-        if (!panel[0]) {
+    }
+
+    const snap = () => {
+        const homeContainer = document.getElementById("home-container")
+        const sections = document.querySelectorAll(".section")
+
+        if (!sections.length && homeContainer) {
+            resetSnap()
             return
         }
 
-        if (panel[0]) {
-            dispatch({ type: "THEME", theme: panel[0].color })
+        if (isSnapping) return
+
+        const vh = sections[0].clientHeight
+        const distToBottom = document.body.scrollHeight - window.scrollY - vh
+        const footerHeight =
+            document.body.scrollHeight - homeContainer.clientHeight
+        if (distToBottom < footerHeight) return
+        setSnap(true)
+
+        const snapElements = [...sections]
+        let snapEl = snapElements.find((el, i) => {
+            return isVisible(el, 51)
+        })
+
+        if (snapEl) {
+            gotToSlide(snapEl)
         }
     }
 
+    const goTo = async num => {
+        window.removeEventListener("scroll", throttled)
+        setSnap(true)
+        scrollTO.current = null
+        await anime.remove(document.scrollingElement)
+        const target = document.querySelectorAll(".section")[num]
+        scrollTO.current = setTimeout(gotToSlide(target, 650), 100)
+    }
+
+    useEffect(() => {
+        window.removeEventListener("scroll", throttled)
+        if (!isSnapping) {
+            setTimeout(() => window.addEventListener("scroll", throttled), 200)
+        }
+        return function cleanup() {
+            window.removeEventListener("scroll", throttled)
+        }
+    }, [isSnapping])
+
+    const image = data.contentfulHomePage.image
+    const videoH = image.file.contentType.includes("video")
     return (
-        <ReactFullpage
-            licenseKey={"YOUR_KEY_HERE"}
-            scrollingSpeed={1000}
-            easingcss3="ease"
-            css3
-            onLeave={onSlideLeave}
-            autoScrolling={false}
-            fitToSection
-            fitToSectionDelay={100}
-            render={({ state, fullpageApi }) => {
-                let isMobile = false
-                if (gatsbyWindow) {
-                    isMobile = window.matchMedia(
-                        `(max-width: ${theme.responsive.medium} )`
-                    ).matches
+        <TransitionState>
+            {({ mount, transitionStatus }) => {
+                if (transitionStatus === "exiting") {
+                    resetSnap()
+                    window.removeEventListener("scroll", throttled)
                 }
-
-                const image = data.contentfulHomePage.image
-                const videoH = image.file.contentType.includes("video")
-
                 return (
-                    <ReactFullpage.Wrapper>
+                    <FullPageContainer>
                         <PanelContainer
                             key="home"
                             backgroundColor="#000"
@@ -101,12 +121,13 @@ const FullPage = ({ data, projects }) => {
                             const video = value.coverVideo.file.contentType.includes(
                                 "video"
                             )
-
+                            const isMobile = false
                             const isDarkBackground = value.darkBackground
                             const theme = isDarkBackground ? true : false
                             return (
                                 <PanelContainer
                                     key={index}
+                                    position={index}
                                     darkBackground={theme}
                                     image={video ? "" : value.coverImage}
                                 >
@@ -140,48 +161,20 @@ const FullPage = ({ data, projects }) => {
                                                     }
                                                 />
                                             ))}
-                                        <div className="fp-navcustom">
-                                            <ul>
-                                                {projects.map((p, i) => {
-                                                    let classStyle = classNames(
-                                                        {
-                                                            dark: !isDarkBackground,
-                                                            active: i === index,
-                                                        }
-                                                    )
-                                                    return (
-                                                        <li key={i}>
-                                                            <a
-                                                                onClick={e => {
-                                                                    e.preventDefault()
-                                                                    fullpageApi.moveTo(
-                                                                        i + 2
-                                                                    )
-                                                                }}
-                                                                href="#"
-                                                                className={
-                                                                    classStyle
-                                                                }
-                                                            >
-                                                                <span className="fp-sr-only">
-                                                                    Section{" "}
-                                                                    {index}
-                                                                </span>
-                                                                <span></span>
-                                                            </a>
-                                                        </li>
-                                                    )
-                                                })}
-                                            </ul>
-                                        </div>
+                                        <PanelNav
+                                            data={projects}
+                                            active={index}
+                                            change={goTo}
+                                            isDark={isDarkBackground}
+                                        />
                                     </Panel>
                                 </PanelContainer>
                             )
                         })}
-                    </ReactFullpage.Wrapper>
+                    </FullPageContainer>
                 )
             }}
-        />
+        </TransitionState>
     )
 }
 

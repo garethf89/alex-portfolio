@@ -1,22 +1,12 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
-import React, { useContext, useState } from "react"
-import { graphql, useStaticQuery } from "gatsby"
+import React, { useContext, useEffect, useState } from "react"
 
 import Footer from "./footer"
-import { Global } from "@emotion/core"
 import Header from "./header"
-import PropTypes from "prop-types"
 import SEO from "./seo"
-import globalStyles from "../styles/globals"
 import { store } from "../state/state"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../helpers/support/webp"
+import { useStaticQuery } from "gatsby"
 
 const Root = styled.div`
     font-family: ${props => props.theme.fonts.body};
@@ -28,7 +18,39 @@ const Root = styled.div`
     }
 `
 
-const Layout = ({ children, title, image, description }) => {
+const TemplateWrap = ({
+    children,
+    location,
+    title,
+    description,
+    image,
+    transitionStatus,
+    entry,
+    exit,
+}) => {
+    const { state, dispatch } = useContext(store)
+    const [initGlobals, setInitGlobals] = useState(false)
+    useEffect(() => {
+        if (!initGlobals) {
+            supportsWebP(res => {
+                if (!res && state.webp) {
+                    dispatch({ type: "WEBP", webp: false })
+                }
+            })
+            setInitGlobals(true)
+        }
+    }, [])
+    return (
+        <Root>
+            <SEO title={title} description={description} image={image} />
+            <Header siteTitle={title} />
+            <main>{children}</main>
+            <Footer />
+        </Root>
+    )
+}
+
+const PageLayout = props => {
     const data = useStaticQuery(graphql`
         query SiteTitleQuery {
             site {
@@ -38,31 +60,6 @@ const Layout = ({ children, title, image, description }) => {
             }
         }
     `)
-    const { state, dispatch } = useContext(store)
-    const [initGlobals, setInitGlobals] = useState(false)
-
-    if (!initGlobals) {
-        supportsWebP(res => {
-            if (!res && state.webp) {
-                dispatch({ type: "WEBP", webp: false })
-            }
-        })
-        setInitGlobals(true)
-    }
-
-    return (
-        <Root>
-            <SEO title={title} description={description} image={image} />
-            <Header siteTitle={data.site.siteMetadata.title} />
-            <main>{children}</main>
-            <Footer />
-            <Global styles={globalStyles} />
-        </Root>
-    )
+    return <TemplateWrap title={data.site.siteMetadata.title} {...props} />
 }
-
-Layout.propTypes = {
-    children: PropTypes.node.isRequired,
-}
-
-export default Layout
+export default PageLayout

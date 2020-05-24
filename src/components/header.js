@@ -1,10 +1,10 @@
 import React, { useContext } from "react"
+import { globals, store } from "../state/state"
 
 import { Link } from "gatsby"
 import Navigation from "./Navigation/nav"
 import PropTypes from "prop-types"
 import SvgLogo from "../svgs/logo"
-import { store } from "../state/state"
 import styled from "@emotion/styled"
 
 const HeaderStyles = styled.header`
@@ -36,7 +36,7 @@ const HeaderLogo = styled(SvgLogo)`
     width: 3.75rem;
     display: block;
     g {
-        transition: all 1s;
+        transition: all 1s ${props => (props.delay ? ".8s" : "")};
     }
     &.svgHeaderLogo {
         g {
@@ -51,7 +51,9 @@ const HeaderLogo = styled(SvgLogo)`
 `
 
 const Header = ({ siteTitle }) => {
-    const { state, dispatch } = useContext(store)
+    const { state } = useContext(store)
+    const globalState = useContext(globals)
+
     const logoColor = state.theme
     const svgClass =
         logoColor === "light" ? "svgHeaderLogo" : "svgHeaderLogo--dark"
@@ -59,7 +61,10 @@ const Header = ({ siteTitle }) => {
     return (
         <HeaderStyles>
             <HeaderLink to="/">
-                <HeaderLogo className={svgClass} />
+                <HeaderLogo
+                    delay={globalState.state.nav ? 1 : 0}
+                    className={svgClass}
+                />
                 Home
             </HeaderLink>
             <Navigation siteTitle={siteTitle} />

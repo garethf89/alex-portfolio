@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from "react"
+import React, { useContext, useEffect, useRef } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
 import FullPage from "../components/fullpage"
-import Layout from "../components/layout"
 import SeeMore from "../components/Work/seemore"
-import { gatsbyWindow } from "../helpers/gatsbyWindow"
-import throttle from "lodash.throttle"
+import { store } from "../state/state"
 
 const IndexPage = () => {
     const data = useStaticQuery(graphql`
@@ -59,46 +57,20 @@ const IndexPage = () => {
     `)
 
     const projects = data.contentfulHomePage.projects
-
     const fpRef = useRef(null)
+    const { dispatch } = useContext(store)
 
-    const checkScroll = () => {
-        if (!fpRef.current) {
-            return
-        }
-        if (!gatsbyWindow()) {
-            return
-        }
-
-        const offset = 0
-        const slidesAmount = projects.length + 1
-        const heightOfFullpage = fpRef.current.offsetHeight
-        const heightofPanel = heightOfFullpage / slidesAmount - offset
-        const outOfBounds = window.scrollY > heightOfFullpage - heightofPanel
-        if (outOfBounds) {
-            window.fullpage_api.setFitToSection(false)
-        } else {
-            window.fullpage_api.setFitToSection(true)
-        }
-    }
-    if (gatsbyWindow()) {
-        useEffect(() => {
-            window.addEventListener("scroll", throttle(checkScroll, 500))
-
-            return function cleanup() {
-                window.removeEventListener("scroll", throttle(checkScroll, 500))
-                window.fullpage_api.destroy("all")
-            }
-        }, [])
-    }
+    useEffect(() => {
+        dispatch({ type: "THEME", theme: "light" })
+    }, [])
 
     return (
-        <Layout title="Home">
+        <div id="home-container">
             <div ref={fpRef}>
                 <FullPage data={data} projects={projects} />
             </div>
             <SeeMore />
-        </Layout>
+        </div>
     )
 }
 

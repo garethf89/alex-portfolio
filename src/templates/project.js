@@ -5,7 +5,6 @@ import BodyContent from "../components/Content/bodyContent"
 import Container from "../components/container"
 import HeadContent from "../components/Content/headContent"
 import HeadHeading from "../components/Content/headHeading"
-import Layout from "../components/layout"
 import LinkedProjects from "../components/Shared/linkedProjects"
 import Panel from "../components/Home/panel"
 import PanelContainer from "../components/panelContainer"
@@ -27,6 +26,7 @@ const ProjectTemplate = ({ data }) => {
         locked,
         slug,
     } = data.contentfulProject
+
     const bodyjson = body.json
     const hasVideo = coverVideo.file.contentType.includes("video")
 
@@ -40,12 +40,15 @@ const ProjectTemplate = ({ data }) => {
         )
     }
 
+    const transitionedFromHome = document.getElementById("home-container")
+
     return (
-        <Layout title={title}>
+        <>
             <PanelContainer
                 contentPage
                 backgroundColor="#000"
                 darkBackground={darkBackground}
+                showTransition={transitionedFromHome}
             >
                 <Panel>
                     <VideoBackground
@@ -63,7 +66,7 @@ const ProjectTemplate = ({ data }) => {
             </Container>
             <LinkedProjects exclude={id} />
             <Social />
-        </Layout>
+        </>
     )
 }
 

@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react"
 
 const initialStateTheme = { theme: "light" }
-const initialStateGlobals = { webp: true }
+const initialStateGlobals = { webp: true, nav: false }
 export const store = createContext()
 export const globals = createContext()
 
@@ -11,6 +11,8 @@ const reducer = (state, action) => {
             return { ...state, theme: action.theme }
         case "WEBP":
             return { ...state, webp: action.webp }
+        case "NAV":
+            return { ...state, nav: action.nav }
         default:
             return {}
     }

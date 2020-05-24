@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 
 import AuthModal from "../Auth/authModal"
 import Heading from "../Typography/heading"
@@ -57,10 +57,6 @@ const WorkPanel = ({ size, title, image, color, slug, locked }) => {
 
     const auth = isAuth()
     const showLocked = !auth && locked
-
-    useEffect(() => {
-        dispatch({ type: "THEME", theme: "dark" })
-    }, [])
 
     supportsWebP(res => {
         if (res) {

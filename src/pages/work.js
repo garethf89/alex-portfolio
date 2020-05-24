@@ -1,10 +1,11 @@
+import React, { useContext, useEffect } from "react"
+
 import Container from "../components/container"
 import Heading from "../components/Typography/heading"
-import Layout from "../components/layout"
-import React from "react"
 import Social from "../components/social"
 import WorkPanel from "../components/Work/panels"
 import { getAllProjects } from "../hooks/get-all-projects"
+import { store } from "../state/state"
 import styled from "@emotion/styled"
 
 const ContainerWork = styled(Container)`
@@ -40,9 +41,13 @@ const WorkPage = () => {
             />
         )
     })
+    const { dispatch } = useContext(store)
 
+    useEffect(() => {
+        dispatch({ type: "THEME", theme: "dark" })
+    }, [])
     return (
-        <Layout title="Work">
+        <>
             <ContainerWork>
                 <Heading level="h1" text="Latest work" />
             </ContainerWork>
@@ -50,7 +55,7 @@ const WorkPage = () => {
                 <WorkFlex>{panels}</WorkFlex>
             </Container>
             <Social />
-        </Layout>
+        </>
     )
 }
 

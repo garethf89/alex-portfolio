@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useRef } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 
+import classNames from "classnames"
 import { gatsbyWindow } from "../helpers/gatsbyWindow"
 import isElementVisible from "../helpers/isElementVisible"
 import { store } from "../state/state"
@@ -7,13 +8,25 @@ import styled from "@emotion/styled"
 import throttle from "lodash.throttle"
 
 const PanelContainerStyled = styled.div`
-    transition: height 0.5s ease-out;
-    height: ${props => (props.contentPage ? "73vh" : "100vh")};
-    position: relative;
-    .fp-tableCell {
-        vertical-align: bottom;
+    @keyframes size {
+        from {
+            height: 100vh;
+        }
+        to {
+            height: 73vh;
+        }
     }
 
+    height: ${props =>
+        props.contentPage && !props.showTransition ? "73vh" : "100vh"};
+    position: relative;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    animation-name: ${props => (props.showTransition ? "size" : "0")};
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
     background-color: ${props => props.backgroundColor};
     background-image: url(${props => props.image});
     background-position: center;
@@ -32,26 +45,40 @@ const PanelContainer = ({
     darkBackground,
     displayImage,
     children,
+    showTransition,
 }) => {
     const theme = darkBackground ? "light" : "dark"
+
     const ref = useRef(null)
     const { dispatch } = useContext(store)
 
     const state = getCurrentState()
+
+    const [visibility, setVisibility] = useState(true)
+
     const visibilityChange = () => {
         if (!ref.current) {
             return
         }
-        const isVisible = isElementVisible(ref.current)
-        if (isVisible && state.theme !== theme) {
+        const isVisible = isElementVisible(ref.current, 51)
+        if (isVisible === visibility) {
+            return
+        } else {
+            setVisibility(isVisible)
+        }
+        if (isVisible) {
             dispatch({ type: "THEME", theme: theme })
-        } else if (!isVisible && state.theme !== "dark") {
+        } else if (!isVisible && contentPage) {
             dispatch({ type: "THEME", theme: "dark" })
         }
     }
-    const throttled = throttle(visibilityChange, 200)
-    if (gatsbyWindow() && contentPage) {
+
+    const throttled = throttle(visibilityChange, 500)
+    if (gatsbyWindow()) {
         useEffect(() => {
+            if (contentPage) {
+                dispatch({ type: "THEME", theme: theme })
+            }
             window.removeEventListener("scroll", throttled)
 
             window.addEventListener("scroll", throttled)
@@ -59,17 +86,28 @@ const PanelContainer = ({
             return function cleanup() {
                 window.removeEventListener("scroll", throttled)
             }
-        }, [state])
+        }, [visibility])
+        useEffect(() => {
+            if (contentPage && state.theme !== theme) {
+                dispatch({ type: "THEME", theme: theme })
+            }
+        }, [])
     }
+
+    const classStyle = classNames({
+        section: true,
+        setHeight: contentPage,
+    })
 
     return (
         <PanelContainerStyled
-            className="section"
+            className={classStyle}
             backgroundColor={backgroundColor}
             image={displayImage}
             color={theme}
             contentPage={contentPage}
             ref={ref}
+            showTransition={showTransition}
         >
             {children}
         </PanelContainerStyled>
