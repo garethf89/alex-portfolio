@@ -18,7 +18,7 @@ const AboutPage = () => {
                     title
                 }
             }
-            contentfulAboutPage {
+            page: contentfulAboutPage {
                 headline
                 title
                 body {
@@ -33,7 +33,7 @@ const AboutPage = () => {
             }
         }
     `)
-    const AboutData = data.contentfulAboutPage
+    const AboutData = data.page
     return (
         <>
             <PanelContainer contentPage darkBackground backgroundColor="#000">
@@ -48,10 +48,10 @@ const AboutPage = () => {
             </PanelContainer>
             <Container>
                 <HeadHeading
-                    subtext={data.contentfulAboutPage.title}
-                    headline={data.contentfulAboutPage.headline}
+                    subtext={data.page.title}
+                    headline={data.page.headline}
                 />
-                <HeadContent body={data.contentfulAboutPage.body.json} />
+                <HeadContent body={data.page.body.json} />
             </Container>
             <LinkedProjects />
 

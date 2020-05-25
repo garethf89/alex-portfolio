@@ -25,7 +25,7 @@ const ProjectTemplate = ({ data }) => {
         agency,
         locked,
         slug,
-    } = data.contentfulProject
+    } = data.page
 
     const bodyjson = body.json
     const hasVideo = coverVideo.file.contentType.includes("video")
@@ -72,7 +72,7 @@ const ProjectTemplate = ({ data }) => {
 
 export const query = graphql`
     query($id: String!) {
-        contentfulProject(id: { eq: $id }) {
+        page: contentfulProject(id: { eq: $id }) {
             id
             metaDescription {
                 metaDescription

@@ -6,7 +6,6 @@ import SEO from "./seo"
 import { store } from "../state/state"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../helpers/support/webp"
-import { useStaticQuery } from "gatsby"
 
 const Root = styled.div`
     font-family: ${props => props.theme.fonts.body};
@@ -18,18 +17,12 @@ const Root = styled.div`
     }
 `
 
-const TemplateWrap = ({
-    children,
-    location,
-    title,
-    description,
-    image,
-    transitionStatus,
-    entry,
-    exit,
-}) => {
+const TemplateWrap = ({ children, description, image, data }) => {
     const { state, dispatch } = useContext(store)
     const [initGlobals, setInitGlobals] = useState(false)
+
+    const { title } = data.page || "Alex Ionna"
+
     useEffect(() => {
         if (!initGlobals) {
             supportsWebP(res => {
@@ -42,7 +35,11 @@ const TemplateWrap = ({
     }, [])
     return (
         <Root>
-            <SEO title={title} description={description} image={image} />
+            <SEO
+                pageTitle={title}
+                pageDescription={description}
+                pageImage={image}
+            />
             <Header siteTitle={title} />
             <main>{children}</main>
             <Footer />
@@ -51,15 +48,6 @@ const TemplateWrap = ({
 }
 
 const PageLayout = props => {
-    const data = useStaticQuery(graphql`
-        query SiteTitleQuery {
-            site {
-                siteMetadata {
-                    title
-                }
-            }
-        }
-    `)
-    return <TemplateWrap title={data.site.siteMetadata.title} {...props} />
+    return <TemplateWrap {...props} />
 }
 export default PageLayout

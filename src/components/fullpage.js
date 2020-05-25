@@ -87,7 +87,7 @@ const FullPage = ({ data, projects, status }) => {
         }
     }, [isSnapping])
 
-    const image = data.contentfulHomePage.image
+    const image = data.page.image
     const videoH = image.file.contentType.includes("video")
     return (
         <TransitionState>
@@ -104,8 +104,8 @@ const FullPage = ({ data, projects, status }) => {
                             darkBackground
                         >
                             <Panel
-                                text={data.contentfulHomePage.headline}
-                                topText={data.contentfulHomePage.title}
+                                text={data.page.headline}
+                                topText={data.page.title}
                             >
                                 {videoH && (
                                     <VideoBackground

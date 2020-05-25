@@ -5,6 +5,7 @@ module.exports.data = {
         node {
           id
           slug
+          title
         }
       }
     }

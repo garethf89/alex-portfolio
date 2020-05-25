@@ -13,7 +13,7 @@ const IndexPage = () => {
                     title
                 }
             }
-            contentfulHomePage {
+            page: contentfulHomePage {
                 headline
                 title
                 image {
@@ -56,7 +56,7 @@ const IndexPage = () => {
         }
     `)
 
-    const projects = data.contentfulHomePage.projects
+    const projects = data.page.projects
     const fpRef = useRef(null)
     const { dispatch } = useContext(store)
 

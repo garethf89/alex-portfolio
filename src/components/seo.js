@@ -5,46 +5,39 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import { graphql, useStaticQuery } from "gatsby"
-
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import React from "react"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
 
-const SEO = ({ title, description, image }) => {
-    const { site } = useStaticQuery(
-        graphql`
-            query {
-                site {
-                    siteMetadata {
-                        title
-                        description
-                        image
-                        siteUrl
-                    }
-                }
-            }
-        `
-    )
+const SEO = ({ pageTitle, pageDescription, pageImage }) => {
+    const { siteUrl, image, title, description } = useSiteMetadata()
 
-    const defaultImage = site.siteMetadata.siteUrl + site.siteMetadata.image
-    const metaDescription = description || site.siteMetadata.description
-    const metaImage = image || defaultImage
+    const metaDescription = pageDescription || description
+    const metaImage = pageImage || image
+
+    const titleTemplate =
+        pageTitle && pageTitle !== title
+            ? `${title} | ${pageTitle}`
+            : `${title}`
 
     return (
         <Helmet
             htmlAttributes={{
                 lang: `en`,
             }}
+            link={[siteUrl]}
             title={title}
-            defaultTitle={site.siteMetadata.title}
-            titleTemplate={`%s | ${site.siteMetadata.title}`}
+            defaultTitle={title}
+            titleTemplate={titleTemplate}
         >
             <meta charSet="utf-8" />
             <meta
                 name="viewport"
                 content="width=device-width, initial-scale=1"
             />
+
+            <link rel="canonical" href={siteUrl} />
             {/* General tags */}
             <meta name="image" content={image} />
             <meta name="description" content={metaDescription} />
@@ -73,7 +66,7 @@ SEO.propTypes = {
     description: PropTypes.string,
     lang: PropTypes.string,
     meta: PropTypes.arrayOf(PropTypes.object),
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
 }
 
 export default SEO
