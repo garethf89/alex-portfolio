@@ -18,9 +18,9 @@ try {
 }
 module.exports = {
     siteMetadata: {
-        title: "Alex",
+        title: "Alex Ionna",
         description: "Portfolio of Web Designer Alex Ionna",
-        siteUrl: "http://TODO",
+        siteUrl: "http://www.alexionna.co.uk",
         author: "Gareth Ferguson",
         image: "/images/AlexLogo.jpg",
         menuLinks: [
