@@ -6,9 +6,8 @@ const PanelListContainer = styled.div`
     position: absolute;
     z-index: 4;
     opacity: 1;
-    transform: translate3d(0, 0, 0);
-    left: 0 !important;
-    right: 0;
+    transform: translate3d(-50%, 0, 0);
+    left: 50% !important;
     margin: 0 auto !important;
     top: auto;
     bottom: 1.75rem;
