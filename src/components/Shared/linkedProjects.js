@@ -26,6 +26,11 @@ const LinkedProjectLinkContainer = styled.div`
         text-decoration: none;
         color: inherit;
     }
+    &:hover {
+        a span {
+            transform: scale(1.1);
+        }
+    }
 `
 const LinkedProjectLink = styled(Link)`
     padding-top: 56.25%;
@@ -36,6 +41,23 @@ const LinkedProjectLink = styled(Link)`
     background-repeat: no-repeat;
     display: inline-block;
     width: 100%;
+    position: relative;
+    overflow: hidden;
+`
+const LinkedProjectLinkBG = styled.span`
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: ${props => props.theme.colors.secondaryBackground};
+    background-image: url(${props => props.image});
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    transition: all 0.5s ease-in-out;
 `
 
 const LinkedProjectLinkHeading = styled(Heading)`
@@ -80,15 +102,19 @@ const LinkedProjects = ({ exclude }) => {
                             return (
                                 <LinkedProjectLinkContainer key={i}>
                                     <LinkedProjectLink
-                                        image={
-                                            webp
-                                                ? project.coverImage.fixed
-                                                      .srcWebp
-                                                : project.coverImage.fixed.src
-                                        }
                                         to={`/${project.slug}`}
                                         className=""
-                                    ></LinkedProjectLink>
+                                    >
+                                        <LinkedProjectLinkBG
+                                            image={
+                                                webp
+                                                    ? project.coverImage.fixed
+                                                          .srcWebp
+                                                    : project.coverImage.fixed
+                                                          .src
+                                            }
+                                        />
+                                    </LinkedProjectLink>
                                     <LinkedProjectLinkHeading level="h3">
                                         <Link
                                             className=""

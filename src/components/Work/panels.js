@@ -15,16 +15,37 @@ const WorkPanelStyled = styled(Link)`
     color: ${props => (props.color === "dark" ? "#000" : "#fff")};
     overflow: hidden;
     margin-bottom: 3.75rem;
-    background-image: url(${props => props.image});
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
     text-decoration: none;
+    cursor: ${props => (props.disabled ? "disabled" : "pointer")};
     pointer-events: ${props => (props.disabled ? "none" : "auto")};
+    transition: all 0.5s ease-in-out;
+    display: block;
+    position: relative;
     @media (min-width: ${props => props.theme.responsive.medium}) {
         padding-top: ${props => (props.size === "large" ? "55%" : "22%")};
         width: ${props => (props.size === "large" ? "100%" : "47%")};
     }
+
+    &:hover {
+        .w-panel-bg {
+            transform: scale(1.1);
+        }
+    }
+`
+
+const Background = styled.div`
+    background-image: url(${props => props.image});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 0.5s ease-in-out;
+    transform: scale(1);
+    z-index: -1;
 `
 
 const Content = styled.div`
@@ -83,11 +104,11 @@ const WorkPanel = ({ size, title, image, color, slug, locked }) => {
         <WorkPanelStyled
             to={`/${slug}`}
             size={size}
-            image={imageSrc}
             color={color}
             onClick={clickLink}
             disabled={showLocked && modalOpen}
         >
+            <Background className="w-panel-bg" image={imageSrc} />
             <Content>
                 {showLocked && (
                     <>
