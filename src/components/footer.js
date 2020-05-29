@@ -6,6 +6,13 @@ const FooterStyles = styled.p`
     margin: 0;
 `
 
+const FooterStylesSub = styled.p`
+    margin: 0;
+    span {
+        font-size: 14px;
+    }
+`
+
 const FooterOuter = styled.footer`
     section {
         padding-top: 3.44rem;
@@ -19,6 +26,18 @@ const Footer = () => {
         <FooterOuter>
             <Container>
                 <FooterStyles>Alex Ioanna Graphic Design {year}</FooterStyles>
+                <FooterStylesSub>
+                    <span>
+                        Built by&nbsp;
+                        <a
+                            href="http://www.garethferguson.co.uk"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                        >
+                            Gareth Ferguson
+                        </a>
+                    </span>
+                </FooterStylesSub>
             </Container>
         </FooterOuter>
     )
