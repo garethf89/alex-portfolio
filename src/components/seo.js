@@ -21,12 +21,13 @@ const SEO = ({ pageTitle, pageDescription, pageImage }) => {
             ? `${title} | ${pageTitle}`
             : `${title}`
 
+    const isHome = pageTitle === title
+
     return (
         <Helmet
             htmlAttributes={{
                 lang: `en`,
             }}
-            link={[siteUrl]}
             title={title}
             defaultTitle={title}
             titleTemplate={titleTemplate}
@@ -52,6 +53,18 @@ const SEO = ({ pageTitle, pageDescription, pageImage }) => {
             <meta name="twitter:title" content={title} />
             <meta name="twitter:image" content={metaImage} />
             <meta name="twitter:description" content={metaDescription} />
+            {isHome && (
+                <script type="application/ld+json">{`
+              {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Alex Ionna",
+                "url": "http://www.alexionna.co.uk",
+                "logo": "http://www.alexionna.co.uk/icons/icon-48x48.png",
+                "sameAs": "http://WWW.TODO.CO.UK"
+              }
+             `}</script>
+            )}
         </Helmet>
     )
 }
