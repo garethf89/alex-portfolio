@@ -21,6 +21,7 @@ const Image = styled.img`
 
 const StyledHalfImage = styled.div`
     display: block;
+    margin-bottom: 2rem;
     img {
         &:first-of-type {
             margin-bottom: 2rem;
@@ -30,6 +31,7 @@ const StyledHalfImage = styled.div`
         display: flex;
         img {
             width: 50%;
+            margin-bottom: 0;
             &:first-of-type {
                 margin-bottom: 0;
             }
@@ -141,17 +143,23 @@ const Body = ({ text, className, include, exclude }) => {
         const textObject = { ...text }
 
         // remove empties
-        const noEmpty = Object.values(textObject).filter((obj, i) => {
+        const noEmpty = Object.values(textObject).map((obj, i) => {
             if (obj.remove) {
                 return false
             }
-            if (obj.type === "ContentfulPageContentTextContent") {
-                return obj.body.json.content[0].content[0].value.length
-                    ? true
-                    : false
+            if (obj.__typename === "ContentfulPageContentTextContent") {
+                obj.body.json.content = obj.body.json.content.filter((e, i) => {
+                    if (
+                        e.nodeType === "paragraph" &&
+                        e.content[0].value.length < 1
+                    ) {
+                        return false
+                    }
+                    return e
+                })
             }
-
-            return true
+            console.log(obj)
+            return obj
         })
 
         setText(noEmpty)
