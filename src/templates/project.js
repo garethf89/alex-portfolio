@@ -17,17 +17,15 @@ const ProjectTemplate = ({ data }) => {
     const {
         id,
         title,
-        coverImage,
         darkBackground,
         coverVideo,
         headline,
-        body,
         agency,
         locked,
         slug,
+        pageContent,
     } = data.page
 
-    const bodyjson = body.json
     const hasVideo = coverVideo.file.contentType.includes("video")
 
     if (locked && !isAuth()) {
@@ -61,8 +59,8 @@ const ProjectTemplate = ({ data }) => {
             </PanelContainer>
             <Container>
                 <HeadHeading subtext={title} headline={headline} />
-                <HeadContent body={bodyjson} agency={agency} />
-                <BodyContent body={bodyjson} />
+                <HeadContent body={pageContent} agency={agency} />
+                <BodyContent body={pageContent} />
             </Container>
             <LinkedProjects exclude={id} />
             <Social />
@@ -85,6 +83,46 @@ export const query = graphql`
             darkBackground
             locked
             slug
+            pageContent {
+                ... on ContentfulPageContentVideo {
+                    id
+                    video {
+                        file {
+                            url
+                        }
+                    }
+                }
+                ... on ContentfulPageContentTextContent {
+                    body {
+                        json
+                    }
+                }
+                ... on ContentfulPageContentFullWidthImage {
+                    image {
+                        title
+                        description
+                        file {
+                            url
+                        }
+                    }
+                }
+                ... on ContentfulPageContentHalfWidthImages {
+                    secondImage {
+                        title
+                        description
+                        file {
+                            url
+                        }
+                    }
+                    firstImage {
+                        title
+                        description
+                        file {
+                            url
+                        }
+                    }
+                }
+            }
             body {
                 json
             }

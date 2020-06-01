@@ -9,6 +9,12 @@ const BodyContainer = styled.div`
         margin-top: 0;
         + img {
             margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+        + .video-inline-player,
+        + .half-width-images {
+            margin-top: 2rem;
+            margin-bottom: 3rem;
         }
     }
 `

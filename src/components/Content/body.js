@@ -14,23 +14,50 @@ const StyledParagraph = styled.p`
     max-width: ${props => props.theme.sizes.contentMaxWidth};
 `
 
-const StyledParagraphImage = styled.p`
-    font-size: 1.13rem;
-    line-height: 1.6;
-    font-weight: 200;
+const Image = styled.img`
+    max-width: 100%;
+    margin-bottom: 3rem;
+`
+
+const StyledHalfImage = styled.div`
+    display: block;
+    img {
+        &:first-of-type {
+            margin-bottom: 2rem;
+        }
+    }
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        display: flex;
+        img {
+            width: 50%;
+            &:first-of-type {
+                margin-bottom: 0;
+            }
+        }
+    }
+`
+
+const StyledParagraphImage = styled.div`
+    margin: 0;
     position: relative;
+    height: 0;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: visible;
+    justify-content: space-between;
     span {
         display: inline-block;
+        width: 100%;
         max-width: ${props => props.theme.sizes.contentMaxWidth};
     }
     img {
         display: none;
+        max-width: calc(100% - ${props => props.theme.sizes.contentMaxWidth});
     }
     @media (min-width: ${props => props.theme.responsive.medium}) {
         img {
             display: inline-block;
-            position: absolute;
-            right: 0;
+            flex-shrink: 1;
         }
     }
 `
@@ -38,7 +65,10 @@ const StyledParagraphImage = styled.p`
 const Bold = ({ children }) => <span className="bold">{children}</span>
 const Text = ({ children }) => <StyledParagraph>{children}</StyledParagraph>
 const TextImage = ({ children }) => (
-    <StyledParagraphImage>{children}</StyledParagraphImage>
+    <StyledParagraphImage>
+        <span></span>
+        {children}
+    </StyledParagraphImage>
 )
 
 const options = {
@@ -47,25 +77,7 @@ const options = {
     },
     renderNode: {
         [BLOCKS.PARAGRAPH]: (node, children) => {
-            const images = Object.values(children).filter(element => {
-                return element.type && element.type.name === "ContentImage"
-            })
-            const hasImage = images.length
-            if (!hasImage) {
-                if (!children[0].length) {
-                    return ""
-                }
-                return <Text>{children}</Text>
-            }
-            const text = Object.values(children).filter(element => {
-                return !element.type
-            })
-            return (
-                <TextImage>
-                    <span>{text}</span>
-                    {images}
-                </TextImage>
-            )
+            return <Text>{children}</Text>
         },
         [BLOCKS.HEADING_1]: (node, children) => (
             <Heading level="h1">{children}</Heading>
@@ -88,9 +100,12 @@ const options = {
             if (video) {
                 return <Video src={file.url} contentType={file.contentType} />
             }
-            return <ContentImage node={node} size="large" />
+            return (
+                <TextImage>
+                    <img src={file.url} alt={file.title} />
+                </TextImage>
+            )
         },
-
         [INLINES.ASSET_HYPERLINK]: (node, children) => {
             return <ContentImage node={node} size="small" />
         },
@@ -105,13 +120,18 @@ const Body = ({ text, className, include, exclude }) => {
     const textToUse = (t, includes, excludes) => {
         //One paragraph for heading only
         if (includes || includes === 0) {
-            t.content = Object.values(t.content).filter((obj, i) => {
-                return i === includes ? obj : false
+            t = t.filter((e, i) => {
+                if (i > includes) {
+                    return false
+                }
+                return true
             })
         } else if (excludes || excludes === 0) {
-            // All other objects
-            t.content = Object.values(t.content).filter((obj, i) => {
-                return i !== exclude ? obj : false
+            t = t.filter((e, i) => {
+                if (i <= excludes) {
+                    return false
+                }
+                return true
             })
         }
         return t
@@ -120,59 +140,76 @@ const Body = ({ text, className, include, exclude }) => {
     useEffect(() => {
         const textObject = { ...text }
 
-        // group together adjacent images - DISABLED FOR NOW!
-
-        /* 
-                "embedded-asset-block-group": (node, children) => {
-            return <ContentImageGroup node={node} size="large" />
-        },
-        */
-        // if (textObject.content.length) {
-        //     const grouped = []
-        //     pairwise(textObject.content, function (current, next) {
-        //         if (
-        //             current.nodeType === BLOCKS.EMBEDDED_ASSET &&
-        //             next.nodeType === BLOCKS.EMBEDDED_ASSET
-        //         ) {
-        //             grouped.push({
-        //                 nodeType: "embedded-asset-block-group",
-        //                 content: [],
-        //                 data: [current, next],
-        //             })
-        //             next.remove = true
-        //         }
-        //     })
-
-        //     if (grouped.length) {
-        //         grouped.map((el, i) => {
-        //             const t = { ...el }
-        //             textObject.content = { ...textObject.content, t }
-        //         })
-        //     }
-        // }
-
         // remove empties
-        textObject.content = Object.values(textObject.content).filter(
-            (obj, i) => {
-                if (obj.remove) {
-                    return false
-                }
-                if (obj.nodeType !== "paragraph") {
-                    return true
-                }
-                return obj.content[0].value.length ? true : false
+        const noEmpty = Object.values(textObject).filter((obj, i) => {
+            if (obj.remove) {
+                return false
             }
-        )
+            if (obj.type === "ContentfulPageContentTextContent") {
+                return obj.body.json.content[0].content[0].value.length
+                    ? true
+                    : false
+            }
 
-        setText(textObject)
+            return true
+        })
+
+        setText(noEmpty)
         return function cleanup() {}
     }, [])
 
-    if (textObjectToUse) {
-        const outputText = textToUse(textObjectToUse, include, exclude)
-        return <BodyText className={className} text={outputText} />
+    if (!textObjectToUse) {
+        return ""
     }
-    return <h1></h1>
+
+    const outputText = textToUse(textObjectToUse, include, exclude)
+    console.log(outputText)
+    const content = []
+
+    Object.values({ ...outputText }).filter((element, i) => {
+        const type = element.__typename
+
+        if (type === "ContentfulPageContentTextContent") {
+            content.push(
+                <BodyText
+                    key={i}
+                    className={className}
+                    text={element.body.json}
+                />
+            )
+        }
+        if (type === "ContentfulPageContentVideo") {
+            const file = element.video.file
+            content.push(
+                <Video src={file.url} contentType={file.contentType} />
+            )
+        }
+        if (type === "ContentfulPageContentFullWidthImage") {
+            content.push(
+                <Image
+                    src={element.image[0].file.url}
+                    alt={element.image[0].file.title}
+                ></Image>
+            )
+        }
+        if (type === "ContentfulPageContentHalfWidthImages") {
+            content.push(
+                <StyledHalfImage className="half-width-images">
+                    <Image
+                        src={element.firstImage.file.url}
+                        alt={element.secondImage.file.title}
+                    ></Image>
+                    <Image
+                        src={element.firstImage.file.url}
+                        alt={element.secondImage.file.title}
+                    ></Image>
+                </StyledHalfImage>
+            )
+        }
+        return true
+    })
+
+    return content
 }
 
 export default Body
