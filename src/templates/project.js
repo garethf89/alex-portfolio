@@ -11,6 +11,7 @@ import PanelContainer from "../components/panelContainer"
 import React from "react"
 import Social from "../components/social"
 import VideoBackground from "../components/Media/video"
+import { gatsbyWindow } from "../helpers/gatsbyWindow"
 import { isAuth } from "../helpers/auth"
 
 const ProjectTemplate = ({ data }) => {
@@ -27,8 +28,9 @@ const ProjectTemplate = ({ data }) => {
     } = data.page
 
     const hasVideo = coverVideo.file.contentType.includes("video")
+    const auth = gatsbyWindow() ? isAuth() : false
 
-    if (locked && !isAuth()) {
+    if (locked && !auth) {
         return (
             <AuthModal
                 target={`/${slug}`}
@@ -38,7 +40,9 @@ const ProjectTemplate = ({ data }) => {
         )
     }
 
-    const transitionedFromHome = document.getElementById("home-container")
+    const transitionedFromHome = gatsbyWindow()
+        ? document.getElementById("home-container")
+        : false
 
     return (
         <>

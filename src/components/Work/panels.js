@@ -4,6 +4,7 @@ import AuthModal from "../Auth/authModal"
 import Heading from "../Typography/heading"
 import { Link } from "gatsby"
 import { Locked } from "../../svgs/Index"
+import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import { isAuth } from "../../helpers/auth"
 import { store } from "../../state/state"
 import styled from "@emotion/styled"
@@ -76,7 +77,7 @@ const WorkPanel = ({ size, title, image, color, slug, locked }) => {
     const [modalOpen, setModal] = useState(false)
     const { state, dispatch } = useContext(store)
 
-    const auth = isAuth()
+    const auth = gatsbyWindow() ? isAuth() : false
     const showLocked = !auth && locked
 
     supportsWebP(res => {

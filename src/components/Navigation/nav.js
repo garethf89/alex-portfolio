@@ -4,6 +4,7 @@ import { globals, store } from "../../state/state"
 
 import { Link } from "gatsby"
 import NavigationButton from "./navbutton"
+import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import styled from "@emotion/styled"
 import { useSiteMetadata } from "../../hooks/use-site-metadata"
 
@@ -89,7 +90,9 @@ const Navigation = () => {
         color: NavThemes[theme].colors.color,
     }
 
-    navActive ? disableScroll() : enableScroll()
+    if (gatsbyWindow()) {
+        navActive ? disableScroll() : enableScroll()
+    }
 
     const toggleNav = isOpen => {
         if (isOpen) {

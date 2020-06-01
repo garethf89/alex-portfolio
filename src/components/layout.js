@@ -21,7 +21,7 @@ const TemplateWrap = ({ children, description, image, data }) => {
     const { state, dispatch } = useContext(store)
     const [initGlobals, setInitGlobals] = useState(false)
 
-    const { title } = data.page || "Alex Ionna"
+    const { title } = (data && data.page) || "Alex Ionna"
 
     useEffect(() => {
         if (!initGlobals) {
