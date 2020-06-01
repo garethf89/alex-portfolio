@@ -158,7 +158,6 @@ const Body = ({ text, className, include, exclude }) => {
                     return e
                 })
             }
-            console.log(obj)
             return obj
         })
 
@@ -171,7 +170,6 @@ const Body = ({ text, className, include, exclude }) => {
     }
 
     const outputText = textToUse(textObjectToUse, include, exclude)
-    console.log(outputText)
     const content = []
 
     Object.values({ ...outputText }).filter((element, i) => {
@@ -189,12 +187,13 @@ const Body = ({ text, className, include, exclude }) => {
         if (type === "ContentfulPageContentVideo") {
             const file = element.video.file
             content.push(
-                <Video src={file.url} contentType={file.contentType} />
+                <Video key={i} src={file.url} contentType={file.contentType} />
             )
         }
         if (type === "ContentfulPageContentFullWidthImage") {
             content.push(
                 <Image
+                    key={i}
                     src={element.image[0].file.url}
                     alt={element.image[0].file.title}
                 ></Image>
@@ -202,7 +201,7 @@ const Body = ({ text, className, include, exclude }) => {
         }
         if (type === "ContentfulPageContentHalfWidthImages") {
             content.push(
-                <StyledHalfImage className="half-width-images">
+                <StyledHalfImage key={i} className="half-width-images">
                     <Image
                         src={element.firstImage.file.url}
                         alt={element.secondImage.file.title}

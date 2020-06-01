@@ -123,9 +123,6 @@ export const query = graphql`
                     }
                 }
             }
-            body {
-                json
-            }
             agency {
                 url
                 title

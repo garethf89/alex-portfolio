@@ -1,5 +1,6 @@
 import { graphql, useStaticQuery } from "gatsby"
 
+import BodyContent from "../components/Content/bodyContent"
 import Container from "../components/container"
 import HeadContent from "../components/Content/headContent"
 import HeadHeading from "../components/Content/headHeading"
@@ -21,8 +22,21 @@ const AboutPage = () => {
             page: contentfulAboutPage {
                 headline
                 title
-                body {
-                    json
+                pageContent {
+                    ... on ContentfulPageContentTextContent {
+                        body {
+                            json
+                        }
+                    }
+                    ... on ContentfulPageContentFullWidthImage {
+                        image {
+                            title
+                            description
+                            file {
+                                url
+                            }
+                        }
+                    }
                 }
                 coverImage {
                     file {
@@ -34,6 +48,7 @@ const AboutPage = () => {
         }
     `)
     const AboutData = data.page
+
     return (
         <>
             <PanelContainer contentPage darkBackground backgroundColor="#000">
@@ -51,7 +66,8 @@ const AboutPage = () => {
                     subtext={data.page.title}
                     headline={data.page.headline}
                 />
-                <HeadContent body={data.page.body.json} />
+                <HeadContent body={data.page.pageContent} />
+                <BodyContent body={data.page.pageContent} />
             </Container>
             <LinkedProjects />
 
