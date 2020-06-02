@@ -44,7 +44,6 @@ const ProjectTemplate = ({ data }) => {
         ? document.getElementById("home-container")
         : false
 
-    console.log(theme)
     const isDark = theme === "Dark"
 
     return (
