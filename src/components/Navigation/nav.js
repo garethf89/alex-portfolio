@@ -44,12 +44,22 @@ const NavInner = styled.div`
     height: 100%;
     width: 100%;
     will-change: clip-path;
-    transition: clip-path ${NAV_ANIMATION_TIME}ms ease-in-out;
+    transition: clip-path ${NAV_ANIMATION_TIME}ms ease-in-out,
+        opacity 0s
+            ${props =>
+                !props.active ? `${NAV_ANIMATION_TIME}ms ease-in-out` : "0s"};
+    opacity: ${props => (props.active ? "1" : "0")};
     clip-path: ${props =>
         !props.active
-            ? "circle(1.65rem at calc(100% - 3.5rem) 3.5rem)"
-            : "circle(150rem at calc(100% - 3.5rem)3.5rem)"};
+            ? "circle(1.25rem at calc(100% - 2rem) 2rem)"
+            : "circle(150rem at calc(100% - 2rem) 2rem)"};
     @media (min-width: ${props => props.theme.responsive.medium}) {
+        clip-path: ${props =>
+            !props.active
+                ? "circle(1.65rem at calc(100% - 2.55rem) 5.65rem)"
+                : "circle(150rem at calc(100% - 2.5rem) 5.65rem)"};
+    }
+    @media (min-width: ${props => props.theme.responsive.large}) {
         clip-path: ${props =>
             !props.active
                 ? "circle(1.65rem at calc(100% - 5.65rem) 5.65rem)"

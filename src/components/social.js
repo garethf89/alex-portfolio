@@ -26,6 +26,7 @@ const SocialList = styled.ul`
     list-style-type: none;
     padding: 0;
     margin: 0;
+    display: flex;
     li {
         padding: 0;
         margin-left: 1.5rem;

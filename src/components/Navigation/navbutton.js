@@ -10,10 +10,10 @@ const NavButton = styled.button`
     pointer-events: auto;
     display: block;
     position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
-    width: 3.75rem;
-    height: 3.75rem;
+    right: 0.75rem;
+    top: 0.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
     cursor: pointer;
     outline: 0;
     border: none;
@@ -23,20 +23,29 @@ const NavButton = styled.button`
         background 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     @media (min-width: ${props => props.theme.responsive.medium}) {
-        right: 3.75rem;
         top: 3.8rem;
+
+        width: 3.75rem;
+        height: 3.75rem;
+    }
+    @media (min-width: ${props => props.theme.responsive.large}) {
+        right: 3.75rem;
     }
 `
 
 const ButtonTarget = styled.span`
     display: block;
-    width: 3.75rem;
-    height: 3.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
     position: absolute;
     top: 0;
     left: 0;
     transition: all 1s;
     opacity: ${props => (props.active ? "1" : "0")};
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        width: 3.75rem;
+        height: 3.75rem;
+    }
 `
 const NavigationButton = ({ theme, buttonClick, active }) => {
     let [menuIconDark, updateMenuDark] = useState(null)

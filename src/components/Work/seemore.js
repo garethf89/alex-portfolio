@@ -24,17 +24,17 @@ const SeeMoreStyles = styled(Link)`
     }
 `
 
-const SeeMore = () => {
+const SeeMore = ({ wide }) => {
     const [isHover, setHover] = useState(false)
 
     return (
-        <Highlight>
+        <Highlight wide>
             <SeeMoreStyles
                 to="/work"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
-                See More Work <MoreLink hover={isHover} />
+                See More Work <MoreLink color={"dark"} hover={isHover} />
             </SeeMoreStyles>
         </Highlight>
     )

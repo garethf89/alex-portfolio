@@ -8,6 +8,7 @@ import { TransitionState } from "gatsby-plugin-transition-link"
 import VideoBackground from "../components/Media/video"
 import anime from "animejs"
 import debounce from "../helpers/debounce"
+import { gatsbyWindow } from "../helpers/gatsbyWindow"
 import isVisible from "../helpers/isElementVisible"
 import styled from "@emotion/styled"
 
@@ -15,75 +16,94 @@ const FullPageContainer = styled.div``
 
 const FullPage = ({ data, projects, status }) => {
     const [isSnapping, setSnap] = useState(false)
+    const [hasWindow, setWindow] = useState(true)
 
     let scrollTO = useRef(false)
+    let resetSnap = () => false
+    let goTo = () => false
+    let goToSlide = () => false
+    let snap = () => false
+    let throttled = () => false
 
-    const throttled = debounce(e => {
-        scrollTO.current = setTimeout(snap, 200)
-    }, 200)
+    if (hasWindow) {
+        throttled = debounce(e => {
+            scrollTO.current = setTimeout(snap, 200)
+        }, 200)
 
-    const resetSnap = () => {
-        scrollTO.current = null
-        setSnap(false)
-        anime.remove(document.scrollingElement)
-    }
+        resetSnap = () => {
+            scrollTO.current = null
+            setSnap(false)
+            anime.remove(document.scrollingElement)
+        }
 
-    const gotToSlide = (el, scrollDuration = 650) => {
-        anime({
-            targets: document.scrollingElement,
-            scrollTop: el.offsetTop,
-            duration: 650,
-            easing: "easeInOutCirc",
-            complete: () => {
+        goToSlide = (el, scrollDuration = 650) => {
+            anime({
+                targets: document.scrollingElement,
+                scrollTop: el.offsetTop,
+                duration: 650,
+                easing: "easeInOutCirc",
+                complete: () => {
+                    resetSnap()
+                },
+            })
+        }
+
+        snap = () => {
+            const homeContainer = document.getElementById("home-container")
+            const sections = document.querySelectorAll(".section")
+
+            if (!sections.length && homeContainer) {
                 resetSnap()
-            },
-        })
-    }
+                return
+            }
 
-    const snap = () => {
-        const homeContainer = document.getElementById("home-container")
-        const sections = document.querySelectorAll(".section")
+            if (isSnapping) return
 
-        if (!sections.length && homeContainer) {
-            resetSnap()
-            return
+            const vh = sections[0].clientHeight
+            const distToBottom =
+                document.body.scrollHeight - window.scrollY - vh
+            const footerHeight =
+                document.body.scrollHeight - homeContainer.clientHeight
+            if (distToBottom < footerHeight) return
+            setSnap(true)
+
+            const snapElements = [...sections]
+            let snapEl = snapElements.find((el, i) => {
+                return isVisible(el, 51)
+            })
+
+            if (snapEl) {
+                goToSlide(snapEl)
+            }
         }
 
-        if (isSnapping) return
-
-        const vh = sections[0].clientHeight
-        const distToBottom = document.body.scrollHeight - window.scrollY - vh
-        const footerHeight =
-            document.body.scrollHeight - homeContainer.clientHeight
-        if (distToBottom < footerHeight) return
-        setSnap(true)
-
-        const snapElements = [...sections]
-        let snapEl = snapElements.find((el, i) => {
-            return isVisible(el, 51)
-        })
-
-        if (snapEl) {
-            gotToSlide(snapEl)
+        goTo = async num => {
+            window.removeEventListener("scroll", throttled)
+            setSnap(true)
+            scrollTO.current = null
+            await anime.remove(document.scrollingElement)
+            const target = document.querySelectorAll(".section")[num]
+            scrollTO.current = setTimeout(goToSlide(target, 650), 100)
         }
-    }
-
-    const goTo = async num => {
-        window.removeEventListener("scroll", throttled)
-        setSnap(true)
-        scrollTO.current = null
-        await anime.remove(document.scrollingElement)
-        const target = document.querySelectorAll(".section")[num]
-        scrollTO.current = setTimeout(gotToSlide(target, 650), 100)
     }
 
     useEffect(() => {
-        window.removeEventListener("scroll", throttled)
-        if (!isSnapping) {
-            setTimeout(() => window.addEventListener("scroll", throttled), 200)
-        }
-        return function cleanup() {
+        if (gatsbyWindow()) {
             window.removeEventListener("scroll", throttled)
+            if (!isSnapping) {
+                setTimeout(
+                    () => window.addEventListener("scroll", throttled),
+                    200
+                )
+            }
+        } else {
+            setWindow(false)
+        }
+
+        return function cleanup() {
+            if (hasWindow) {
+                window.removeEventListener("scroll", throttled)
+            }
         }
     }, [isSnapping])
 
@@ -92,8 +112,9 @@ const FullPage = ({ data, projects, status }) => {
     return (
         <TransitionState>
             {({ mount, transitionStatus }) => {
-                if (transitionStatus === "exiting") {
-                    resetSnap()
+                if (transitionStatus === "exiting" && hasWindow) {
+                    scrollTO.current = null
+                    anime.remove(document.scrollingElement)
                     window.removeEventListener("scroll", throttled)
                 }
                 return (
@@ -136,6 +157,7 @@ const FullPage = ({ data, projects, status }) => {
                                         subText={value.headline}
                                         dataAnchor={`slide-anchor-${index}`}
                                         slug={value.slug}
+                                        color={isDarkBackground}
                                     >
                                         {video && !isMobile && (
                                             <VideoBackground

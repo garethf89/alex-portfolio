@@ -69,7 +69,7 @@ const IndexPage = () => {
             <div ref={fpRef}>
                 <FullPage data={data} projects={projects} />
             </div>
-            <SeeMore />
+            <SeeMore wide />
         </div>
     )
 }

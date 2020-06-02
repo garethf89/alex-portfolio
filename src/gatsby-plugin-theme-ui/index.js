@@ -11,15 +11,18 @@ export default {
     fonts: {
         body: "Muli, Roboto, Helvetica, Arial, sans-serif",
     },
+    logo: {
+        width: "3.75rem",
+    },
     sizes: {
         maxWidth: "1248px",
-        widerMaxWidth: "1368px",
+        widerMaxWidth: "1310px",
         contentMaxWidth: "657px",
     },
     responsive: {
         small: "35em",
         medium: "50em",
-        large: "70em",
+        large: "85em",
     },
     button: {
         light: {

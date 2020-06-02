@@ -11,7 +11,7 @@ import { useStaticQuery } from "gatsby"
 
 const ContainerWork = styled(Container)`
     padding-bottom: 0;
-    margin: 14.13rem 0 7.13rem;
+    margin: 14.13rem auto 7.13rem;
 `
 
 const WorkFlex = styled.div`
@@ -61,7 +61,7 @@ const WorkPage = () => {
             <ContainerWork>
                 <Heading level="h1" text="Latest work" />
             </ContainerWork>
-            <Container wide>
+            <Container>
                 <WorkFlex>{panels}</WorkFlex>
             </Container>
             <Social />

@@ -17,10 +17,10 @@ const FlexContainer = styled(Container)`
     }
 `
 
-const Highlight = ({ children }) => {
+const Highlight = ({ children, wide }) => {
     return (
         <HighlightStyles>
-            <FlexContainer>{children}</FlexContainer>
+            <FlexContainer wide={wide}>{children}</FlexContainer>
         </HighlightStyles>
     )
 }

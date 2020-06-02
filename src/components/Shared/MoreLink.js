@@ -34,9 +34,9 @@ const MoreLinkOuter = styled.span`
     }
 `
 
-const MoreLink = ({ hover, theme }) => {
+const MoreLink = ({ hover, color }) => {
     return (
-        <MoreLinkOuter color={theme} hover={hover}>
+        <MoreLinkOuter color={color} hover={hover}>
             <ArrowRight />
         </MoreLinkOuter>
     )

@@ -20,11 +20,11 @@ const FooterOuter = styled.footer`
     }
 `
 
-const Footer = () => {
+const Footer = ({ wide }) => {
     const year = new Date().getFullYear()
     return (
         <FooterOuter>
-            <Container>
+            <Container wide={wide}>
                 <FooterStyles>Alex Ioanna Graphic Design {year}</FooterStyles>
                 <FooterStylesSub>
                     <span>

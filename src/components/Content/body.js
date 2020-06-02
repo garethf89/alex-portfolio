@@ -56,7 +56,7 @@ const StyledParagraphImage = styled.div`
         display: none;
         max-width: calc(100% - ${props => props.theme.sizes.contentMaxWidth});
     }
-    @media (min-width: ${props => props.theme.responsive.medium}) {
+    @media (min-width: 900px) {
         img {
             display: inline-block;
             flex-shrink: 1;

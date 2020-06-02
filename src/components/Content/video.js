@@ -12,13 +12,17 @@ const VideoPlayer = styled(Player)`
     }
 `
 
+const VideoContainer = styled.div`
+    margin-bottom: 2rem;
+`
+
 const Video = ({ src, poster, type }) => {
     return (
-        <div data-vjs-player className="video-inline-player">
+        <VideoContainer data-vjs-player className="video-inline-player">
             <VideoPlayer>
                 <source src={src} type={type} />
             </VideoPlayer>
-        </div>
+        </VideoContainer>
     )
 }
 

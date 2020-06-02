@@ -8,11 +8,17 @@ const Wrapper = styled.section`
         props.wide
             ? props.theme.sizes.widerMaxWidth
             : props.theme.sizes.maxWidth};
-    padding: 0 1.5rem;
+    padding: 0 ${2.5 + 1.5}rem;
     flex-grow: 1;
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        padding: 0 ${3.75 + 1.5}rem;
+    }
+    @media (min-width: ${props => props.theme.responsive.large}) {
+        padding: 0 1.5rem;
+    }
 `
 
-const Container = ({ children, className, wide }) => {
+const Container = ({ theme, children, className, wide }) => {
     return (
         <Wrapper wide={wide} className={className}>
             {children}

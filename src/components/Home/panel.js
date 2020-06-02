@@ -51,7 +51,7 @@ const Panel = ({ color, children, text, subText, topText, slug }) => {
             {children}
             {text && (
                 <PanelText hover={isHover}>
-                    <Container>
+                    <Container wide>
                         <HoverSpan
                             onMouseOver={e => setHover(true)}
                             onMouseLeave={e => setHover(false)}
@@ -87,7 +87,7 @@ const Panel = ({ color, children, text, subText, topText, slug }) => {
                             )}
                             {!topText && (
                                 <FadeLink to={`/${slug}`} duration={1}>
-                                    <MoreLink theme={theme} hover={isHover} />
+                                    <MoreLink color={theme} hover={isHover} />
                                 </FadeLink>
                             )}
                         </HoverSpan>

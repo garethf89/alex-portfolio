@@ -17,11 +17,13 @@ const Root = styled.div`
     }
 `
 
-const TemplateWrap = ({ children, description, image, data }) => {
+const TemplateWrap = ({ children, description, image, data, path }) => {
     const { state, dispatch } = useContext(store)
     const [initGlobals, setInitGlobals] = useState(false)
 
     const { title } = (data && data.page) || "Alex Ionna"
+
+    const home = path === "/"
 
     useEffect(() => {
         if (!initGlobals) {
@@ -42,7 +44,7 @@ const TemplateWrap = ({ children, description, image, data }) => {
             />
             <Header siteTitle={title} />
             <main>{children}</main>
-            <Footer />
+            <Footer wide={home} />
         </Root>
     )
 }

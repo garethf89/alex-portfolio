@@ -76,7 +76,7 @@ const PanelContainer = ({
     const throttled = throttle(visibilityChange, 500)
     if (gatsbyWindow()) {
         useEffect(() => {
-            if (contentPage) {
+            if (contentPage && visibility) {
                 dispatch({ type: "THEME", theme: theme })
             }
             window.removeEventListener("scroll", throttled)
