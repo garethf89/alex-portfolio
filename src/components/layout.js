@@ -3,8 +3,10 @@ import * as Sentry from "@sentry/browser"
 import React, { useContext, useEffect, useState } from "react"
 
 import Footer from "./footer"
+import { Global } from "@emotion/core"
 import Header from "./header"
 import SEO from "./seo"
+import globalStyles from "../styles/globals"
 import { store } from "../state/state"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../helpers/support/webp"
@@ -35,16 +37,16 @@ const TemplateWrap = ({ children, description, image, data, path }) => {
                         "https://0ecd19efd71b4b00b7f3195828707b19@o339760.ingest.sentry.io/5261724",
                 })
             }
-            supportsWebP(res => {
-                if (!res && state.webp) {
-                    dispatch({ type: "WEBP", webp: false })
-                }
-            })
+            if (!supportsWebP()) {
+                dispatch({ type: "WEBP", webp: false })
+            }
+
             setInitGlobals(true)
         }
     }, [])
     return (
         <Root>
+            <Global styles={globalStyles} />
             <SEO
                 pageTitle={title}
                 pageDescription={description}

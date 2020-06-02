@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 
 import AuthModal from "../Auth/authModal"
 import Heading from "../Typography/heading"
@@ -6,7 +6,6 @@ import { Link } from "gatsby"
 import { Locked } from "../../svgs/Index"
 import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import { isAuth } from "../../helpers/auth"
-import { store } from "../../state/state"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
 
@@ -73,18 +72,13 @@ const LockContainer = styled.div`
 `
 
 const WorkPanel = ({ size, title, image, color, slug, locked }) => {
-    const [imageSrc, setSrc] = useState(image ? image.file.url : null)
     const [modalOpen, setModal] = useState(false)
-    const { state, dispatch } = useContext(store)
 
     const auth = gatsbyWindow() ? isAuth() : false
     const showLocked = !auth && locked
 
-    supportsWebP(res => {
-        if (res) {
-            setSrc(image.resolutions.srcWebp)
-        }
-    })
+    const webp = supportsWebP()
+    const imageSrc = webp ? image.resolutions.srcWebp : image.file.url
 
     const clickLink = e => {
         if (showLocked) {

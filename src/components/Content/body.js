@@ -28,9 +28,9 @@ const StyledHalfImage = styled.div`
         }
     }
     @media (min-width: ${props => props.theme.responsive.medium}) {
-        display: flex;
         img {
             width: 50%;
+            height: auto;
             margin-bottom: 0;
             &:first-of-type {
                 margin-bottom: 0;
@@ -54,6 +54,7 @@ const StyledParagraphImage = styled.div`
     }
     img {
         display: none;
+        height: auto;
         max-width: calc(100% - ${props => props.theme.sizes.contentMaxWidth});
     }
     @media (min-width: 900px) {

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
 import styled from "@emotion/styled"
@@ -45,16 +45,10 @@ const ContentImage = ({ node, size }) => {
             }),
         []
     )
-    const [haveWebP, setWebP] = useState(true)
-    const assetSrc = haveWebP
+    const assetSrc = supportsWebP()
         ? asset[0].node[size].srcWebp
         : asset[0].node[size].src
 
-    supportsWebP(res => {
-        if (!res) {
-            setWebP(false)
-        }
-    })
     return (
         <ContentImageStyles
             size={size}

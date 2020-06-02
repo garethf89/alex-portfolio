@@ -1,5 +1,4 @@
-import React, { useState } from "react"
-
+import React from "react"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
 
@@ -18,14 +17,7 @@ const PanelWrapper = styled.div`
 `
 
 const PanelImage = ({ source, sourceWeb }) => {
-    const [imageSrc, setSrc] = useState(source)
-
-    supportsWebP(res => {
-        if (res) {
-            setSrc(sourceWeb)
-        }
-    })
-
+    const imageSrc = supportsWebP() ? sourceWeb : source
     return <PanelWrapper source={imageSrc}></PanelWrapper>
 }
 

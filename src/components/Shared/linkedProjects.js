@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import Container from "../container"
 import Heading from "../Typography/heading"
 import { Link } from "gatsby"
 import { getAllProjects } from "../../hooks/get-all-projects"
-import { globals } from "../../state/state"
 import { isAuth } from "../../helpers/auth"
 import { random } from "../../helpers/random"
 import styled from "@emotion/styled"
+import { supportsWebP } from "../../helpers/support/webp"
 
 const LinkedProjectsStyle = styled.aside`
     background: ${props => props.theme.colors.secondaryBackground};
@@ -66,9 +66,9 @@ const LinkedProjectLinkHeading = styled(Heading)`
 
 const LinkedProjects = ({ exclude }) => {
     const [randomProjects, setProjects] = useState(null)
-    const { state } = useContext(globals)
-    const { webp } = state
+
     const data = getAllProjects()
+    const webp = supportsWebP()
 
     useEffect(() => {
         const projects = [...data.contentfulWork.projects]
