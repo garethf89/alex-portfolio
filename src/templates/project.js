@@ -18,7 +18,7 @@ const ProjectTemplate = ({ data }) => {
     const {
         id,
         title,
-        darkBackground,
+        theme,
         coverVideo,
         headline,
         agency,
@@ -44,12 +44,15 @@ const ProjectTemplate = ({ data }) => {
         ? document.getElementById("home-container")
         : false
 
+    console.log(theme)
+    const isDark = theme === "Dark"
+
     return (
         <>
             <PanelContainer
                 contentPage
                 backgroundColor="#000"
-                darkBackground={darkBackground}
+                darkBackground={isDark}
                 showTransition={transitionedFromHome}
             >
                 <Panel>
@@ -76,15 +79,9 @@ export const query = graphql`
     query($id: String!) {
         page: contentfulProject(id: { eq: $id }) {
             id
-            metaDescription {
-                metaDescription
-                internal {
-                    content
-                }
-            }
             headline
             title
-            darkBackground
+            theme
             locked
             slug
             pageContent {

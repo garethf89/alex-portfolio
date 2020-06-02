@@ -47,7 +47,7 @@ const PanelContainer = ({
     children,
     showTransition,
 }) => {
-    const theme = darkBackground ? "light" : "dark"
+    const theme = darkBackground ? "dark" : "light"
 
     const ref = useRef(null)
     const { dispatch } = useContext(store)

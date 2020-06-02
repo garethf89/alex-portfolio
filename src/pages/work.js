@@ -34,9 +34,8 @@ const WorkPage = () => {
     const panels = projects.contentfulWork.projects.map((value, index) => {
         const video = value.coverVideo.file.contentType.includes("video")
 
-        const isDarkBackground = value.darkBackground
-        const theme = isDarkBackground ? "light" : "dark"
-
+        const isDarkBackground = value.theme
+        const theme = isDarkBackground === "Dark" ? "dark" : "light"
         const size = index % 3 === 0 ? "large" : "small"
 
         return (

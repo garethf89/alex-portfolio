@@ -9,7 +9,7 @@ export const getAllProjects = () => {
                         id
                         title
                         slug
-                        darkBackground
+                        theme
                         headline
                         locked
                         coverVideo {

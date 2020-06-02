@@ -38,7 +38,7 @@ const AboutPage = () => {
                         }
                     }
                 }
-                coverImage {
+                coverVideo {
                     file {
                         url
                         contentType
@@ -54,8 +54,8 @@ const AboutPage = () => {
             <PanelContainer contentPage darkBackground backgroundColor="#000">
                 <Panel>
                     <VideoBackground
-                        src={AboutData.coverImage.file.url}
-                        type={AboutData.coverImage.file.contentType}
+                        src={AboutData.coverVideo.file.url}
+                        type={AboutData.coverVideo.file.contentType}
                         poster=""
                         autoPlay
                     />

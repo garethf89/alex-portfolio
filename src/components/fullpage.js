@@ -119,11 +119,7 @@ const FullPage = ({ data, projects, status }) => {
                 }
                 return (
                     <FullPageContainer>
-                        <PanelContainer
-                            key="home"
-                            backgroundColor="#000"
-                            darkBackground
-                        >
+                        <PanelContainer key="home" backgroundColor="#000">
                             <Panel
                                 text={data.page.headline}
                                 topText={data.page.title}
@@ -143,8 +139,8 @@ const FullPage = ({ data, projects, status }) => {
                                 "video"
                             )
                             const isMobile = false
-                            const isDarkBackground = value.darkBackground
-                            const theme = isDarkBackground ? true : false
+                            const isDarkBackground = value.theme
+                            const theme = isDarkBackground === "Dark"
                             return (
                                 <PanelContainer
                                     key={index}
