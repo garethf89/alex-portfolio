@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/browser"
+
 import React, { useContext, useEffect, useState } from "react"
 
 import Footer from "./footer"
@@ -27,6 +29,12 @@ const TemplateWrap = ({ children, description, image, data, path }) => {
 
     useEffect(() => {
         if (!initGlobals) {
+            if (process.env.NODE_ENV === "production") {
+                Sentry.init({
+                    dsn:
+                        "https://0ecd19efd71b4b00b7f3195828707b19@o339760.ingest.sentry.io/5261724",
+                })
+            }
             supportsWebP(res => {
                 if (!res && state.webp) {
                     dispatch({ type: "WEBP", webp: false })

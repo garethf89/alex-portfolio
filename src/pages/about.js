@@ -51,7 +51,7 @@ const AboutPage = () => {
 
     return (
         <>
-            <PanelContainer contentPage darkBackground backgroundColor="#000">
+            <PanelContainer contentPage backgroundColor="#000">
                 <Panel>
                     <VideoBackground
                         src={AboutData.coverVideo.file.url}
