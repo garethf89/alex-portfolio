@@ -45,7 +45,7 @@ const PanelSubText = styled.p`
 `
 const Panel = ({ color, children, text, subText, topText, slug }) => {
     const [isHover, setHover] = useState(false)
-    const theme = color ? "dark" : "light"
+    const theme = color === "Dark" ? "dark" : "light"
     return (
         <>
             {children}

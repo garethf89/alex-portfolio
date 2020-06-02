@@ -11,10 +11,7 @@ const Wrapper = styled.section`
     padding: 0 ${2.5 + 1.5}rem;
     flex-grow: 1;
     @media (min-width: ${props => props.theme.responsive.medium}) {
-        padding: 0 ${3.75 + 1.5}rem;
-    }
-    @media (min-width: ${props => props.theme.responsive.large}) {
-        padding: 0 1.5rem;
+        padding: 0 ${3.75 + 2.75}rem;
     }
 `
 

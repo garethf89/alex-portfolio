@@ -16,7 +16,7 @@ const MoreLinkOuter = styled.span`
         transform: translateY(-50%);
         right: ${props => (props.hover ? "0" : "1rem")};
         transition: right 0.25s ease-in-out;
-        stroke: ${props => (props.color === "dark" ? "#fff" : "#000")};
+        stroke: ${props => (props.color === "dark" ? "#000" : "#fff")};
         g {
             stroke: inherit;
         }

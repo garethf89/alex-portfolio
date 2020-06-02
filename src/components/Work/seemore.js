@@ -34,7 +34,7 @@ const SeeMore = ({ wide }) => {
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
             >
-                See More Work <MoreLink color={"dark"} hover={isHover} />
+                See More Work <MoreLink color={"light"} hover={isHover} />
             </SeeMoreStyles>
         </Highlight>
     )

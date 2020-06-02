@@ -17,7 +17,7 @@ const HeaderStyles = styled.header`
     pointer-events: none;
     padding: 0.75rem;
     @media (min-width: ${props => props.theme.responsive.medium}) {
-        padding: 3.75rem 0.75rem;
+        padding: 3.75rem 1.5rem;
     }
     @media (min-width: ${props => props.theme.responsive.large}) {
         padding: 3.75rem;

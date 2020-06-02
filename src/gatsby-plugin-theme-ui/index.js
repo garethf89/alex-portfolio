@@ -22,7 +22,7 @@ export default {
     responsive: {
         small: "35em",
         medium: "50em",
-        large: "85em",
+        large: "79.38em",
     },
     button: {
         light: {

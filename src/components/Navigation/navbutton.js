@@ -24,7 +24,6 @@ const NavButton = styled.button`
 
     @media (min-width: ${props => props.theme.responsive.medium}) {
         top: 3.8rem;
-
         width: 3.75rem;
         height: 3.75rem;
     }
