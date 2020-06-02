@@ -59,7 +59,8 @@ const FullPage = ({ data, projects, status }) => {
 
             if (isSnapping) return
 
-            const vh = sections[0].clientHeight
+            const vh = window.innerHeight
+
             const distToBottom =
                 document.body.scrollHeight - window.scrollY - vh
             const footerHeight =
