@@ -27,7 +27,7 @@ const NAV_ANIMATION_TIME = 750
 
 const NavigationStyles = styled.nav`
     pointer-events: ${props => (props.active ? "auto" : "none")};
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     height: 100vh;
@@ -36,6 +36,9 @@ const NavigationStyles = styled.nav`
     transition: z-index 0s 0.5s
         ${props => (!props.active ? ",  max-height 0s 1s" : "")};
     z-index: ${props => (props.active ? "99" : "3")};
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        position: fixed;
+    }
 `
 
 const NavInner = styled.div`
@@ -56,8 +59,8 @@ const NavInner = styled.div`
     @media (min-width: ${props => props.theme.responsive.medium}) {
         clip-path: ${props =>
             !props.active
-                ? "circle(1.65rem at calc(100% - 2.55rem) 5.65rem)"
-                : "circle(150rem at calc(100% - 2.5rem) 5.65rem)"};
+                ? "circle(1.65rem at calc(100% - 3.5rem) 3.5rem)"
+                : "circle(150rem at calc(100% - 3.5rem) 3.5rem)"};
     }
     @media (min-width: ${props => props.theme.responsive.large}) {
         clip-path: ${props =>

@@ -8,7 +8,7 @@ import SvgLogo from "../svgs/logo"
 import styled from "@emotion/styled"
 
 const HeaderStyles = styled.header`
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -17,7 +17,8 @@ const HeaderStyles = styled.header`
     pointer-events: none;
     padding: 0.75rem;
     @media (min-width: ${props => props.theme.responsive.medium}) {
-        padding: 3.75rem 1.5rem;
+        padding: 1.5rem;
+        position: fixed;
     }
     @media (min-width: ${props => props.theme.responsive.large}) {
         padding: 3.75rem;

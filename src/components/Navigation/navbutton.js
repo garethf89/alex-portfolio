@@ -10,8 +10,8 @@ const NavButton = styled.button`
     pointer-events: auto;
     display: block;
     position: absolute;
-    right: 0.75rem;
-    top: 0.75rem;
+    right: 1.5rem;
+    top: 1.5rem;
     width: 2.5rem;
     height: 2.5rem;
     cursor: pointer;
@@ -23,11 +23,11 @@ const NavButton = styled.button`
         background 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     @media (min-width: ${props => props.theme.responsive.medium}) {
-        top: 3.8rem;
         width: 3.75rem;
         height: 3.75rem;
     }
     @media (min-width: ${props => props.theme.responsive.large}) {
+        top: 3.8rem;
         right: 3.75rem;
     }
 `
