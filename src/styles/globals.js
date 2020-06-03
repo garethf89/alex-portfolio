@@ -4,7 +4,6 @@ import normalize from "normalize.css"
 /* stylelint-disable */
 export const globalStyles = props => css`
     ${normalize}
-    @import url('https://fonts.googleapis.com/css2?family=Muli:wght@200;400;600&display=block');
     * {
         box-sizing: border-box;
     }

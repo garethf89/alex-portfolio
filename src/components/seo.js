@@ -39,9 +39,14 @@ const SEO = ({ pageTitle, pageDescription, pageImage }) => {
             />
 
             <link rel="canonical" href={siteUrl} />
+
             {/* General tags */}
             <meta name="image" content={image} />
             <meta name="description" content={metaDescription} />
+            <link
+                href={`https://fonts.googleapis.com/css2?family=Muli:wght@200;400;600&display=swap`}
+                rel="stylesheet"
+            />
 
             {/* OpenGraph tags */}
             <meta property="og:title" content={title} />
@@ -58,10 +63,10 @@ const SEO = ({ pageTitle, pageDescription, pageImage }) => {
               {
                 "@context": "https://schema.org",
                 "@type": "Organization",
-                "name": "Alex Ionna",
-                "url": "http://www.alexionna.co.uk",
-                "logo": "http://www.alexionna.co.uk/icons/icon-48x48.png",
-                "sameAs": "http://WWW.TODO.CO.UK"
+                "name": "Alex Ioanna",
+                "url": "https://www.alexioanna.co.uk",
+                "logo": "https://www.alexioanna.co.uk/icons/icon-48x48.png",
+                "sameAs": "https://WWW.TODO.CO.UK"
               }
              `}</script>
             )}

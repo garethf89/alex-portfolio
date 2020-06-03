@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react"
+import { graphql, useStaticQuery } from "gatsby"
 
 import Container from "../components/container"
 import Heading from "../components/Typography/heading"
@@ -7,7 +8,6 @@ import WorkPanel from "../components/Work/panels"
 import { getAllProjects } from "../hooks/get-all-projects"
 import { store } from "../state/state"
 import styled from "@emotion/styled"
-import { useStaticQuery } from "gatsby"
 
 const ContainerWork = styled(Container)`
     padding-bottom: 0;

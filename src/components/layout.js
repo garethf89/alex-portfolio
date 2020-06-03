@@ -25,7 +25,7 @@ const TemplateWrap = ({ children, description, image, data, path }) => {
     const { state, dispatch } = useContext(store)
     const [initGlobals, setInitGlobals] = useState(false)
 
-    const { title } = (data && data.page) || "Alex Ionna"
+    const { title } = (data && data.page) || "Alex Ioanna"
 
     const home = path === "/"
 

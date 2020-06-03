@@ -18,9 +18,9 @@ try {
 }
 module.exports = {
     siteMetadata: {
-        title: "Alex Ionna",
-        description: "Portfolio of Web Designer Alex Ionna",
-        siteUrl: "http://www.alexionna.co.uk",
+        title: "Alex Ioanna",
+        description: "Portfolio of Web Designer Alex Ioanna",
+        siteUrl: "https://www.alexioanna.co.uk",
         author: "Gareth Ferguson",
         image: "/images/AlexLogo.jpg",
         menuLinks: [
@@ -68,7 +68,7 @@ module.exports = {
         {
             resolve: `gatsby-plugin-manifest`,
             options: {
-                name: `Alex Ionna Portfolio`,
+                name: `Alex Ioanna Portfolio`,
                 short_name: `Alex`,
                 start_url: `/`,
                 background_color: `#000000`,
