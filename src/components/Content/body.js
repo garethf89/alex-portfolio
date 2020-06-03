@@ -98,6 +98,10 @@ const options = {
             <Heading level="h5">{children}</Heading>
         ),
         [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
+            if (node.data.target.sys.type === "Link") {
+                return
+            }
+
             const file = node.data.target.fields.file["en-GB"]
             const video = file.contentType.includes("video")
             if (video) {
