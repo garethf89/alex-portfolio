@@ -209,10 +209,10 @@ const Body = ({ text, className, include, exclude }) => {
                 <StyledHalfImage key={i} className="half-width-images">
                     <Image
                         src={element.firstImage.file.url}
-                        alt={element.secondImage.file.title}
+                        alt={element.firstImage.file.title}
                     ></Image>
                     <Image
-                        src={element.firstImage.file.url}
+                        src={element.secondImage.file.url}
                         alt={element.secondImage.file.title}
                     ></Image>
                 </StyledHalfImage>
