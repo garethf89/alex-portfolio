@@ -36,7 +36,12 @@ const MoreLinkOuter = styled.span`
 
 const MoreLink = ({ hover, color }) => {
     return (
-        <MoreLinkOuter color={color} hover={hover}>
+        <MoreLinkOuter
+            aria-hidden="true"
+            focusable="false"
+            color={color}
+            hover={hover}
+        >
             <ArrowRight />
         </MoreLinkOuter>
     )

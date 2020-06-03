@@ -5,6 +5,7 @@ import FadeLink from "../Home/animatedLink"
 import Heading from "../Typography/heading"
 import { Link } from "gatsby"
 import MoreLink from "../Shared/MoreLink"
+import ScreenReaderOnly from "../Common/ScreenReaderOnly"
 import styled from "@emotion/styled"
 
 const HoverSpan = styled.span`
@@ -43,6 +44,7 @@ const PanelSubText = styled.p`
         color: inherit;
     }
 `
+
 const Panel = ({ color, children, text, subText, topText, slug }) => {
     const [isHover, setHover] = useState(false)
     const theme = color === "Dark" ? "dark" : "light"
@@ -86,7 +88,8 @@ const Panel = ({ color, children, text, subText, topText, slug }) => {
                                 </PanelSubText>
                             )}
                             {!topText && (
-                                <FadeLink to={`/${slug}`} duration={1}>
+                                <FadeLink hideText to={`/${slug}`} duration={1}>
+                                    <ScreenReaderOnly>{text}</ScreenReaderOnly>
                                     <MoreLink color={theme} hover={isHover} />
                                 </FadeLink>
                             )}

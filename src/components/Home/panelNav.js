@@ -1,4 +1,5 @@
 import React from "react"
+import ScreenReaderOnly from "../Common/ScreenReaderOnly"
 import classNames from "classnames"
 import styled from "@emotion/styled"
 
@@ -17,17 +18,6 @@ const PanelListContainer = styled.div`
 
     @media (min-width: ${props => props.theme.responsive.medium}) {
         bottom: 3.75rem;
-    }
-    /*Only display content to screen readers*/
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
     }
 `
 
@@ -106,9 +96,9 @@ const PanelNav = ({ change, data, isDark, active }) => {
                                 href="#"
                                 className={classStyle}
                             >
-                                <span className="sr-only">
+                                <ScreenReaderOnly>
                                     Section {active}
-                                </span>
+                                </ScreenReaderOnly>
                                 <span></span>
                             </PanelLink>
                         </PanelItem>

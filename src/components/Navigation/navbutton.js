@@ -99,7 +99,10 @@ const NavigationButton = ({ theme, buttonClick, active }) => {
     }
 
     return (
-        <NavButton onClick={() => onClick()}>
+        <NavButton
+            aria-label="Toggle navigation menu"
+            onClick={() => onClick()}
+        >
             <ButtonTarget
                 active={theme === "light"}
                 id="NavButtonLight"
