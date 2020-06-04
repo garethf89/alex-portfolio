@@ -6,6 +6,7 @@ import Heading from "../Typography/heading"
 import Video from "./video"
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import styled from "@emotion/styled"
+import { supportsWebP } from "../../helpers/support/webp"
 
 const StyledParagraph = styled.p`
     font-size: 1.13rem;
@@ -101,15 +102,18 @@ const options = {
             if (node.data.target.sys.type === "Link") {
                 return
             }
-
             const file = node.data.target.fields.file["en-GB"]
             const video = file.contentType.includes("video")
             if (video) {
                 return <Video src={file.url} contentType={file.contentType} />
             }
+            const url = supportsWebP() ? file.url + "?&fm=webp" : file.url
             return (
                 <TextImage>
-                    <img src={file.url} alt={file.title} />
+                    <img
+                        src={url}
+                        alt={node.data.target.fields.title["en-GB"]}
+                    />
                 </TextImage>
             )
         },
@@ -176,6 +180,7 @@ const Body = ({ text, className, include, exclude }) => {
 
     const outputText = textToUse(textObjectToUse, include, exclude)
     const content = []
+    const webP = supportsWebP()
 
     Object.values({ ...outputText }).filter((element, i) => {
         const type = element.__typename
@@ -199,8 +204,12 @@ const Body = ({ text, className, include, exclude }) => {
             content.push(
                 <Image
                     key={i}
-                    src={element.image[0].file.url}
-                    alt={element.image[0].file.title}
+                    src={
+                        webP
+                            ? element.image[0].resolutions.srcWebp
+                            : element.image[0].file.url
+                    }
+                    alt={element.image[0].title}
                 ></Image>
             )
         }
@@ -208,12 +217,20 @@ const Body = ({ text, className, include, exclude }) => {
             content.push(
                 <StyledHalfImage key={i} className="half-width-images">
                     <Image
-                        src={element.firstImage.file.url}
-                        alt={element.firstImage.file.title}
+                        src={
+                            webP
+                                ? element.firstImage.resolutions.srcWebp
+                                : element.firstImage.file.url
+                        }
+                        alt={element.firstImage.title}
                     ></Image>
                     <Image
-                        src={element.secondImage.file.url}
-                        alt={element.secondImage.file.title}
+                        src={
+                            webP
+                                ? element.secondImage.resolutions.srcWebp
+                                : element.secondImage.file.url
+                        }
+                        alt={element.secondImage.title}
                     ></Image>
                 </StyledHalfImage>
             )

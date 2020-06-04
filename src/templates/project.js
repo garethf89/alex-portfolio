@@ -90,6 +90,9 @@ export const query = graphql`
                         file {
                             url
                         }
+                        resolutions {
+                            srcWebp
+                        }
                     }
                 }
                 ... on ContentfulPageContentTextContent {
@@ -104,6 +107,9 @@ export const query = graphql`
                         file {
                             url
                         }
+                        resolutions(quality: 100, width: 2400) {
+                            srcWebp
+                        }
                     }
                 }
                 ... on ContentfulPageContentHalfWidthImages {
@@ -113,12 +119,18 @@ export const query = graphql`
                         file {
                             url
                         }
+                        resolutions(quality: 100, width: 2400) {
+                            srcWebp
+                        }
                     }
                     firstImage {
                         title
                         description
                         file {
                             url
+                        }
+                        resolutions(quality: 100, width: 2400) {
+                            srcWebp
                         }
                     }
                 }

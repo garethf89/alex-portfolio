@@ -15,9 +15,8 @@ const HeaderStyles = styled.header`
     z-index: 99;
     background: transparent;
     pointer-events: none;
-    padding: 0.75rem;
+    padding: 1.5rem;
     @media (min-width: ${props => props.theme.responsive.medium}) {
-        padding: 1.5rem;
         position: fixed;
     }
     @media (min-width: ${props => props.theme.responsive.large}) {
