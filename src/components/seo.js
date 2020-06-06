@@ -44,10 +44,14 @@ const SEO = ({ pageTitle, pageDescription, pageImage }) => {
             <meta name="image" content={image} />
             <meta name="description" content={metaDescription} />
             <link
+                rel="preconnect"
+                href="https://fonts.gstatic.com/"
+                crossOrigin
+            />
+            <link
                 href={`https://fonts.googleapis.com/css2?family=Muli:wght@200;400;600&display=swap`}
                 rel="stylesheet"
             />
-
             {/* OpenGraph tags */}
             <meta property="og:title" content={title} />
             <meta property="og:image" content={metaImage} />
