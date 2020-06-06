@@ -37,6 +37,7 @@ const AboutPage = () => {
                             }
                             fixed(quality: 100, width: 2400) {
                                 srcWebp
+                                src
                             }
                         }
                     }
