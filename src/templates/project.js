@@ -90,8 +90,9 @@ export const query = graphql`
                         file {
                             url
                         }
-                        resolutions {
+                        fixed {
                             srcWebp
+                            src
                         }
                     }
                 }
@@ -107,8 +108,9 @@ export const query = graphql`
                         file {
                             url
                         }
-                        resolutions(quality: 100, width: 2400) {
+                        fixed(quality: 100, width: 2400) {
                             srcWebp
+                            src
                         }
                     }
                 }
@@ -119,8 +121,9 @@ export const query = graphql`
                         file {
                             url
                         }
-                        resolutions(quality: 100, width: 2400) {
+                        fixed(quality: 100, width: 2400) {
                             srcWebp
+                            src
                         }
                     }
                     firstImage {
@@ -129,8 +132,9 @@ export const query = graphql`
                         file {
                             url
                         }
-                        resolutions(quality: 100, width: 2400) {
+                        fixed(quality: 100, width: 2400) {
                             srcWebp
+                            src
                         }
                     }
                 }

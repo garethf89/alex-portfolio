@@ -35,6 +35,9 @@ const AboutPage = () => {
                             file {
                                 url
                             }
+                            fixed(quality: 100, width: 2400) {
+                                srcWebp
+                            }
                         }
                     }
                 }

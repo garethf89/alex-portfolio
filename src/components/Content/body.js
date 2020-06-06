@@ -206,7 +206,7 @@ const Body = ({ text, className, include, exclude }) => {
                     key={i}
                     src={
                         webP
-                            ? element.image[0].resolutions.srcWebp
+                            ? element.image[0].fixed.srcWebp
                             : element.image[0].file.url
                     }
                     alt={element.image[0].title}
@@ -214,21 +214,22 @@ const Body = ({ text, className, include, exclude }) => {
             )
         }
         if (type === "ContentfulPageContentHalfWidthImages") {
+            console.log(element)
             content.push(
                 <StyledHalfImage key={i} className="half-width-images">
                     <Image
                         src={
-                            webP
-                                ? element.firstImage.resolutions.srcWebp
-                                : element.firstImage.file.url
+                            !webP
+                                ? element.firstImage.fixed.srcWebp
+                                : element.firstImage.fixed.src
                         }
                         alt={element.firstImage.title}
                     ></Image>
                     <Image
                         src={
                             webP
-                                ? element.secondImage.resolutions.srcWebp
-                                : element.secondImage.file.url
+                                ? element.secondImage.fixed.srcWebp
+                                : element.secondImage.fixed.src
                         }
                         alt={element.secondImage.title}
                     ></Image>
