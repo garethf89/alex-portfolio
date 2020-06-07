@@ -28,19 +28,6 @@ const AboutPage = () => {
                             json
                         }
                     }
-                    ... on ContentfulPageContentFullWidthImage {
-                        image {
-                            title
-                            description
-                            file {
-                                url
-                            }
-                            fixed(quality: 100, width: 2400) {
-                                srcWebp
-                                src
-                            }
-                        }
-                    }
                 }
                 coverVideo {
                     file {
