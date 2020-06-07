@@ -183,8 +183,7 @@ const Body = ({ text, className, include, exclude }) => {
     const webP = supportsWebP()
 
     Object.values({ ...outputText }).filter((element, i) => {
-        const type = element.__typename
-
+        const type = element.internal.type
         if (type === "ContentfulPageContentTextContent") {
             content.push(
                 <BodyText
@@ -214,7 +213,6 @@ const Body = ({ text, className, include, exclude }) => {
             )
         }
         if (type === "ContentfulPageContentHalfWidthImages") {
-            console.log(element)
             content.push(
                 <StyledHalfImage key={i} className="half-width-images">
                     <Image

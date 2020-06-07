@@ -95,10 +95,16 @@ export const query = graphql`
                             src
                         }
                     }
+                    internal {
+                        type
+                    }
                 }
                 ... on ContentfulPageContentTextContent {
                     body {
                         json
+                    }
+                    internal {
+                        type
                     }
                 }
                 ... on ContentfulPageContentFullWidthImage {
@@ -112,6 +118,9 @@ export const query = graphql`
                             srcWebp
                             src
                         }
+                    }
+                    internal {
+                        type
                     }
                 }
                 ... on ContentfulPageContentHalfWidthImages {
@@ -136,6 +145,9 @@ export const query = graphql`
                             srcWebp
                             src
                         }
+                    }
+                    internal {
+                        type
                     }
                 }
             }

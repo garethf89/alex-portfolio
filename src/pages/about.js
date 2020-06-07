@@ -27,6 +27,9 @@ const AboutPage = () => {
                         body {
                             json
                         }
+                        internal {
+                            type
+                        }
                     }
                 }
                 coverVideo {
