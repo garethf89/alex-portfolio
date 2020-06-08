@@ -15,13 +15,16 @@ const LinkedProjectsStyle = styled.aside`
 `
 
 const LinkedProjectsInner = styled.div`
-    display: flex;
     margin-top: 3.25rem;
-    justify-content: space-between;
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        display: flex;
+        justify-content: space-between;
+    }
 `
 const LinkedProjectLinkContainer = styled.div`
     display: inline-block;
-    width: 49%;
+    width: 100%;
+
     a {
         text-decoration: none;
         color: inherit;
@@ -30,6 +33,9 @@ const LinkedProjectLinkContainer = styled.div`
         a span {
             transform: scale(1.1);
         }
+    }
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        width: 49%;
     }
 `
 const LinkedProjectLink = styled(Link)`
