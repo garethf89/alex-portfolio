@@ -86,6 +86,7 @@ export const query = graphql`
             pageContent {
                 ... on ContentfulPageContentVideo {
                     id
+                    autoplay
                     video {
                         file {
                             url

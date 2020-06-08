@@ -1,7 +1,9 @@
 import "video-react/dist/video-react.css"
 
-import { Player } from "video-react"
-import React from "react"
+import { BigPlayButton, ControlBar, Player } from "video-react"
+import React, { useEffect, useRef } from "react"
+
+import classNames from "classnames"
 import styled from "@emotion/styled"
 
 const VideoPlayer = styled(Player)`
@@ -21,13 +23,40 @@ const VideoContainer = styled.div`
     + .half-width-images {
         margin-top: 2rem;
     }
+    &.autoplay {
+        .video-react-big-play-button {
+            display: none;
+        }
+    }
 `
 
-const Video = ({ src, poster, type }) => {
+const Video = ({ src, poster, type, autoplay }) => {
+    const refVideo = useRef(null)
+
+    useEffect(() => {
+        if (!refVideo.current) {
+            return
+        }
+        if (autoplay) {
+            refVideo.current.play()
+        }
+    })
+
+    let classStyle = classNames({
+        autoplay: autoplay,
+        "video-inline-player": true,
+    })
     return (
-        <VideoContainer data-vjs-player className="video-inline-player">
-            <VideoPlayer>
-                <source src={src} type={type} />
+        <VideoContainer data-vjs-player className={classStyle}>
+            <VideoPlayer
+                muted={autoplay}
+                ref={refVideo}
+                autoPlay={autoplay}
+                src={src}
+                type={type}
+            >
+                <ControlBar autoHide={false} className={classStyle} />
+                <BigPlayButton className={classStyle} />
             </VideoPlayer>
         </VideoContainer>
     )

@@ -188,7 +188,12 @@ const Body = ({ text, className, include, exclude }) => {
         if (type === "ContentfulPageContentVideo") {
             const file = element.video.file
             content.push(
-                <Video key={i} src={file.url} contentType={file.contentType} />
+                <Video
+                    key={i}
+                    autoplay={element.autoplay}
+                    src={file.url}
+                    contentType={file.contentType}
+                />
             )
         }
         if (type === "ContentfulPageContentFullWidthImage") {
