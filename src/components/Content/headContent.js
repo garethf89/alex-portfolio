@@ -31,7 +31,7 @@ const HeadContent = ({ body, agency }) => {
         body.length > 1 &&
         body[0].internal &&
         body[0].internal.type !== "ContentfulPageContentTextContent"
-    console.log(isImageFirstChild)
+
     return (
         <HeadAreaStyled isImageFirstChild={isImageFirstChild}>
             <HeadAreaContainer>
