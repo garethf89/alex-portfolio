@@ -95,7 +95,9 @@ const LinkedProjects = ({ exclude }) => {
     return (
         <LinkedProjectsStyle>
             <Container>
-                <Heading level="h2">There's more to see</Heading>
+                <Heading override="h2" level="h1">
+                    There's more to see
+                </Heading>
                 <LinkedProjectsInner>
                     {randomProjects &&
                         randomProjects.map((project, i) => {

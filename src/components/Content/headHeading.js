@@ -23,7 +23,7 @@ const HeadHeading = ({ subtext, headline }) => {
     return (
         <HeadContainer>
             <HeadSubText level="h1">{subtext}</HeadSubText>
-            <HeadHeadingText level="h2" text={headline} />
+            <HeadHeadingText level="h1" override="h2" text={headline} />
         </HeadContainer>
     )
 }

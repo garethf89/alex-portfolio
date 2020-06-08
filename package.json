@@ -79,8 +79,8 @@
     "lint:css": "stylelint 'src/**/*.js'",
     "check-pretty": "prettier --list-different {,src/**/}*.{js,jsx,json,css,scss}",
     "format": "prettier --write \"src/**/*.js\"",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "storybook": "NODE_ENV=production start-storybook -p 6006",
+    "build-storybook": "NODE_ENV=production build-storybook -o build/components",
     "analyze-size": "source-map-explorer bundle.min.js"
   },
   "repository": {

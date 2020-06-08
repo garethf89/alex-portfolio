@@ -1,7 +1,6 @@
 import React from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
-
 /* stylelint-disable */
 const common = props => css`
     font-family: ${props.theme.fonts.body};
@@ -17,7 +16,6 @@ const H1 = styled.h1`
     font-weight: 200;
     ${common}
 `
-
 const H2 = styled.h2`
     font-size: 30px;
     line-height: 1;
@@ -44,10 +42,10 @@ const H5 = styled.h5`
     ${common}
 `
 
-const Heading = ({ level, text, className, children }) => {
+const Heading = ({ level, text, className, children, override }) => {
     if (level === "h1") {
         return (
-            <H1 className={className}>
+            <H1 as={override} level={level} className={className}>
                 {text}
                 {children}
             </H1>
@@ -56,7 +54,7 @@ const Heading = ({ level, text, className, children }) => {
 
     if (level === "h2") {
         return (
-            <H2 className={className}>
+            <H2 as={override} className={className}>
                 {text}
                 {children}
             </H2>
@@ -65,7 +63,7 @@ const Heading = ({ level, text, className, children }) => {
 
     if (level === "h3") {
         return (
-            <H3 className={className}>
+            <H3 as={override} className={className}>
                 {text}
                 {children}
             </H3>
@@ -74,7 +72,7 @@ const Heading = ({ level, text, className, children }) => {
 
     if (level === "h4") {
         return (
-            <H4 className={className}>
+            <H4 as={override} className={className}>
                 {text}
                 {children}
             </H4>
@@ -82,7 +80,7 @@ const Heading = ({ level, text, className, children }) => {
     }
     if (level === "h5") {
         return (
-            <H5 className={className}>
+            <H5 as={override} className={className}>
                 {text}
                 {children}
             </H5>

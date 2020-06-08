@@ -15,12 +15,12 @@ const StyledParagraph = styled.p`
     max-width: ${props => props.theme.sizes.contentMaxWidth};
 `
 
-const Image = styled.img`
+export const Image = styled.img`
     max-width: 100%;
     margin-bottom: 3rem;
 `
 
-const StyledHalfImage = styled.div`
+export const StyledHalfImage = styled.div`
     display: block;
     margin-bottom: 2rem;
     img {
@@ -123,7 +123,7 @@ const options = {
     },
 }
 
-const BodyText = ({ text }) => documentToReactComponents(text, options)
+export const BodyText = ({ text }) => documentToReactComponents(text, options)
 
 const Body = ({ text, className, include, exclude }) => {
     const [textObjectToUse, setText] = useState(null)
