@@ -29,7 +29,9 @@ const BodyWidth = styled.div`
 const HeadContent = ({ body, agency }) => {
     const isImageFirstChild =
         body.length > 1 &&
-        body[0].nodeType !== "ContentfulPageContentTextContent"
+        body[0].internal &&
+        body[0].internal.type !== "ContentfulPageContentTextContent"
+    console.log(isImageFirstChild)
     return (
         <HeadAreaStyled isImageFirstChild={isImageFirstChild}>
             <HeadAreaContainer>

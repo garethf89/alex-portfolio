@@ -17,22 +17,25 @@ const StyledParagraph = styled.p`
 
 export const Image = styled.img`
     max-width: 100%;
-    margin-bottom: 3rem;
+    margin: 3rem 0;
+    + .half-width-images {
+        margin-top: 0;
+    }
 `
 
 export const StyledHalfImage = styled.div`
     display: block;
-    margin-bottom: 2rem;
+    margin: 3rem 0;
     img {
-        &:first-of-type {
-            margin-bottom: 2rem;
-        }
+        margin: 0;
+    }
+    + img {
+        margin-top: 0;
     }
     @media (min-width: ${props => props.theme.responsive.medium}) {
         img {
             width: 50%;
             height: auto;
-            margin-bottom: 0;
             &:first-of-type {
                 margin-bottom: 0;
             }
@@ -41,22 +44,14 @@ export const StyledHalfImage = styled.div`
 `
 
 const StyledParagraphImage = styled.div`
-    margin: 0;
-    position: relative;
-    height: 0;
-    display: flex;
-    flex-wrap: wrap;
-    overflow: visible;
-    justify-content: space-between;
-    span {
-        display: inline-block;
-        width: 100%;
-        max-width: ${props => props.theme.sizes.contentMaxWidth};
-    }
+    max-width: calc(100% - ${props => props.theme.sizes.contentMaxWidth});
+    flex-basis: calc(100% - ${props => props.theme.sizes.contentMaxWidth});
+    height: 1px;
+    overflow-y: visible;
+    text-align: center;
     img {
         display: none;
         height: auto;
-        max-width: calc(100% - ${props => props.theme.sizes.contentMaxWidth});
     }
     @media (min-width: 900px) {
         img {
@@ -69,10 +64,7 @@ const StyledParagraphImage = styled.div`
 const Bold = ({ children }) => <span className="bold">{children}</span>
 const Text = ({ children }) => <StyledParagraph>{children}</StyledParagraph>
 const TextImage = ({ children }) => (
-    <StyledParagraphImage>
-        <span></span>
-        {children}
-    </StyledParagraphImage>
+    <StyledParagraphImage>{children}</StyledParagraphImage>
 )
 
 const options = {

@@ -4,7 +4,8 @@ import styled from "@emotion/styled"
 
 const BodyContainer = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
     p {
         margin-top: 0;
         + img {

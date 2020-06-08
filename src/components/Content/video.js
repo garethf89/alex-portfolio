@@ -13,7 +13,14 @@ const VideoPlayer = styled(Player)`
 `
 
 const VideoContainer = styled.div`
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    display: block;
+    flex-basis: 100%;
+    width: auto;
+    + img,
+    + .half-width-images {
+        margin-top: 2rem;
+    }
 `
 
 const Video = ({ src, poster, type }) => {
