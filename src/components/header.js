@@ -1,10 +1,12 @@
-import React, { useContext } from "react"
+import * as animationData from "../animations/LogoKick"
+
+import React, { useContext, useEffect, useState } from "react"
 import { globals, store } from "../state/state"
 
 import { Link } from "gatsby"
 import Navigation from "./Navigation/nav"
 import PropTypes from "prop-types"
-import SvgLogo from "../svgs/logo"
+import lottie from "lottie-web"
 import styled from "@emotion/styled"
 
 const HeaderStyles = styled.header`
@@ -46,22 +48,21 @@ const HeaderLink = styled(props => <Link {...props} />)`
     display: inline-block;
     text-indent: -99rem;
     font-size: 0;
-`
-
-const HeaderLogo = styled(SvgLogo)`
     height: 2.5rem;
     width: 2.5rem;
-    display: block;
-    g {
-        transition: all 1s ${props => (props.delay ? ".8s" : "")};
+    svg {
+        display: block;
+    }
+    path {
+        transition: fill 1s ${props => (props.delay ? ".8s" : "")};
     }
     &.svgHeaderLogo {
-        g {
+        path {
             fill: #fff;
         }
     }
     &.svgHeaderLogo--dark {
-        g {
+        path {
             fill: #000;
         }
     }
@@ -79,14 +80,38 @@ const Header = ({ siteTitle }) => {
     const svgClass =
         logoColor === "light" ? "svgHeaderLogo" : "svgHeaderLogo--dark"
 
+    let [headIconDark, updateHeadDark] = useState(null)
+
+    useEffect(() => {
+        updateHeadDark(
+            lottie.loadAnimation({
+                container: document.getElementById("HeaderLogoDark"),
+                renderer: "svg",
+                loop: false,
+                autoplay: false,
+                animationData: animationData,
+                rendererSettings: {
+                    clearCanvas: false,
+                    className: "RenderedSVGMenu",
+                },
+            })
+        )
+    }, [])
+
+    const hover = () => {
+        headIconDark.goToAndPlay(0)
+    }
+
     return (
         <HeaderStyles>
             <HeaderInner>
-                <HeaderLink to="/">
-                    <HeaderLogo
-                        delay={globalState.state.nav ? 1 : 0}
-                        className={svgClass}
-                    />
+                <HeaderLink
+                    to="/"
+                    onMouseEnter={hover}
+                    id="HeaderLogoDark"
+                    delay={globalState.state.nav ? 1 : 0}
+                    className={svgClass}
+                >
                     Home
                 </HeaderLink>
                 <Navigation siteTitle={siteTitle} />
