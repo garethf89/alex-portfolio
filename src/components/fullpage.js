@@ -144,6 +144,7 @@ const FullPage = ({ data, projects, status }) => {
                             const theme = isDarkBackground === "Dark"
                             return (
                                 <PanelContainer
+                                    className="home-panel"
                                     key={index}
                                     position={index}
                                     darkBackground={theme}

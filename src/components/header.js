@@ -46,6 +46,7 @@ const HeaderLink = styled(props => <Link {...props} />)`
     cursor: pointer;
     position: relative;
     display: inline-block;
+    vertical-align: top;
     text-indent: -99rem;
     font-size: 0;
     height: 2.5rem;

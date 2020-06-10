@@ -52,7 +52,7 @@ const Panel = ({ color, children, text, subText, topText, slug }) => {
         <>
             {children}
             {text && (
-                <PanelText hover={isHover}>
+                <PanelText className="panel-text" hover={isHover}>
                     <Container wide>
                         <HoverSpan
                             onMouseOver={e => setHover(true)}

@@ -17,5 +17,10 @@ export const globalStyles = props => css`
         margin: 0;
         padding: 0;
     }
+
+    .tl-wrapper--unmount {
+        transition-delay: 0.25s;
+        z-index: -1;
+    }
 `
 export default globalStyles

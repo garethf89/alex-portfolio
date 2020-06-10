@@ -32,6 +32,16 @@ const PanelContainerStyled = styled.div`
     background-position: center;
     background-size: cover;
     color: ${props => (props.color === "light" ? "#fff" : "inherit")};
+
+    .panel-text,
+    .fp-navcustom {
+        transition: opacity 0.75s;
+        opacity: 1;
+    }
+    &.fade-out-text .panel-text,
+    &.fade-out-text .fp-navcustom {
+        opacity: 0;
+    }
 `
 
 const getCurrentState = () => {
@@ -46,6 +56,7 @@ const PanelContainer = ({
     displayImage,
     children,
     showTransition,
+    className,
 }) => {
     const theme = darkBackground ? "dark" : "light"
 
@@ -66,6 +77,10 @@ const PanelContainer = ({
         } else {
             setVisibility(isVisible)
         }
+
+        if (document.querySelector(".tl-wrapper--unmount")) {
+            return
+        }
         if (isVisible) {
             dispatch({ type: "THEME", theme: theme })
         } else if (!isVisible && contentPage) {
@@ -74,6 +89,7 @@ const PanelContainer = ({
     }
 
     const throttled = throttle(visibilityChange, 500)
+
     if (gatsbyWindow()) {
         useEffect(() => {
             if (contentPage && visibility) {
@@ -94,7 +110,7 @@ const PanelContainer = ({
         }, [])
     }
 
-    const classStyle = classNames({
+    const classStyle = classNames(className, {
         section: true,
         setHeight: contentPage,
     })
