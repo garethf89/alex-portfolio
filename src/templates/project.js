@@ -20,6 +20,7 @@ const ProjectTemplate = ({ data }) => {
         title,
         theme,
         coverVideo,
+        coverImage,
         headline,
         agency,
         locked,
@@ -56,6 +57,7 @@ const ProjectTemplate = ({ data }) => {
             >
                 <Panel>
                     <VideoBackground
+                        fallback={coverImage.resolutions}
                         src={coverVideo.file.url}
                         type={coverVideo.file.contentType}
                         poster=""
@@ -172,6 +174,7 @@ export const query = graphql`
                 title
                 resolutions(width: 2400) {
                     srcWebp
+                    src
                 }
                 fixed(width: 1400) {
                     src

@@ -16,9 +16,9 @@ const PanelWrapper = styled.div`
     background-size: cover;
 `
 
-const PanelImage = ({ source, sourceWeb }) => {
+const PanelImage = ({ source, sourceWeb, className }) => {
     const imageSrc = supportsWebP() ? sourceWeb : source
-    return <PanelWrapper source={imageSrc}></PanelWrapper>
+    return <PanelWrapper className={className} source={imageSrc}></PanelWrapper>
 }
 
 export default PanelImage

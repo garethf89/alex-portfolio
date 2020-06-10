@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react"
 
+import PanelImage from "./panelimage"
 import debounce from "../../helpers/debounce"
 import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import isElementVisibleFullpage from "../../helpers/isElementVisibleFullpage"
@@ -13,6 +14,7 @@ const VideoBackgroundContainer = styled.div`
     height: 100%;
     z-index: 1;
     overflow: hidden;
+
     video {
         min-width: 100%;
         height: auto;
@@ -20,6 +22,7 @@ const VideoBackgroundContainer = styled.div`
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        display: none;
     }
     @media (min-aspect-ratio: 16/9) {
         video {
@@ -32,9 +35,27 @@ const VideoBackgroundContainer = styled.div`
             min-height: 100%;
         }
     }
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        video {
+            display: block;
+        }
+    }
+`
+const PanelImageStyled = styled(PanelImage)`
+    display: block;
+
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        display: ${props => (props.fixed ? "none" : "block")};
+    }
 `
 
-const VideoBackground = ({ src, poster, autoPlay, type = "video/mp4" }) => {
+const VideoBackground = ({
+    fallback,
+    src,
+    poster,
+    autoPlay,
+    type = "video/mp4",
+}) => {
     const refVideo = useRef(null)
 
     const visibilityChange = () => {
@@ -70,15 +91,25 @@ const VideoBackground = ({ src, poster, autoPlay, type = "video/mp4" }) => {
     }
     return (
         <VideoBackgroundContainer>
-            <video
-                ref={refVideo}
-                poster={poster}
-                autoPlay={autoPlay}
-                muted
-                loop
-            >
-                <source src={src} type={type} />
-            </video>
+            {fallback && (
+                <PanelImageStyled
+                    className=""
+                    fixed={src}
+                    source={fallback.src}
+                    sourceWeb={fallback.srcWebp}
+                />
+            )}
+            {src && (
+                <video
+                    ref={refVideo}
+                    poster={poster}
+                    autoPlay={autoPlay}
+                    muted
+                    loop
+                >
+                    <source src={src} type={type} />
+                </video>
+            )}
         </VideoBackgroundContainer>
     )
 }

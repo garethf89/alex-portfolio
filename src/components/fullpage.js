@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react"
 
 import Panel from "../components/Home/panel"
 import PanelContainer from "../components/panelContainer"
-import PanelImage from "../components/Media/panelimage"
 import PanelNav from "./Home/panelNav"
 import { TransitionState } from "gatsby-plugin-transition-link"
 import VideoBackground from "../components/Media/video"
@@ -159,6 +158,9 @@ const FullPage = ({ data, projects, status }) => {
                                     >
                                         {video && !isMobile && (
                                             <VideoBackground
+                                                fallback={
+                                                    value.coverImage.resolutions
+                                                }
                                                 src={value.coverVideo.file.url}
                                                 type={
                                                     value.coverVideo.file
@@ -168,19 +170,6 @@ const FullPage = ({ data, projects, status }) => {
                                                 autoPlay={false}
                                             />
                                         )}
-                                        {!video ||
-                                            (isMobile && (
-                                                <PanelImage
-                                                    source={
-                                                        value.coverImage.fixed
-                                                            .src
-                                                    }
-                                                    sourceWeb={
-                                                        value.coverImage.fixed
-                                                            .srcWebp
-                                                    }
-                                                />
-                                            ))}
                                         <PanelNav
                                             data={projects}
                                             active={index}
