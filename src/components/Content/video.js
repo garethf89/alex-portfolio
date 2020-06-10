@@ -49,6 +49,7 @@ const Video = ({ src, poster, type, autoplay }) => {
     return (
         <VideoContainer data-vjs-player className={classStyle}>
             <VideoPlayer
+                loop={autoplay}
                 muted={autoplay}
                 ref={refVideo}
                 autoPlay={autoplay}
