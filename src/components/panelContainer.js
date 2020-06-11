@@ -92,9 +92,11 @@ const PanelContainer = ({
 
     if (gatsbyWindow()) {
         useEffect(() => {
-            if (contentPage && visibility) {
-                dispatch({ type: "THEME", theme: theme })
-            }
+            setTimeout(() => {
+                if (contentPage && visibility) {
+                    dispatch({ type: "THEME", theme: theme })
+                }
+            }, 100)
             window.removeEventListener("scroll", throttled)
 
             window.addEventListener("scroll", throttled)
