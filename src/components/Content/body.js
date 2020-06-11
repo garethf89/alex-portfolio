@@ -203,7 +203,7 @@ const Body = ({ text, className, include, exclude }) => {
                     src={
                         webP
                             ? element.image[0].fixed.srcWebp
-                            : element.image[0].file.url
+                            : element.image[0].fixed.src
                     }
                     alt={element.image[0].title}
                 ></Image>
@@ -214,7 +214,7 @@ const Body = ({ text, className, include, exclude }) => {
                 <StyledHalfImage key={i} className="half-width-images">
                     <Image
                         src={
-                            !webP
+                            webP
                                 ? element.firstImage.fixed.srcWebp
                                 : element.firstImage.fixed.src
                         }

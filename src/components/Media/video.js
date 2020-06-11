@@ -57,7 +57,6 @@ const VideoBackground = ({
     type = "video/mp4",
 }) => {
     const refVideo = useRef(null)
-
     const visibilityChange = () => {
         if (!refVideo.current) {
             return

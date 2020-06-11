@@ -1,6 +1,6 @@
 import * as animationData from "../animations/LogoKick"
 
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { globals, store } from "../state/state"
 
 import { Link } from "gatsby"
@@ -40,7 +40,13 @@ const HeaderInner = styled.div`
     }
 `
 
-const HeaderLink = styled(props => <Link {...props} />)`
+const HeaderAnchor = styled(props => <Link {...props} />)`
+    visibility: hidden;
+    height: 0;
+    width: 0;
+`
+
+const HeaderLink = styled.div`
     z-index: 3;
     pointer-events: auto;
     cursor: pointer;
@@ -53,17 +59,18 @@ const HeaderLink = styled(props => <Link {...props} />)`
     width: 2.5rem;
     svg {
         display: block;
-    }
-    path {
-        transition: fill 1s ${props => (props.delay ? ".8s" : "")};
+
+        path {
+            transition: fill 1s ${props => (props.delay ? ".8s" : "")};
+        }
     }
     &.svgHeaderLogo {
-        path {
+        svg path {
             fill: #fff;
         }
     }
     &.svgHeaderLogo--dark {
-        path {
+        svg path {
             fill: #000;
         }
     }
@@ -76,6 +83,8 @@ const HeaderLink = styled(props => <Link {...props} />)`
 const Header = ({ siteTitle }) => {
     const { state } = useContext(store)
     const globalState = useContext(globals)
+
+    const linkRef = useRef(false)
 
     const logoColor = state.theme
     const svgClass =
@@ -103,18 +112,23 @@ const Header = ({ siteTitle }) => {
         headIconDark.goToAndPlay(0)
     }
 
+    const clickSVG = () => {
+        document.getElementById("HomeLink").click()
+    }
+
     return (
         <HeaderStyles>
             <HeaderInner>
                 <HeaderLink
-                    to="/"
                     onMouseEnter={hover}
+                    onClick={clickSVG}
                     id="HeaderLogoDark"
                     delay={globalState.state.nav ? 1 : 0}
                     className={svgClass}
-                >
+                ></HeaderLink>
+                <HeaderAnchor to="/" id="HomeLink">
                     Home
-                </HeaderLink>
+                </HeaderAnchor>
                 <Navigation siteTitle={siteTitle} />
             </HeaderInner>
         </HeaderStyles>

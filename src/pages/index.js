@@ -43,6 +43,7 @@ const IndexPage = () => {
                         title
                         resolutions(width: 2400) {
                             srcWebp
+                            src
                         }
                         fixed(width: 1400) {
                             src
