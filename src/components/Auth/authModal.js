@@ -9,9 +9,6 @@ import Modal from "react-modal"
 import { setAuth } from "../../helpers/auth"
 import styled from "@emotion/styled"
 
-const MODAL_CLASS = "modal-styled"
-const MODAL_OVERLAY_CLASS = "modal-styled"
-
 const styles = {
     content: {
         left: "50%",

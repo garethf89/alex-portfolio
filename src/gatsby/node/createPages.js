@@ -1,7 +1,7 @@
 const query = require("./query.js")
 const path = require(`path`)
 
-module.exports = async ({ graphql, actions }) => {
+module.exports = async({ graphql, actions }) => {
     const { createPage } = actions
     const projectTemplate = path.resolve(`src/templates/project.js`)
     // Create a page for each "page"

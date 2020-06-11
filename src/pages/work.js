@@ -21,6 +21,7 @@ const WorkFlex = styled.div`
 `
 
 const WorkPage = () => {
+    // eslint-disable-next-line
     const data = useStaticQuery(graphql`
         query WorkPage {
             page: contentfulWork {
@@ -32,8 +33,6 @@ const WorkPage = () => {
     const projects = getAllProjects()
 
     const panels = projects.contentfulWork.projects.map((value, index) => {
-        const video = value.coverVideo.file.contentType.includes("video")
-
         const isDarkBackground = value.theme
         const theme = isDarkBackground === "Dark" ? "dark" : "light"
         const size = index % 3 === 0 ? "large" : "small"

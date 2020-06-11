@@ -38,7 +38,7 @@ const ButtonStyled = styled.button`
 `
 
 const Button = ({ children, type = "button", color, click }) => {
-    const colorTheme = color ? theme.button[color] : theme.button["dark"]
+    const colorTheme = color ? theme.button[color] : theme.button.dark
 
     return (
         <ButtonStyled

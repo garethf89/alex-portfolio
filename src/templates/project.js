@@ -28,7 +28,6 @@ const ProjectTemplate = ({ data }) => {
         pageContent,
     } = data.page
 
-    const hasVideo = coverVideo.file.contentType.includes("video")
     const auth = gatsbyWindow() ? isAuth() : false
 
     if (locked && !auth) {

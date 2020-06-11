@@ -1,7 +1,6 @@
 import * as React from "react"
 
-function SvgComponent(props) {
-    return (
+const SvgComponent = (props) => (
         <svg width="1em" height="1em" viewBox="0 0 55 55" {...props}>
             <path
                 d="M41.25 41.224h-5.698v-8.917c0-2.126-.037-4.86-2.961-4.86-2.965 0-3.417 2.317-3.417 4.71v9.067h-5.692V22.89h5.462v2.507h.079c.76-1.442 2.62-2.963 5.392-2.963 5.77 0 6.835 3.797 6.835 8.735v10.056zm-24.193-20.84a3.305 3.305 0 11-.005-6.609 3.305 3.305 0 01.005 6.61zm2.85 20.84h-5.705V22.89h5.705v18.335zM27.5 0C12.311 0 0 12.311 0 27.5 0 42.687 12.311 55 27.5 55S55 42.687 55 27.5C55 12.311 42.689 0 27.5 0z"
@@ -9,8 +8,7 @@ function SvgComponent(props) {
                 fillRule="evenodd"
             />
         </svg>
-    )
-}
+    );
 
 export default SvgComponent
 

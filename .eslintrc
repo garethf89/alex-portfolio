@@ -23,12 +23,6 @@
             "undefined"
         ],
         "id-match": "error",
-        "max-len": [
-            "error",
-            {
-                "code": 140
-            }
-        ],
         "no-bitwise": "error",
         "no-caller": "error",
         "no-cond-assign": "error",

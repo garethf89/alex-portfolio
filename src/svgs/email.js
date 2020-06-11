@@ -1,7 +1,6 @@
 import * as React from "react"
 
-function SvgComponent(props) {
-    return (
+const SvgComponent = (props) => (
         <svg width="1em" height="1em" viewBox="0 0 55 55" {...props}>
             <g fill="none" fillRule="evenodd">
                 <path
@@ -27,8 +26,7 @@ function SvgComponent(props) {
                 </g>
             </g>
         </svg>
-    )
-}
+    );
 
 export default SvgComponent
 

@@ -22,7 +22,7 @@ const Root = styled.div`
 `
 
 const TemplateWrap = ({ children, description, image, data, path }) => {
-    const { state, dispatch } = useContext(store)
+    const { dispatch } = useContext(store)
     const [initGlobals, setInitGlobals] = useState(false)
 
     const { title } = (data && data.page) || "Alex Ioanna"
