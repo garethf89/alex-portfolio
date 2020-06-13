@@ -13,12 +13,20 @@ const PanelContainerStyled = styled.div`
             height: 100vh;
         }
         to {
+            height: 60vh;
+        }
+    }
+    @keyframes sizeD {
+        from {
+            height: 100vh;
+        }
+        to {
             height: 73vh;
         }
     }
 
     height: ${props =>
-        props.contentPage && !props.showTransition ? "73vh" : "100vh"};
+        props.contentPage && !props.showTransition ? "60vh" : "100vh"};
     position: relative;
     display: table;
     table-layout: fixed;
@@ -41,6 +49,12 @@ const PanelContainerStyled = styled.div`
     &.fade-out-text .panel-text,
     &.fade-out-text .fp-navcustom {
         opacity: 0;
+    }
+
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        animation-name: ${props => (props.showTransition ? "sizeD" : "0")};
+        height: ${props =>
+            props.contentPage && !props.showTransition ? "73vh" : "100vh"};
     }
 `
 

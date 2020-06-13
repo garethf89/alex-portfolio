@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import Container from "../container"
 import Heading from "../Typography/heading"
 import { Link } from "gatsby"
+import ScreenReaderOnly from "../Common/ScreenReaderOnly"
 import { getAllProjects } from "../../hooks/get-all-projects"
 import { isAuth } from "../../helpers/auth"
 import { random } from "../../helpers/random"
@@ -121,7 +122,11 @@ const LinkedProjects = ({ exclude }) => {
                                                     : project.coverImage.fixed
                                                           .src
                                             }
-                                        />
+                                        >
+                                            <ScreenReaderOnly>
+                                                {project.title}
+                                            </ScreenReaderOnly>
+                                        </LinkedProjectLinkBG>
                                     </LinkedProjectLink>
                                     <LinkedProjectLinkHeading level="h3">
                                         <Link

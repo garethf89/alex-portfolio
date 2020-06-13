@@ -48,6 +48,7 @@ const AboutPage = () => {
             <PanelContainer contentPage backgroundColor="#000">
                 <Panel>
                     <VideoBackground
+                        showVideo
                         src={AboutData.coverVideo.file.url}
                         type={AboutData.coverVideo.file.contentType}
                         poster=""

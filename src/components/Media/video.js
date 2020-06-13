@@ -22,7 +22,7 @@ const VideoBackgroundContainer = styled.div`
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        display: none;
+        display: ${props => props.alwaysShowMedia};
     }
     @media (min-aspect-ratio: 16/9) {
         video {
@@ -54,6 +54,7 @@ const VideoBackground = ({
     src,
     poster,
     autoPlay,
+    showVideo,
     type = "video/mp4",
 }) => {
     const refVideo = useRef(null)
@@ -88,9 +89,14 @@ const VideoBackground = ({
             }
         }, [])
     }
+
+    const showImage = fallback && !showVideo
+    const showMedia = src
+    const alwaysShowMedia = showMedia && !showImage
+
     return (
-        <VideoBackgroundContainer>
-            {fallback && (
+        <VideoBackgroundContainer alwaysShowMedia={alwaysShowMedia}>
+            {showImage && (
                 <PanelImageStyled
                     className=""
                     fixed={src}
@@ -98,7 +104,7 @@ const VideoBackground = ({
                     sourceWeb={fallback.srcWebp}
                 />
             )}
-            {src && (
+            {showMedia && (
                 <video
                     ref={refVideo}
                     poster={poster}

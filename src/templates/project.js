@@ -57,6 +57,7 @@ const ProjectTemplate = ({ data }) => {
                 <Panel>
                     <VideoBackground
                         fallback={coverImage.resolutions}
+                        showVideo
                         src={coverVideo.file.url}
                         type={coverVideo.file.contentType}
                         poster=""

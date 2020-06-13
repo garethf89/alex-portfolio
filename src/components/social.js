@@ -39,6 +39,7 @@ const SocialList = styled.ul`
         display: inline-block;
         transition: all 0.5s;
         opacity: 1;
+        color: #fff;
         &:hover {
             opacity: 0.8;
         }
