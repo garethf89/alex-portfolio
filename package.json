@@ -68,7 +68,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build && yarn build-storybook",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
@@ -80,8 +80,8 @@
     "check-pretty": "prettier --list-different {,src/**/}*.{js,jsx,json,css,scss}",
     "format": "prettier --write \"src/**/*.js\"",
     "storybook": "NODE_ENV=production start-storybook -p 6006",
-    "build-storybook": "NODE_ENV=production build-storybook -o build/components",
-    "analyze-size": "source-map-explorer bundle.min.js"
+    "build-storybook": "NODE_ENV=production build-storybook -o public/components",
+    "analyze-size": "source-map-explorer public/app*.js"
   },
   "repository": {
     "type": "git",
