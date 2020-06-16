@@ -1,10 +1,30 @@
+import Heading from "../components/Typography/heading"
+import LinkedProjects from "../components/Shared/linkedProjects"
+import PanelContainer from "../components/panelContainer"
 import React from "react"
+import Social from "../components/social"
+import styled from "@emotion/styled"
 
-const NotFoundPage = () => (
-    <div>
-        <h1>NOT FOUND</h1>
-        <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-    </div>
-)
+const NotFound = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+`
+
+const NotFoundPage = () => {
+    return (
+        <>
+            <PanelContainer contentPage backgroundColor="#000">
+                <NotFound>
+                    <Heading level="h1">Page not found</Heading>
+                </NotFound>
+            </PanelContainer>
+            <LinkedProjects />
+
+            <Social />
+        </>
+    )
+}
 
 export default NotFoundPage
