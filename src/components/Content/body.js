@@ -17,21 +17,11 @@ const StyledParagraph = styled.p`
 
 export const Image = styled.img`
     max-width: 100%;
-    margin: 3rem 0;
-    + .half-width-images {
-        margin-top: 0;
-    }
 `
 
 export const StyledHalfImage = styled.div`
     display: block;
     margin: 3rem 0;
-    img {
-        margin: 0;
-    }
-    + img {
-        margin-top: 0;
-    }
     @media (min-width: ${props => props.theme.responsive.medium}) {
         img {
             width: 50%;
@@ -199,6 +189,7 @@ const Body = ({ text, className, include, exclude }) => {
         if (type === "ContentfulPageContentFullWidthImage") {
             content.push(
                 <Image
+                    className="body-block"
                     key={i}
                     src={
                         webP
@@ -211,7 +202,10 @@ const Body = ({ text, className, include, exclude }) => {
         }
         if (type === "ContentfulPageContentHalfWidthImages") {
             content.push(
-                <StyledHalfImage key={i} className="half-width-images">
+                <StyledHalfImage
+                    key={i}
+                    className="body-block half-width-images"
+                >
                     <Image
                         src={
                             webP

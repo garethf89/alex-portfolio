@@ -3,20 +3,20 @@ import React from "react"
 import styled from "@emotion/styled"
 
 const BodyContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
     margin-bottom: 2rem;
+
+    .body-block {
+        margin: 0 0 3rem;
+    }
     p {
         margin-top: 0;
-        + img {
+        + .body-block {
             margin-top: 2rem;
-            margin-bottom: 3rem;
         }
-        + .video-inline-player,
-        + .half-width-images {
-            margin-top: 2rem;
-            margin-bottom: 3rem;
-        }
+    }
+    @media (min-width: ${props => props.theme.responsive.medium}) {
+        display: flex;
+        flex-wrap: wrap;
     }
 `
 

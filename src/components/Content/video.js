@@ -19,10 +19,6 @@ const VideoContainer = styled.div`
     display: block;
     flex-basis: 100%;
     width: auto;
-    + img,
-    + .half-width-images {
-        margin-top: 2rem;
-    }
     &.autoplay {
         .video-react-big-play-button {
             display: none;
@@ -44,6 +40,7 @@ const Video = ({ src, poster, type, autoplay }) => {
 
     let classStyle = classNames({
         autoplay: autoplay,
+        "body-block": true,
         "video-inline-player": true,
     })
     return (
