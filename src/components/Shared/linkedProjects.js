@@ -9,6 +9,7 @@ import { isAuth } from "../../helpers/auth"
 import { random } from "../../helpers/random"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
+import VideoBackground from "../Media/video"
 
 const LinkedProjectsStyle = styled.aside`
     background: ${props => props.theme.colors.secondaryBackground};
@@ -114,19 +115,36 @@ const LinkedProjects = ({ exclude }) => {
                                         to={`/${project.slug}`}
                                         className=""
                                     >
-                                        <LinkedProjectLinkBG
-                                            image={
-                                                webp
-                                                    ? project.coverImage.fixed
-                                                          .srcWebp
-                                                    : project.coverImage.fixed
-                                                          .src
-                                            }
-                                        >
-                                            <ScreenReaderOnly>
-                                                {project.title}
-                                            </ScreenReaderOnly>
-                                        </LinkedProjectLinkBG>
+                                        {project.coverImage.file.url.indexOf(
+                                            ".mp4"
+                                        ) === -1 && (
+                                            <LinkedProjectLinkBG
+                                                image={
+                                                    webp
+                                                        ? project.coverImage
+                                                              .fixed.srcWebp
+                                                        : project.coverImage
+                                                              .fixed.src
+                                                }
+                                            >
+                                                <ScreenReaderOnly>
+                                                    {project.title}
+                                                </ScreenReaderOnly>
+                                            </LinkedProjectLinkBG>
+                                        )}
+                                        {project.coverImage.file.url.indexOf(
+                                            ".mp4"
+                                        ) > -1 && (
+                                            <VideoBackground
+                                                src={
+                                                    project.coverImage.file.url
+                                                }
+                                            >
+                                                <ScreenReaderOnly>
+                                                    {project.title}
+                                                </ScreenReaderOnly>
+                                            </VideoBackground>
+                                        )}
                                     </LinkedProjectLink>
                                     <LinkedProjectLinkHeading level="h3">
                                         <Link

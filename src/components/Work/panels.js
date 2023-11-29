@@ -8,6 +8,7 @@ import { gatsbyWindow } from "../../helpers/gatsbyWindow"
 import { isAuth } from "../../helpers/auth"
 import styled from "@emotion/styled"
 import { supportsWebP } from "../../helpers/support/webp"
+import VideoBackground from "../Media/video"
 
 const WorkPanelStyled = styled(Link)`
     padding-top: 55%;
@@ -77,8 +78,14 @@ const WorkPanel = ({ size, title, image, color, slug, locked }) => {
     const auth = gatsbyWindow() ? isAuth() : false
     const showLocked = !auth && locked
 
+    const isVideo = image.file.url.indexOf(".mp4") > -1
+
     const webp = supportsWebP()
-    const imageSrc = webp ? image.resolutions.srcWebp : image.file.url
+    const imageSrc = !isVideo
+        ? webp
+            ? image.resolutions.srcWebp
+            : image.file.url
+        : image.file.url
 
     const clickLink = e => {
         if (showLocked) {
@@ -103,7 +110,8 @@ const WorkPanel = ({ size, title, image, color, slug, locked }) => {
             onClick={clickLink}
             disabled={showLocked && modalOpen}
         >
-            <Background className="w-panel-bg" image={imageSrc} />
+            {isVideo && <VideoBackground autoplay src={image.file.url} />}
+            {!isVideo && <Background className="w-panel-bg" image={imageSrc} />}
             <Content>
                 {showLocked && (
                     <>
