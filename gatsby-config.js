@@ -9,6 +9,7 @@ try {
             accessToken: process.env.ACCESS_TOKEN,
         },
         development: {
+            host: "preview.contentful.com",
             spaceId: process.env.SPACE_ID,
             accessToken: process.env.ACCESS_TOKEN,
         },
