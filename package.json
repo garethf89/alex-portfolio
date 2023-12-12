@@ -71,6 +71,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build && yarn build-storybook",
+    "build:preview": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
