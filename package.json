@@ -83,7 +83,8 @@
     "format": "prettier --write \"src/**/*.js\"",
     "storybook": "NODE_ENV=production start-storybook -p 6006",
     "build-storybook": "NODE_ENV=production build-storybook -o public/components",
-    "analyze-size": "source-map-explorer public/app*.js"
+    "analyze-size": "source-map-explorer public/app*.js",
+    "previewSetup": "cp -f preview.toml netlify.toml"
   },
   "repository": {
     "type": "git",
