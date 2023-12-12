@@ -8,6 +8,10 @@ try {
             spaceId: process.env.SPACE_ID,
             accessToken: process.env.ACCESS_TOKEN,
         },
+        development: {
+            spaceId: process.env.SPACE_ID,
+            accessToken: process.env.ACCESS_TOKEN,
+        },
     }
 } finally {
     const { spaceId, accessToken } = contentfulConfig.production
