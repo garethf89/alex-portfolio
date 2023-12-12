@@ -1,4 +1,9 @@
 let contentfulConfig
+
+require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}`,
+})
+
 try {
     contentfulConfig = require("./.contentful")
 } catch (e) {
@@ -87,7 +92,7 @@ module.exports = {
         {
             resolve: "gatsby-source-contentful",
             options:
-                process.env.NODE_ENV === "development"
+                process.env.PREVIEW === "true"
                     ? contentfulConfig.development
                     : contentfulConfig.production,
         },
