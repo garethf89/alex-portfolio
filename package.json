@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",
+    "@netlify/plugin-gatsby": "3.7.2",
     "@storybook/addon-a11y": "^5.3.19",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-graphql": "^5.3.19",
