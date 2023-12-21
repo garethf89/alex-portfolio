@@ -104,9 +104,10 @@ module.exports = {
                     process.env.PREVIEW === "true"
                         ? {
                               "/*": [
-                                  "Access-Control-Allow-Origin = *",
+                                  "Access-Control-Allow-Origin = '*'",
                                   "X-Robots-Tag: noindex",
                                   "Set-Cookie: auth=abc123; SameSite=None; Secure",
+                                  "X-Frame-Options: https://app.contentful.com"
                               ],
                           }
                         : {
