@@ -1,4 +1,4 @@
 /*
   Access-Control-Allow-Origin = "*"
   X-Robots-Tag: "noindex"
-  SameSite=None; Secure
+  Set-Cookie: auth=abc123; SameSite=None; Secure
