@@ -100,9 +100,18 @@ module.exports = {
         {
             resolve: `gatsby-plugin-netlify`,
             options: {
-                headers: {
-                    // "/*": ["Cache-Control: max-age=604800"],
-                },
+                headers:
+                    process.env.PREVIEW === "true"
+                        ? {
+                              "/*": [
+                                  "Access-Control-Allow-Origin = *",
+                                  "X-Robots-Tag: noindex",
+                                  "Set-Cookie: auth=abc123; SameSite=None; Secure",
+                              ],
+                          }
+                        : {
+                              // "/*": ["Cache-Control: max-age=604800"],
+                          },
             },
         },
         // this (optional) plugin enables Progressive Web App + Offline functionality
